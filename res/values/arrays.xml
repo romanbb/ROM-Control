@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string-array
+		name="lock_screen_entries">
+		<item>4-Tab unlock</item>
+		<item>Rotary unlock</item>
+		<item>Puzzle unlock</item>
+		<item>Android unlock</item>
+		<item>Glass unlock</item>
+		<item>Epic unlock</item>
+		<item>Star Wars unlock</item>
+		<item>Miui unlock</item>
+		<item>SGSII unlock</item>
+	</string-array>
+	<string-array
+		name="lock_screen_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+		<item>5</item>
+		<item>6</item>
+		<item>7</item>
+		<item>8</item>
+	</string-array>
+	<string-array
+		name="read_ahead_entries">
+		<item>128</item>
+		<item>256</item>
+		<item>512</item>
+		<item>1024</item>
+		<item>2048</item>
+		<item>4096</item>
+	</string-array>
+</resources>
