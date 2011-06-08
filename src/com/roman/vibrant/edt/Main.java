@@ -513,7 +513,7 @@ public class Main extends PreferenceActivity {
 						intent.putExtra("outputY", 800);
 						intent.putExtra("scale", true);
 						intent.putExtra("return-data", false);
-						intent.putExtra(MediaStore.EXTRA_OUTPUT, getTempUri());
+						intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenUri());
 						intent.putExtra("outputFormat",
 								Bitmap.CompressFormat.JPEG.toString());
 
@@ -688,6 +688,7 @@ public class Main extends PreferenceActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == SELECT_PHOTO) {
+				
 				// make the lockscreen directory
 				new File("/sdcard/lockscreen_wallpaper/").mkdir();
 
@@ -699,13 +700,14 @@ public class Main extends PreferenceActivity {
 					e1.printStackTrace();
 				}
 
-				String filePath = Environment.getExternalStorageDirectory()
-						+ LOCKSCREEN_WALLPAPER_LOCATION;
+				
+				File file = touchLockscreenFile();
+				String filePath = file.getPath();
 
 				Bitmap selectedImage = BitmapFactory.decodeFile(filePath);
 
 				try {
-					Uri uri = Uri.fromFile(new File(filePath));
+					Uri uri = Uri.fromFile(file);
 					OutputStream outStream = context.getContentResolver()
 							.openOutputStream(uri);
 					selectedImage.compress(Bitmap.CompressFormat.JPEG, 100,
@@ -805,8 +807,9 @@ public class Main extends PreferenceActivity {
 		}
 	}
 
-	private Uri getTempUri() {
-		return Uri.fromFile(touchLockscreenFile());
+	private Uri getLockscreenUri() {
+		return Uri.fromFile(new File(Environment.getExternalStorageDirectory(),
+				LOCKSCREEN_WALLPAPER_LOCATION));
 	}
 
 	private File touchLockscreenFile() {

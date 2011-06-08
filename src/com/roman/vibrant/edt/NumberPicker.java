@@ -44,7 +44,7 @@ import android.widget.TextView;
 public class NumberPicker extends LinearLayout implements OnClickListener,
         OnFocusChangeListener, OnLongClickListener {
 
-    private static final String TAG = "NumberPicker";
+    //private static final String TAG = "NumberPicker";
     private static final int DEFAULT_MAX = 30;
     private static final int DEFAULT_MIN = 3;
 
@@ -111,7 +111,6 @@ public class NumberPicker extends LinearLayout implements OnClickListener,
         this(context, attrs, 0);
     }
 
-    @SuppressWarnings({"UnusedDeclaration"})
     public NumberPicker(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs);
         setOrientation(VERTICAL);
