@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -39,10 +38,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 public class Main extends PreferenceActivity {
 	String pref;
@@ -63,9 +59,8 @@ public class Main extends PreferenceActivity {
 		d = new Dialog(this);
 		builder = new AlertDialog.Builder(this);
 
-		
-		/* hide clock
-		 * 
+		/*
+		 * hide clock
 		 */
 		Preference hide_clock = (Preference) findPreference("hide_clock");
 
@@ -171,7 +166,7 @@ public class Main extends PreferenceActivity {
 					}
 
 				});
-		
+
 		/*
 		 * dbm visibility
 		 */
@@ -503,10 +498,6 @@ public class Main extends PreferenceActivity {
 
 		Preference lock_screen_wallpaper_pref = (Preference) findPreference("lock_screen_wallpaper_pref");
 
-		// lock_screen_wallpaper_pref
-		registerForContextMenu(lock_screen_wallpaper_pref.getView(
-				getListView(), getListView()));
-
 		lock_screen_wallpaper_pref
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
 
@@ -624,17 +615,20 @@ public class Main extends PreferenceActivity {
 		if (read_ahead_pref.getEntry() == null) {
 			read_ahead_pref.setValueIndex(4);
 		}
-		//read_ahead_pref.setValueIndex()
+		// read_ahead_pref.setValueIndex()
 
 		read_ahead_pref
 				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
 					public boolean onPreferenceChange(Preference preference,
 							Object newValue) {
-						if(ShellInterface.isSuAvailable()) {
-							ShellInterface.runCommand("/system/xbin/echo " + newValue + " > /sys/devices/virtual/bdi/179:0/read_ahead_kb");
+						if (ShellInterface.isSuAvailable()) {
+							ShellInterface
+									.runCommand("/system/xbin/echo "
+											+ newValue
+											+ " > /sys/devices/virtual/bdi/179:0/read_ahead_kb");
 						}
-						
+
 						preference.setSummary(newValue.toString());
 						return true;
 					}
@@ -679,8 +673,6 @@ public class Main extends PreferenceActivity {
 	@Override
 	public boolean onContextItemSelected(MenuItem item) {
 
-		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
-				.getMenuInfo();
 		switch (item.getItemId()) {
 		case R.id.restore_default:
 			File f = new File("/mnt/sdcard/" + LOCKSCREEN_WALLPAPER_LOCATION);
@@ -804,22 +796,13 @@ public class Main extends PreferenceActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle item selection
 		switch (item.getItemId()) {
-		case R.id.restartui:
-			test();
+		case R.id.restore_default:
+			File f = new File("/mnt/sdcard/" + LOCKSCREEN_WALLPAPER_LOCATION);
+			f.delete();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
-	}
-
-	public void test() {
-		final String SOME_ACTION = "com.roman.vibrant.edt.SET_DEFAULTS";
-		Intent i = new Intent();
-		i.setAction(SOME_ACTION);
-
-		sendBroadcast(i);
-		Log.e("EDT", "Sent broadcast");
-
 	}
 
 	private Uri getTempUri() {

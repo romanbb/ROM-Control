@@ -13,8 +13,7 @@
 			android:title="Choose Custom App"></Preference>
 		<Preference
 			android:key="lock_screen_wallpaper_pref"
-			android:title="Set Lockscreen Wallpaper"
-			android:summary="Only works with the SGSII lockscreen. \nLong press to restore the default lock screen."></Preference>
+			android:title="Set Lockscreen Wallpaper" android:summary="Only works with the SGSII lockscreen. \nPress menu to restore the original."></Preference>
 		<Preference
 			android:key="lockscreen_timeout_pref"
 			android:title="Custom Lockscreen Timeout"></Preference>
