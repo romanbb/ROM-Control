@@ -40,8 +40,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.IWindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class Main extends PreferenceActivity {
 	String pref;
@@ -52,9 +52,6 @@ public class Main extends PreferenceActivity {
 	Context context;
 	Dialog d;
 	AlertDialog.Builder builder;
-
-	final IWindowManager windowManager = IWindowManager.Stub
-			.asInterface(ServiceManager.getService("window"));
 
 	/** Called when the activity is first created. */
 	@Override
@@ -387,6 +384,12 @@ public class Main extends PreferenceActivity {
 						preference.setSummary(lockScreenNames[selection]);
 						Settings.System.putInt(getContentResolver(),
 								"lockscreen_type_key", selection);
+						
+						if(selection == 9) {
+							Settings.System.putInt(getContentResolver(), "lockscreen_enable", 0);
+						} else {
+							Settings.System.putInt(getContentResolver(), "lockscreen_enable", 1);
+						}
 
 						refreshLockscreenPreferences();
 						return true;
@@ -855,6 +858,29 @@ public class Main extends PreferenceActivity {
 
 				});
 
+		/*
+		 * restore defualt lockscreen wallpaper (sgs2)
+		 */
+		((Preference) findPreference("lockscreen_sgs2_restore_default"))
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						File f = new File("/mnt/sdcard/"
+								+ LOCKSCREEN_WALLPAPER_LOCATION);
+						f.delete();
+						return true;
+					}
+				});
+		
+		findPreference("about_pref").setOnPreferenceClickListener(new OnPreferenceClickListener() {
+			
+			public boolean onPreferenceClick(Preference preference) {
+				Intent i = new Intent(context, AboutActivity.class);
+				startActivity(i);
+				return true;
+			}
+		});
+
 		// run at the end
 		refreshLockscreenPreferences();
 	}
@@ -900,8 +926,10 @@ public class Main extends PreferenceActivity {
 		// enable SGS II lockscreen option
 		if (key == 8) {
 			lock_screen_wallpaper_pref.setEnabled(true);
+			findPreference("lockscreen_sgs2_restore_default").setEnabled(true);
 		} else {
 			lock_screen_wallpaper_pref.setEnabled(false);
+			findPreference("lockscreen_sgs2_restore_default").setEnabled(false);
 		}
 
 		// refresh delay behavior summary
@@ -1024,13 +1052,17 @@ public class Main extends PreferenceActivity {
 					.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
-		} else
+		} else {
+			Toast.makeText(getApplicationContext(), "Please don't use a file manager to select an image!", Toast.LENGTH_SHORT).show();
 			return null;
+		}
+			
+			
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.pref_menu, menu);
+		//MenuInflater inflater = getMenuInflater();
+		//inflater.inflate(R.menu.pref_menu, menu);
 		return true;
 	}
 
@@ -1087,15 +1119,6 @@ public class Main extends PreferenceActivity {
 		if (status.equals(Environment.MEDIA_MOUNTED))
 			return true;
 		return false;
-	}
-
-	public void writeAnimationPreference(int which, Object objValue) {
-		try {
-			float val = Float.parseFloat(objValue.toString());
-			mWindowManager.setAnimationScale(which, val);
-		} catch (NumberFormatException e) {
-		} catch (RemoteException e) {
-		}
 	}
 
 }

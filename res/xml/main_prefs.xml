@@ -28,7 +28,7 @@
 		
 
 	</PreferenceScreen>
-	<PreferenceScreen
+	<PreferenceCategory android:title="Statusbar Tweaks"></PreferenceCategory><PreferenceScreen
 		android:title="Battery Options">
 		<CheckBoxPreference
 			android:title="Show Battery Icon"
@@ -42,6 +42,7 @@
 		<EditTextPreference
 			android:title="Append Battery Text"
 			android:key="battery_text_append"></EditTextPreference>
+		
 
 	</PreferenceScreen>
 	<PreferenceScreen
@@ -67,13 +68,14 @@
 			android:key="show_signal_dbm"
 			android:title="Show dBm Text"></CheckBoxPreference>
 	</PreferenceScreen>
-	<PreferenceScreen
-		android:title="Misc">
+	<PreferenceCategory android:title="Other"></PreferenceCategory><PreferenceScreen
+		android:title="Misc" android:summary="SD Cache, Debugging visibility">
 		<CheckBoxPreference
 			android:key="hide_adb"
 			android:title="Hide ADB Notification"
 			android:summary="Debugging Notification in the status bar"></CheckBoxPreference>
 		<ListPreference android:key="read_ahead_pref" android:title="SD Read-Ahead Cache" android:entryValues="@array/read_ahead_entries" android:entries="@array/read_ahead_entries"></ListPreference>
 		
-	</PreferenceScreen><PreferenceScreen android:title="Animations"></PreferenceScreen>
+		
+	</PreferenceScreen><Preference android:title="About" android:key="about_pref" android:summary="Thread &amp; Twitter links!"></Preference>
 </PreferenceScreen>

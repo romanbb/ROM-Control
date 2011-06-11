@@ -28,8 +28,7 @@
 		</receiver>
 		
 		<activity
-			android:label="App Picker"
-			android:name=".IntentPicker"></activity>
+			android:label="EDT Tweaks - About" android:name=".AboutActivity"></activity>
 
 	</application>
 </manifest>
