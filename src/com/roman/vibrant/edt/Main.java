@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -20,6 +21,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -38,6 +40,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.IWindowManager;
 import android.widget.EditText;
 
 public class Main extends PreferenceActivity {
@@ -49,6 +52,9 @@ public class Main extends PreferenceActivity {
 	Context context;
 	Dialog d;
 	AlertDialog.Builder builder;
+
+	final IWindowManager windowManager = IWindowManager.Stub
+			.asInterface(ServiceManager.getService("window"));
 
 	/** Called when the activity is first created. */
 	@Override
@@ -382,7 +388,7 @@ public class Main extends PreferenceActivity {
 						Settings.System.putInt(getContentResolver(),
 								"lockscreen_type_key", selection);
 
-						refreshCustomAppChooser();
+						refreshLockscreenPreferences();
 						return true;
 					}
 				});
@@ -513,7 +519,8 @@ public class Main extends PreferenceActivity {
 						intent.putExtra("outputY", 800);
 						intent.putExtra("scale", true);
 						intent.putExtra("return-data", false);
-						intent.putExtra(MediaStore.EXTRA_OUTPUT, getLockscreenUri());
+						intent.putExtra(MediaStore.EXTRA_OUTPUT,
+								getLockscreenUri());
 						intent.putExtra("outputFormat",
 								Bitmap.CompressFormat.JPEG.toString());
 
@@ -543,6 +550,8 @@ public class Main extends PreferenceActivity {
 		}
 
 		lockscreen_timeout_pref.setSummary((timeoutInMs / 1000) + " seconds");
+
+		// builder = new AlertDialog.Builder(this);
 
 		lockscreen_timeout_pref
 				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
@@ -634,28 +643,274 @@ public class Main extends PreferenceActivity {
 					}
 				});
 
+		/*
+		 * lock screen music controls
+		 */
+		Preference lockscreen_music_controls = (Preference) findPreference("lockscreen_music_controls");
+
+		try {
+			if (Settings.System.getInt(getContentResolver(),
+					"lockscreen_music_controls") == 1) {
+				((CheckBoxPreference) lockscreen_music_controls)
+						.setChecked(true);
+				findPreference("lockscreen_always_music_controls").setEnabled(
+						true);
+			} else {
+				((CheckBoxPreference) lockscreen_music_controls)
+						.setChecked(false);
+				findPreference("lockscreen_always_music_controls").setEnabled(
+						false);
+			}
+		} catch (SettingNotFoundException e) {
+			((CheckBoxPreference) lockscreen_music_controls).setChecked(true);
+			Settings.System.putInt(getContentResolver(),
+					"lockscreen_music_controls", 1);
+			findPreference("lockscreen_always_music_controls").setEnabled(true);
+		}
+
+		lockscreen_music_controls
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						boolean checked = ((CheckBoxPreference) preference)
+								.isChecked();
+
+						if (checked) {
+							Settings.System.putInt(getContentResolver(),
+									"lockscreen_music_controls", 1);
+							findPreference("lockscreen_always_music_controls")
+									.setEnabled(true);
+						} else {
+							Settings.System.putInt(getContentResolver(),
+									"lockscreen_music_controls", 0);
+							findPreference("lockscreen_always_music_controls")
+									.setEnabled(false);
+						}
+						return true;
+					}
+
+				});
+
+		/*
+		 * lock always screen music controls
+		 */
+		Preference lockscreen_always_music_controls = (Preference) findPreference("lockscreen_always_music_controls");
+
+		try {
+			if (Settings.System.getInt(getContentResolver(),
+					"lockscreen_always_music_controls") == 1) {
+				((CheckBoxPreference) lockscreen_always_music_controls)
+						.setChecked(true);
+			} else {
+				((CheckBoxPreference) lockscreen_always_music_controls)
+						.setChecked(false);
+			}
+		} catch (SettingNotFoundException e) {
+			((CheckBoxPreference) lockscreen_always_music_controls)
+					.setChecked(true);
+			Settings.System.putInt(getContentResolver(),
+					"lockscreen_always_music_controls", 1);
+		}
+
+		lockscreen_always_music_controls
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						boolean checked = ((CheckBoxPreference) preference)
+								.isChecked();
+
+						if (checked) {
+							Settings.System.putInt(getContentResolver(),
+									"lockscreen_always_music_controls", 1);
+						} else {
+							Settings.System.putInt(getContentResolver(),
+									"lockscreen_always_music_controls", 0);
+						}
+						return true;
+					}
+
+				});
+
+		/*
+		 * enable lockscreen default setting
+		 */
+		try {
+			Settings.System.getInt(getContentResolver(), "lockscreen_enable");
+		} catch (SettingNotFoundException e) {
+			Settings.System
+					.putInt(getContentResolver(), "lockscreen_enable", 1);
+		}
+
+		/*
+		 * lockscreen_delay_behavior
+		 */
+
+		ListPreference lockscreen_delay_behavior = (ListPreference) findPreference("lockscreen_delay_behavior");
+
+		try {
+			Settings.System.getInt(getContentResolver(),
+					"lockscreen_delay_behavior");
+		} catch (SettingNotFoundException e) {
+			Settings.System.putInt(getContentResolver(),
+					"lockscreen_delay_behavior", 1);
+			lockscreen_delay_behavior.setValueIndex(0);
+		}
+
+		// lockscreen_delay_behavior.setSummary(lockscreen_delay_behavior
+		// .getEntry());
+
+		lockscreen_delay_behavior
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
+
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+
+						Integer selection = Integer.parseInt(newValue
+								.toString());
+						Log.i("EDT", "Setting delay_behavior to " + selection);
+						Settings.System.putInt(getContentResolver(),
+								"lockscreen_delay_behavior", selection);
+						// refreshCustomAppChooser();
+						// preference.setSummary(selection.toString());
+
+						refreshLockscreenPreferences();
+						return true;
+					}
+				});
+
+		/*
+		 * custom lockscreen timeout
+		 */
+		Preference lockscreen_delay_timeout_pref = (Preference) findPreference("lockscreen_delay_timeout_pref");
+		int timeoutDelayInMs = 5000;
+
+		try {
+			timeoutDelayInMs = Settings.System.getInt(getContentResolver(),
+					"lockscreen_enable_delay_timeout");
+		} catch (SettingNotFoundException e) {
+			timeoutDelayInMs = 5000;
+			Settings.System.putInt(getContentResolver(),
+					"lockscreen_enable_delay_timeout", timeoutInMs);
+
+		}
+
+		lockscreen_delay_timeout_pref.setSummary((timeoutDelayInMs / 1000)
+				+ " seconds");
+
+		lockscreen_delay_timeout_pref
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+
+						LayoutInflater inflater = (LayoutInflater) context
+								.getSystemService(LAYOUT_INFLATER_SERVICE);
+						//
+						View layout = inflater.inflate(
+								R.layout.number_picker_layout, null);
+
+						final EditText edit = (EditText) layout
+								.findViewById(R.id.timepicker_input);
+
+						int secs = Settings.System.getInt(getContentResolver(),
+								"lockscreen_enable_delay_timeout", 5000) / 1000;
+
+						edit.setText(Integer.toString(secs));
+
+						builder.setView(layout);
+						builder.setMessage("Lockscreen Enable Delay")
+								.setCancelable(false)
+								.setPositiveButton("Set",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+
+												int result = Integer
+														.parseInt(edit
+																.getText()
+																.toString());
+												Settings.System
+														.putInt(getContentResolver(),
+																"lockscreen_enable_delay_timeout",
+																result * 1000);
+												findPreference(
+														"lockscreen_delay_timeout_pref")
+														.setSummary(
+																result
+																		+ " seconds");
+											}
+										})
+								.setNegativeButton("Cancel",
+										new DialogInterface.OnClickListener() {
+											public void onClick(
+													DialogInterface dialog,
+													int id) {
+												dialog.cancel();
+											}
+										});
+						AlertDialog alert = builder.create();
+						alert.show();
+						return true;
+					}
+
+				});
+
 		// run at the end
-		refreshCustomAppChooser();
+		refreshLockscreenPreferences();
 	}
 
-	public void refreshCustomAppChooser() {
+	public void refreshLockscreenPreferences() {
 
-		Preference custom_app_preference = (Preference) findPreference("custom_app_pref");
 		Preference lock_screen_wallpaper_pref = (Preference) findPreference("lock_screen_wallpaper_pref");
 
 		int key = Settings.System.getInt(getContentResolver(),
 				"lockscreen_type_key", 0);
+
 		if (key == 0 || key == 7) {
-			custom_app_preference.setEnabled(true);
+			findPreference("custom_app_pref").setEnabled(true);
 		} else {
-			custom_app_preference.setEnabled(false);
+			findPreference("custom_app_pref").setEnabled(false);
 		}
 
+		// music options
+		if (key == 2 || key == 4 || key == 5 || key == 7 || key == 8
+				|| key == 9) {
+			findPreference("lockscreen_music_controls").setEnabled(false);
+			findPreference("lockscreen_always_music_controls")
+					.setEnabled(false);
+		} else {
+			findPreference("lockscreen_music_controls").setEnabled(true);
+			findPreference("lockscreen_always_music_controls").setEnabled(true);
+		}
+
+		// no lockscreen option
+		if (key == 9) {
+			findPreference("lockscreen_timeout_pref").setEnabled(false);
+			findPreference("lockscreen_delay_behavior").setEnabled(false);
+			findPreference("lockscreen_delay_timeout_pref").setEnabled(false);
+			findPreference("lockscreen_selection_pref").setSummary(
+					"Lockscreen disabled");
+
+		} else {
+			findPreference("lockscreen_timeout_pref").setEnabled(true);
+			findPreference("lockscreen_delay_behavior").setEnabled(true);
+			findPreference("lockscreen_delay_timeout_pref").setEnabled(true);
+		}
+
+		// enable SGS II lockscreen option
 		if (key == 8) {
 			lock_screen_wallpaper_pref.setEnabled(true);
 		} else {
 			lock_screen_wallpaper_pref.setEnabled(false);
 		}
+
+		// refresh delay behavior summary
+		String[] entries = context.getResources().getStringArray(
+				R.array.lockscreen_delayed_behavior_entries);
+		String entry = entries[Settings.System.getInt(getContentResolver(),
+				"lockscreen_delay_behavior", 1) - 1].toLowerCase();
+		findPreference("lockscreen_delay_behavior").setSummary(
+				"Lockscreen will delay " + entry);
 
 	}
 
@@ -688,7 +943,7 @@ public class Main extends PreferenceActivity {
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (resultCode == RESULT_OK) {
 			if (requestCode == SELECT_PHOTO) {
-				
+
 				// make the lockscreen directory
 				new File("/sdcard/lockscreen_wallpaper/").mkdir();
 
@@ -700,7 +955,6 @@ public class Main extends PreferenceActivity {
 					e1.printStackTrace();
 				}
 
-				
 				File file = touchLockscreenFile();
 				String filePath = file.getPath();
 
@@ -791,7 +1045,7 @@ public class Main extends PreferenceActivity {
 				"custom_lockscreen_timeout", 5000) / 1000);
 
 		lockscreen_timeout_pref.setSummary(i + " seconds");
-		refreshCustomAppChooser();
+		refreshLockscreenPreferences();
 	}
 
 	@Override
@@ -833,6 +1087,15 @@ public class Main extends PreferenceActivity {
 		if (status.equals(Environment.MEDIA_MOUNTED))
 			return true;
 		return false;
+	}
+
+	public void writeAnimationPreference(int which, Object objValue) {
+		try {
+			float val = Float.parseFloat(objValue.toString());
+			mWindowManager.setAnimationScale(which, val);
+		} catch (NumberFormatException e) {
+		} catch (RemoteException e) {
+		}
 	}
 
 }
