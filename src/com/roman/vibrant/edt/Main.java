@@ -435,7 +435,7 @@ public class Main extends PreferenceActivity {
 		if (Settings.System.getString(getContentResolver(),
 				"battery_text_append") == null) {
 			Settings.System.putString(getContentResolver(),
-					"battery_text_append", "%");
+					"battery_text_append", "% ");
 		}
 
 		battery_text_append.setSummary("\""
