@@ -46,17 +46,10 @@
 	</PreferenceScreen>
 	<PreferenceCategory
 		android:title="Statusbar Tweaks"></PreferenceCategory>
-	<Preference
-	android:title="Battery Options" android:key="battery_options_pref">
-	</Preference>
-	<ListPreference
-		android:key="clock_am_pm"
-		android:entries="@array/am_pm_entries"
-		android:entryValues="@array/am_pm_values"
-		android:title="Clock Options"></ListPreference>
-	<Preference
-		android:key="clock_color_pref"
-		android:title="Choose Clock Color"></Preference>
+	<Preference android:title="Battery Options" android:key="battery_options_pref">
+	</Preference><PreferenceScreen android:title="Clock Options"><ListPreference android:key="clock_am_pm" android:entries="@array/am_pm_entries" android:entryValues="@array/am_pm_values" android:title="Clock Options"></ListPreference><Preference android:key="clock_color_pref" android:title="Choose Clock Color"></Preference></PreferenceScreen>
+	
+	
 	<PreferenceScreen
 		android:title="Signal Options">
 		<CheckBoxPreference
@@ -90,4 +83,5 @@
 		android:title="About"
 		android:key="about_pref"
 		android:summary="Thread &amp; Twitter links!"></Preference>
+	
 </PreferenceScreen>
