@@ -21,17 +21,23 @@
 		android:key="battery_text_append"></EditTextPreference>
 	<PreferenceCategory
 		android:title="Color Settings"></PreferenceCategory>
+	
 	<CheckBoxPreference
 		android:title="Automatically Color"
 		android:key="battery_automatically_color_pref"></CheckBoxPreference>
 	<Preference
-		android:key="battery_color_pref" android:title="Static Battery Color"></Preference>
-	
-		
-		
-		<Preference android:key="battery_color_auto_charging" android:title="[Auto] Charging Color"></Preference>
-		<Preference android:title="[Auto] Regular Color" android:key="battery_color_auto_regular"></Preference>
-		<Preference android:key="battery_color_auto_medium" android:summary="When battery is &lt; 40%" android:title="[Auto] Medium Level Color"></Preference>
+		android:key="battery_color_pref"
+		android:title="Static Battery Color"></Preference>
+	<Preference
+		android:key="battery_color_auto_charging"
+		android:title="[Auto] Charging Color"></Preference>
+	<Preference
+		android:title="[Auto] Regular Color"
+		android:key="battery_color_auto_regular"></Preference>
+	<Preference
+		android:key="battery_color_auto_medium"
+		android:summary="When battery is &lt; 40%"
+		android:title="[Auto] Medium Level Color"></Preference>
 	<Preference
 		android:key="battery_color_auto_low"
 		android:summary="When battery is &lt; 15%"

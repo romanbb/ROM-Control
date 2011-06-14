@@ -4,4 +4,6 @@
     <string name="app_name">EDT Tweaks</string>
     <string name="ambilwarna_cancel">Cancel</string>
     <string name="ambilwarna_ok">OK</string>
+    <string name="automatic_battery_enabled">Color will changes based on current level</string>
+    <string name="automatic_battery_disabled">Battery text has a static color</string>
 </resources>

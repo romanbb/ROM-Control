@@ -27,7 +27,6 @@ public class BatteryActivity extends PreferenceActivity implements
 	private static final int COLOR_AUTO_LOW = 5;
 
 	private int batteryColorPickerFlag;
-	private Preference lastClickedPref;
 
 	AmbilWarnaDialog batteryColorPickerDialog = null;
 
@@ -67,15 +66,21 @@ public class BatteryActivity extends PreferenceActivity implements
 					"battery_text_color") == 1) {
 				((CheckBoxPreference) battery_automatically_color_pref)
 						.setChecked(true);
+				battery_automatically_color_pref
+						.setSummary(R.string.automatic_battery_enabled);
 			} else {
 				((CheckBoxPreference) battery_automatically_color_pref)
 						.setChecked(false);
+				battery_automatically_color_pref
+						.setSummary(R.string.automatic_battery_disabled);
 			}
 		} catch (SettingNotFoundException e) {
 			((CheckBoxPreference) battery_automatically_color_pref)
 					.setChecked(true);
 			Settings.System.putInt(getContentResolver(), "battery_text_color",
 					1);
+			battery_automatically_color_pref
+					.setSummary(R.string.automatic_battery_enabled);
 		}
 
 		battery_automatically_color_pref
@@ -88,9 +93,13 @@ public class BatteryActivity extends PreferenceActivity implements
 						if (checked) {
 							Settings.System.putInt(getContentResolver(),
 									"battery_text_color", 1);
+							preference
+									.setSummary(R.string.automatic_battery_enabled);
 						} else {
 							Settings.System.putInt(getContentResolver(),
 									"battery_text_color", 0);
+							preference
+									.setSummary(R.string.automatic_battery_disabled);
 						}
 						sendTimeIntent();
 						return true;
@@ -214,13 +223,14 @@ public class BatteryActivity extends PreferenceActivity implements
 					}
 
 				});
-
+		refreshOptions();
 	}
 
 	public void sendTimeIntent() {
 		Intent timeIntent = new Intent();
 		timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
 		sendBroadcast(timeIntent);
+		refreshOptions();
 	}
 
 	public boolean onPreferenceClick(Preference preference) {
@@ -229,42 +239,37 @@ public class BatteryActivity extends PreferenceActivity implements
 		if (key.equals("battery_color_auto_charging")) {
 			batteryColorPickerFlag = COLOR_AUTO_CHARGING;
 
-			batteryColorPickerDialog = new AmbilWarnaDialog(
-					this, Settings.System.getInt(
-							getContentResolver(),
+			batteryColorPickerDialog = new AmbilWarnaDialog(this,
+					Settings.System.getInt(getContentResolver(),
 							"battery_color_auto_charging", 0xFFFFFFFF), this);
 
 			batteryColorPickerDialog.show();
 
 		} else if (key.equals("battery_color_auto_regular")) {
 			batteryColorPickerFlag = COLOR_AUTO_REGULAR;
-			batteryColorPickerDialog = new AmbilWarnaDialog(
-					this, Settings.System.getInt(
-							getContentResolver(),
+			batteryColorPickerDialog = new AmbilWarnaDialog(this,
+					Settings.System.getInt(getContentResolver(),
 							"battery_color_auto_regular", 0xFFFFFFFF), this);
 			batteryColorPickerDialog.show();
 
 		} else if (key.equals("battery_color_auto_medium")) {
 			batteryColorPickerFlag = COLOR_AUTO_MEDIUM;
-			batteryColorPickerDialog = new AmbilWarnaDialog(
-					this, Settings.System.getInt(
-							getContentResolver(),
+			batteryColorPickerDialog = new AmbilWarnaDialog(this,
+					Settings.System.getInt(getContentResolver(),
 							"battery_color_auto_medium", 0xFFFFFFFF), this);
 			batteryColorPickerDialog.show();
 
 		} else if (key.equals("battery_color_auto_low")) {
 			batteryColorPickerFlag = COLOR_AUTO_LOW;
-			batteryColorPickerDialog = new AmbilWarnaDialog(
-					this, Settings.System.getInt(
-							getContentResolver(),
+			batteryColorPickerDialog = new AmbilWarnaDialog(this,
+					Settings.System.getInt(getContentResolver(),
 							"battery_color_auto_low", 0xFFFFFFFF), this);
 			batteryColorPickerDialog.show();
 
 		} else if (key.equals("battery_color_pref")) {
 			batteryColorPickerFlag = COLOR_BATTERY;
-			batteryColorPickerDialog = new AmbilWarnaDialog(
-					this, Settings.System.getInt(
-							getContentResolver(),
+			batteryColorPickerDialog = new AmbilWarnaDialog(this,
+					Settings.System.getInt(getContentResolver(),
 							"battery_color", 0xFFFFFFFF), this);
 			batteryColorPickerDialog.show();
 		}
@@ -313,6 +318,23 @@ public class BatteryActivity extends PreferenceActivity implements
 
 	public void onCancel(AmbilWarnaDialog dialog) {
 		// cancel was selected by the user
+	}
+
+	public void refreshOptions() {
+		if (((CheckBoxPreference) findPreference("battery_automatically_color_pref"))
+				.isChecked()) {
+			findPreference("battery_color_pref").setEnabled(false);
+			findPreference("battery_color_auto_charging").setEnabled(true);
+			findPreference("battery_color_auto_regular").setEnabled(true);
+			findPreference("battery_color_auto_medium").setEnabled(true);
+			findPreference("battery_color_auto_low").setEnabled(true);
+		} else {
+			findPreference("battery_color_pref").setEnabled(true);
+			findPreference("battery_color_auto_charging").setEnabled(false);
+			findPreference("battery_color_auto_regular").setEnabled(false);
+			findPreference("battery_color_auto_medium").setEnabled(false);
+			findPreference("battery_color_auto_low").setEnabled(false);
+		}
 	}
 
 }
