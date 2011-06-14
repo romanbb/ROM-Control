@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import yuku.ambilwarna.AmbilWarnaDialog;
+import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -21,7 +23,6 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.RemoteException;
 import android.preference.CheckBoxPreference;
 import android.preference.EditTextPreference;
 import android.preference.ListPreference;
@@ -43,6 +44,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.roman.vibrant.edt.ColorPickerDialog.OnColorChangedListener;
+
 public class Main extends PreferenceActivity {
 	String pref;
 	public static final int SELECT_PHOTO = 1;
@@ -63,76 +66,36 @@ public class Main extends PreferenceActivity {
 		builder = new AlertDialog.Builder(this);
 
 		/*
-		 * hide clock
+		 * ampm options
 		 */
-		Preference hide_clock = (Preference) findPreference("hide_clock");
+		Preference clock_am_pm = (Preference) findPreference("clock_am_pm");
 
 		try {
-			if (Settings.System.getInt(getContentResolver(), "hide_clock") == 1) {
-				((CheckBoxPreference) hide_clock).setChecked(true);
-			} else {
-				((CheckBoxPreference) hide_clock).setChecked(false);
-			}
+			Settings.System.getInt(getContentResolver(), "clock_am_pm_style");
+
 		} catch (SettingNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			((CheckBoxPreference) hide_clock).setChecked(false);
-			Settings.System.putInt(getContentResolver(), "hide_clock", 0);
+			Settings.System
+					.putInt(getContentResolver(), "clock_am_pm_style", 0);
 		}
 
-		hide_clock
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+		clock_am_pm
+				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
 
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
+					public boolean onPreferenceChange(Preference preference,
+							Object newValue) {
+						Integer selection = Integer.parseInt(newValue
+								.toString());
 
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"hide_clock", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"hide_clock", 0);
-						}
+						Settings.System.putInt(getContentResolver(),
+								"clock_am_pm_style", selection);
+
+						Intent timeIntent = new Intent();
+						timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
+						sendBroadcast(timeIntent);
 						return true;
 					}
-
 				});
 
-		/*
-		 * hide am pm
-		 */
-		Preference hide_am_pm = (Preference) findPreference("hide_am_pm");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(), "hide_am_pm") == 1) {
-				((CheckBoxPreference) hide_am_pm).setChecked(true);
-			} else {
-				((CheckBoxPreference) hide_am_pm).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) hide_am_pm).setChecked(true);
-			Settings.System.putInt(getContentResolver(), "hide_am_pm", 1);
-		}
-
-		hide_am_pm
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"hide_am_pm", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"hide_am_pm", 0);
-						}
-						return true;
-					}
-
-				});
 		/*
 		 * signal bar visibility
 		 */
@@ -246,78 +209,6 @@ public class Main extends PreferenceActivity {
 
 				});
 
-		Preference show_battery_icon = (Preference) findPreference("show_battery_icon");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					"show_battery_icon") == 1) {
-				((CheckBoxPreference) show_battery_icon).setChecked(true);
-			} else {
-				((CheckBoxPreference) show_battery_icon).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) show_battery_icon).setChecked(true);
-			Settings.System
-					.putInt(getContentResolver(), "show_battery_icon", 1);
-		}
-
-		show_battery_icon
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"show_battery_icon", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"show_battery_icon", 0);
-						}
-						return true;
-					}
-
-				});
-
-		/*
-		 * battery text
-		 */
-
-		Preference show_battery_text = (Preference) findPreference("show_battery_text");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					"show_battery_text") == 1) {
-				((CheckBoxPreference) show_battery_text).setChecked(true);
-			} else {
-				((CheckBoxPreference) show_battery_text).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) show_battery_text).setChecked(false);
-			Settings.System
-					.putInt(getContentResolver(), "show_battery_text", 0);
-		}
-
-		show_battery_text
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"show_battery_text", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"show_battery_text", 0);
-						}
-						return true;
-					}
-
-				});
-
 		/*
 		 * preference for adb notification
 		 */
@@ -384,75 +275,16 @@ public class Main extends PreferenceActivity {
 						preference.setSummary(lockScreenNames[selection]);
 						Settings.System.putInt(getContentResolver(),
 								"lockscreen_type_key", selection);
-						
-						if(selection == 9) {
-							Settings.System.putInt(getContentResolver(), "lockscreen_enable", 0);
+
+						if (selection == 9) {
+							Settings.System.putInt(getContentResolver(),
+									"lockscreen_enable", 0);
 						} else {
-							Settings.System.putInt(getContentResolver(), "lockscreen_enable", 1);
+							Settings.System.putInt(getContentResolver(),
+									"lockscreen_enable", 1);
 						}
 
 						refreshLockscreenPreferences();
-						return true;
-					}
-				});
-
-		/*
-		 * prepend battery text
-		 */
-
-		EditTextPreference battery_text_prepend = (EditTextPreference) findPreference("battery_text_prepend");
-
-		if (Settings.System.getString(getContentResolver(),
-				"battery_text_prepend") == null) {
-			Settings.System.putString(getContentResolver(),
-					"battery_text_prepend", "");
-		}
-
-		battery_text_prepend.setSummary("\""
-				+ Settings.System.getString(getContentResolver(),
-						"battery_text_prepend") + "\"");
-
-		battery_text_prepend.setText(Settings.System.getString(
-				getContentResolver(), "battery_text_prepend"));
-
-		battery_text_prepend
-				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-					public boolean onPreferenceChange(Preference preference,
-							Object newValue) {
-						Settings.System.putString(getContentResolver(),
-								"battery_text_prepend", (String) newValue);
-						preference.setSummary("\"" + newValue + "\"");
-						return true;
-					}
-				});
-
-		/*
-		 * append battery text test
-		 */
-		EditTextPreference battery_text_append = (EditTextPreference) findPreference("battery_text_append");
-
-		if (Settings.System.getString(getContentResolver(),
-				"battery_text_append") == null) {
-			Settings.System.putString(getContentResolver(),
-					"battery_text_append", "% ");
-		}
-
-		battery_text_append.setSummary("\""
-				+ Settings.System.getString(getContentResolver(),
-						"battery_text_append") + "\"");
-
-		battery_text_append.setText(Settings.System.getString(
-				getContentResolver(), "battery_text_append"));
-
-		battery_text_append
-				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-					public boolean onPreferenceChange(Preference preference,
-							Object newValue) {
-						Settings.System.putString(getContentResolver(),
-								"battery_text_append", (String) newValue);
-						preference.setSummary("\"" + newValue + "\"");
 						return true;
 					}
 				});
@@ -858,6 +690,16 @@ public class Main extends PreferenceActivity {
 
 				});
 
+		findPreference("battery_options_pref").setOnPreferenceClickListener(
+				new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						Intent i = new Intent(context, BatteryActivity.class);
+						startActivity(i);
+						return true;
+					}
+				});
+
 		/*
 		 * restore defualt lockscreen wallpaper (sgs2)
 		 */
@@ -871,15 +713,56 @@ public class Main extends PreferenceActivity {
 						return true;
 					}
 				});
-		
-		findPreference("about_pref").setOnPreferenceClickListener(new OnPreferenceClickListener() {
-			
-			public boolean onPreferenceClick(Preference preference) {
-				Intent i = new Intent(context, AboutActivity.class);
-				startActivity(i);
-				return true;
-			}
-		});
+
+		findPreference("about_pref").setOnPreferenceClickListener(
+				new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						Intent i = new Intent(context, AboutActivity.class);
+						startActivity(i);
+						return true;
+					}
+				});
+
+		/*
+		 * color picker
+		 */
+		// initialColor is the initially-selected color to be shown in the
+		// rectangle on the left of the arrow.
+		// for example, 0xff000000 is black, 0xff0000ff is blue. Please be aware
+		// of the initial 0xff which is the alpha.
+
+		final AmbilWarnaDialog colorPickerDialog = new AmbilWarnaDialog(this,
+				0xffffffff, new OnAmbilWarnaListener() {
+					public void onOk(AmbilWarnaDialog dialog, int color) {
+						Settings.System.putInt(context.getContentResolver(),
+								"clock_color", color);
+
+						// Intent timeIntent = new Intent();
+						// timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
+						// sendBroadcast(timeIntent);
+						sendTimeIntent();
+
+						String stringColor = color + "";
+						findPreference("clock_color_pref").setSummary(
+								stringColor);
+					}
+
+					public void onCancel(AmbilWarnaDialog dialog) {
+						// cancel was selected by the user
+					}
+				});
+
+		((Preference) findPreference("clock_color_pref"))
+				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						// Intent i = new Intent(context,
+						// ColorPickerDialog.class);
+						colorPickerDialog.show();
+						return true;
+					}
+				});
 
 		// run at the end
 		refreshLockscreenPreferences();
@@ -1053,16 +936,17 @@ public class Main extends PreferenceActivity {
 			cursor.moveToFirst();
 			return cursor.getString(column_index);
 		} else {
-			Toast.makeText(getApplicationContext(), "Please don't use a file manager to select an image!", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getApplicationContext(),
+					"Please don't use a file manager to select an image!",
+					Toast.LENGTH_SHORT).show();
 			return null;
 		}
-			
-			
+
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		//MenuInflater inflater = getMenuInflater();
-		//inflater.inflate(R.menu.pref_menu, menu);
+		// MenuInflater inflater = getMenuInflater();
+		// inflater.inflate(R.menu.pref_menu, menu);
 		return true;
 	}
 
@@ -1119,6 +1003,35 @@ public class Main extends PreferenceActivity {
 		if (status.equals(Environment.MEDIA_MOUNTED))
 			return true;
 		return false;
+	}
+
+	public class ClockChangeListener implements OnColorChangedListener {
+
+		private Context mContext;
+		private int color;
+
+		public ClockChangeListener(Context c) {
+			mContext = c;
+		}
+
+		public void colorChanged(int color) {
+
+		}
+
+		public void setColor(int c) {
+			color = c;
+		}
+
+		public int getColor() {
+			return color;
+		}
+
+	}
+
+	public void sendTimeIntent() {
+		Intent timeIntent = new Intent();
+		timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
+		sendBroadcast(timeIntent);
 	}
 
 }

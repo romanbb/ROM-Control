@@ -18,7 +18,7 @@
 		<Preference
 			android:summary="\@romanbb"
 			android:title="Roman / birgertime"
-			android:key="about_roman_twitter"></Preference>
+			android:key="about_comrade_twitter"></Preference>
 		<Preference
 			android:summary="\@whitehawkx"
 			android:title="Whitehawkx"

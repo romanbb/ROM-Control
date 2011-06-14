@@ -47,7 +47,7 @@ public class AboutActivity extends PreferenceActivity {
 					}
 				});
 		
-		findPreference("about_roman_twitter").setOnPreferenceClickListener(
+		findPreference("about_comrade_twitter").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
 						Intent browserIntent = new Intent(
