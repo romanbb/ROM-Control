@@ -1,4 +1,4 @@
-package com.roman.vibrant.edt;
+package com.roman.edt.tweaks;
 
 /*
  * Copyright (C) 2007 The Android Open Source Project

@@ -1,4 +1,4 @@
-package com.roman.vibrant.edt;
+package com.roman.edt.tweaks;
 
 import android.util.Log;
 

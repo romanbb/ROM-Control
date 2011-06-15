@@ -1,4 +1,4 @@
-package com.roman.vibrant.edt;
+package com.roman.edt.tweaks;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -12,29 +12,22 @@ public class AboutActivity extends PreferenceActivity {
 	public void onCreate(Bundle ofLove) {
 		super.onCreate(ofLove);
 		addPreferencesFromResource(R.xml.about_prefs);
-		
-		findPreference("about_edtsite").setOnPreferenceClickListener(
-				new OnPreferenceClickListener() {
-					public boolean onPreferenceClick(Preference preference) {
-						Intent browserIntent = new Intent(
-								"android.intent.action.VIEW",
-								Uri.parse("http://edtdev.com/forum/forum/40-project-v/"));
-						startActivity(browserIntent);
-						return true;
-					}
-				});
-		
-		findPreference("about_xda").setOnPreferenceClickListener(
-				new OnPreferenceClickListener() {
-					public boolean onPreferenceClick(Preference preference) {
-						Intent browserIntent = new Intent(
-								"android.intent.action.VIEW",
-								Uri.parse("http://forum.xda-developers.com/showthread.php?t=1105037"));
-						startActivity(browserIntent);
-						return true;
-					}
-				});
-		
+
+		/*
+		 * findPreference("about_edtsite").setOnPreferenceClickListener( new
+		 * OnPreferenceClickListener() { public boolean
+		 * onPreferenceClick(Preference preference) { Intent browserIntent = new
+		 * Intent( "android.intent.action.VIEW",
+		 * Uri.parse("http://edtdev.com/forum/forum/40-project-v/"));
+		 * startActivity(browserIntent); return true; } });
+		 * 
+		 * findPreference("about_xda").setOnPreferenceClickListener( new
+		 * OnPreferenceClickListener() { public boolean
+		 * onPreferenceClick(Preference preference) { Intent browserIntent = new
+		 * Intent( "android.intent.action.VIEW",
+		 * Uri.parse("http://forum.xda-developers.com/showthread.php?t=1105037"
+		 * )); startActivity(browserIntent); return true; } });
+		 */
 
 		findPreference("about_jelly_twitter").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
@@ -46,7 +39,7 @@ public class AboutActivity extends PreferenceActivity {
 						return true;
 					}
 				});
-		
+
 		findPreference("about_comrade_twitter").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
@@ -57,7 +50,7 @@ public class AboutActivity extends PreferenceActivity {
 						return true;
 					}
 				});
-		
+
 		findPreference("about_jonny_twitter").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
@@ -68,18 +61,18 @@ public class AboutActivity extends PreferenceActivity {
 						return true;
 					}
 				});
-		
+
 		findPreference("about_dan_twitter").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {
 						Intent browserIntent = new Intent(
-								"android.intent.action.VIEW", Uri
-										.parse("http://twitter.com/dan_brutal_edt"));
+								"android.intent.action.VIEW",
+								Uri.parse("http://twitter.com/dan_brutal_edt"));
 						startActivity(browserIntent);
 						return true;
 					}
 				});
-		
+
 		findPreference("about_beast_twitter").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 					public boolean onPreferenceClick(Preference preference) {

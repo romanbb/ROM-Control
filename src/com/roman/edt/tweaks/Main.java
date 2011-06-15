@@ -1,4 +1,4 @@
-package com.roman.vibrant.edt;
+package com.roman.edt.tweaks;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,7 +44,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.roman.vibrant.edt.ColorPickerDialog.OnColorChangedListener;
+import com.roman.edt.tweaks.ColorPickerDialog.OnColorChangedListener;
 
 public class Main extends PreferenceActivity {
 	String pref;

@@ -2,7 +2,8 @@
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceScreen
-		android:title="Lock Screen Options">
+		android:title="Lock Screen Options"
+		android:enabled="false" >
 		<ListPreference
 			android:entryValues="@array/lock_screen_values"
 			android:entries="@array/lock_screen_entries"
@@ -58,17 +59,16 @@
 			android:enabled="true"></CheckBoxPreference>
 		<CheckBoxPreference
 			android:title="Show Signal Strength"
-			android:persistent="true"
-			android:key="show_signal_numbers"></CheckBoxPreference>
+			android:key="show_signal_numbers" android:enabled="false"></CheckBoxPreference>
 		<CheckBoxPreference
 			android:key="show_signal_dbm"
-			android:title="Show dBm Text"></CheckBoxPreference>
+			android:title="Show dBm Text" android:enabled="false"></CheckBoxPreference>
 	</PreferenceScreen>
 	<PreferenceCategory
 		android:title="Other"></PreferenceCategory>
 	<PreferenceScreen
 		android:title="Misc"
-		android:summary="SD Cache, Debugging visibility">
+		android:summary="SD Cache, Debugging visibility" android:enabled="false">
 		<CheckBoxPreference
 			android:key="hide_adb"
 			android:title="Hide ADB Notification"

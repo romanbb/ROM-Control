@@ -12,7 +12,7 @@ import android.graphics.Shader.TileMode;
 import android.util.AttributeSet;
 import android.view.View;
 
-import com.roman.vibrant.edt.R;
+import com.roman.edt.tweaks.R;
 
 public class AmbilWarnaKotak extends View {
 	

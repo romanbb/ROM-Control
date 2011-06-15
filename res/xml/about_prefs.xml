@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceCategory
-		android:title="Project V">
-		<Preference
-			android:title="Project V @ EDT Dev"
-			android:key="about_edtsite"></Preference>
-		<Preference
-			android:key="about_xda" android:title="Project V @ XDA"></Preference>
-        
-    </PreferenceCategory>
+	<!-- <PreferenceCategory android:title="Project V"> <Preference android:title="Project 
+		V @ EDT Dev" android:key="about_edtsite"></Preference> <Preference android:key="about_xda" 
+		android:title="Project V @ XDA"></Preference> </PreferenceCategory> -->
 	<PreferenceCategory
 		android:title="Einherjar Development Team">
 		<Preference
 			android:summary="\@sxe_web"
-			android:key="about_jelly_twitter" android:title="Heathen / Jellete"></Preference>
+			android:key="about_jelly_twitter"
+			android:title="Heathen / Jellete"></Preference>
 		<Preference
 			android:summary="\@romanbb"
 			android:title="Roman / birgertime"

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.roman.vibrant.edt;
+package com.roman.edt.tweaks;
 
 import android.content.Context;
 import android.os.Handler;

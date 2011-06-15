@@ -11,7 +11,7 @@ import android.view.View;
 import android.widget.AbsoluteLayout;
 import android.widget.ImageView;
 
-import com.roman.vibrant.edt.R;
+import com.roman.edt.tweaks.R;
 
 
 public class AmbilWarnaDialog {
