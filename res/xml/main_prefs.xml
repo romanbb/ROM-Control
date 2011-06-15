@@ -2,8 +2,7 @@
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceScreen
-		android:title="Lock Screen Options"
-		android:enabled="false" >
+		android:title="Lock Screen Options" android:key="lockscreen_prefscreen">
 		<ListPreference
 			android:entryValues="@array/lock_screen_values"
 			android:entries="@array/lock_screen_entries"
@@ -15,28 +14,28 @@
 		<Preference
 			android:key="lock_screen_wallpaper_pref"
 			android:title="Set Lockscreen Wallpaper"
-			android:summary="Only works with the SGSII lockscreen. \nPress menu to restore the original."></Preference>
+			android:summary="Only works with the SGSII lockscreen. \nPress menu to restore the original." android:enabled="false"></Preference>
 		<Preference
 			android:key="lockscreen_sgs2_restore_default"
-			android:title="Restore Default Wallpaper"></Preference>
+			android:title="Restore Default Wallpaper" android:enabled="false"></Preference>
 		<PreferenceCategory
-			android:title="Timeout Settings">
+			android:title="Timeout Settings" android:key="timeout_settings_cat">
 			<ListPreference
 				android:entries="@array/lockscreen_delayed_behavior_entries"
 				android:entryValues="@array/lockscreen_delayed_behavior_values"
 				android:dialogTitle="When to delay the lockscreen"
 				android:key="lockscreen_delay_behavior"
-				android:title="Delay Behavior"></ListPreference>
+				android:title="Delay Behavior" android:enabled="false"></ListPreference>
 			<Preference
 				android:key="lockscreen_delay_timeout_pref"
-				android:title="Lockscreen Delay"></Preference>
+				android:title="Lockscreen Delay" android:enabled="false"></Preference>
 			<Preference
 				android:key="lockscreen_timeout_pref"
-				android:title="Lockscreen Timeout"></Preference>
+				android:title="Lockscreen Timeout" android:enabled="false"></Preference>
 
 		</PreferenceCategory>
 		<PreferenceCategory
-			android:title="Music Controls">
+			android:title="Music Controls" android:key="music_controls_cat">
 			<CheckBoxPreference
 				android:key="lockscreen_music_controls"
 				android:title="Music Controls "></CheckBoxPreference>
@@ -44,31 +43,22 @@
 				android:key="lockscreen_always_music_controls"
 				android:title="Always Music Controls"></CheckBoxPreference>
 		</PreferenceCategory>
-	</PreferenceScreen>
-	<PreferenceCategory
-		android:title="Statusbar Tweaks"></PreferenceCategory>
-	<Preference android:title="Battery Options" android:key="battery_options_pref">
-	</Preference><PreferenceScreen android:title="Clock Options"><ListPreference android:key="clock_am_pm" android:entries="@array/am_pm_entries" android:entryValues="@array/am_pm_values" android:title="Clock Options"></ListPreference><Preference android:key="clock_color_pref" android:title="Choose Clock Color"></Preference></PreferenceScreen>
+	</PreferenceScreen><PreferenceCategory android:title="Statusbar Tweaks" android:key="statusbar_cat"><Preference android:title="Battery Options" android:key="battery_options_pref">
+	</Preference><PreferenceScreen android:title="Clock Options"><ListPreference android:key="clock_am_pm" android:entries="@array/am_pm_entries" android:entryValues="@array/am_pm_values" android:title="Display Style"></ListPreference><Preference android:key="clock_color_pref" android:title="Choose Clock Color"></Preference></PreferenceScreen><PreferenceScreen android:title="Signal Options">
+		<CheckBoxPreference android:key="show_signal_bars" android:title="Show Signal Bars" android:enabled="true"></CheckBoxPreference>
+		<CheckBoxPreference android:title="Show Signal Strength" android:key="show_signal_numbers" android:enabled="false"></CheckBoxPreference>
+		<CheckBoxPreference android:key="show_signal_dbm" android:title="Show dBm Text" android:enabled="false"></CheckBoxPreference>
+	</PreferenceScreen></PreferenceCategory>
 	
 	
-	<PreferenceScreen
-		android:title="Signal Options">
-		<CheckBoxPreference
-			android:key="show_signal_bars"
-			android:title="Show Signal Bars"
-			android:enabled="true"></CheckBoxPreference>
-		<CheckBoxPreference
-			android:title="Show Signal Strength"
-			android:key="show_signal_numbers" android:enabled="false"></CheckBoxPreference>
-		<CheckBoxPreference
-			android:key="show_signal_dbm"
-			android:title="Show dBm Text" android:enabled="false"></CheckBoxPreference>
-	</PreferenceScreen>
+	
+	
+	
 	<PreferenceCategory
-		android:title="Other"></PreferenceCategory>
+		android:title="Other" android:key="other_cat"></PreferenceCategory>
 	<PreferenceScreen
 		android:title="Misc"
-		android:summary="SD Cache, Debugging visibility" android:enabled="false">
+		android:summary="SD Cache, Debugging visibility" android:enabled="false" android:key="misc_prefscreen">
 		<CheckBoxPreference
 			android:key="hide_adb"
 			android:title="Hide ADB Notification"

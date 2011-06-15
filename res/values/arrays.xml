@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array
-		name="lock_screen_entries">
-		<item>4-Tab unlock</item>
-		<item>Rotary unlock</item>
-		<item>Puzzle unlock</item>
-		<item>Android unlock</item>
-		<item>Glass unlock</item>
-		<item>Epic unlock</item>
-		<item>Star Wars unlock</item>
-		<item>Miui unlock</item>
-		<item>SGSII unlock</item>
-		<item>Disable lockscreen</item>
-	</string-array>
+	    <string-array name="lock_screen_entries">
+        <item>4-Tab unlock</item>
+        <item>Epic unlock</item>
+        <item>Android unlock</item>
+        <item>Glass unlock</item>
+        <item>Rotary unlock</item>
+        <item>Puzzle unlock</item>
+        <item>Star Wars unlock</item>
+        <item>Miui unlock</item>
+        <item>SGSII unlock</item>
+        <item>Disable lockscreen</item>
+    </string-array>
 	<string-array
 		name="lock_screen_values">
 		<item>0</item>
