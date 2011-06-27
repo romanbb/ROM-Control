@@ -31,8 +31,8 @@
 
 		<activity
 			android:label="EDT Tweaks - About"
-			android:name=".AboutActivity"></activity>
-		<activity android:name="BatteryActivity" android:label="EDT Tweaks - Battery Options"></activity>
+			android:name=".Activities.AboutActivity"></activity>
+		<activity android:name=".Activities.BatteryActivity" android:label="EDT Tweaks - Battery Options"></activity>
 
 	</application>
 </manifest>

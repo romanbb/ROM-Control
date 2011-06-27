@@ -1,7 +1,5 @@
 package com.roman.edt.tweaks;
 
-import android.util.Log;
-
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -9,6 +7,8 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import android.util.Log;
 
 /**
  * Interface to the Superuser shell on Android devices with some helper

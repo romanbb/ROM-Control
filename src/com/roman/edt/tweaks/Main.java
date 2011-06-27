@@ -44,6 +44,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.roman.edt.tweaks.Activities.AboutActivity;
+import com.roman.edt.tweaks.Activities.BatteryActivity;
 import com.roman.edt.tweaks.ColorPickerDialog.OnColorChangedListener;
 
 public class Main extends PreferenceActivity {
@@ -209,40 +211,6 @@ public class Main extends PreferenceActivity {
 
 				});
 
-		/*
-		 * preference for adb notification
-		 */
-		Preference hide_adb = (Preference) findPreference("hide_adb");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					"hide_usb_debugging_notification") == 1) {
-				((CheckBoxPreference) hide_adb).setChecked(true);
-			} else {
-				((CheckBoxPreference) hide_adb).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) hide_adb).setChecked(true);
-			Settings.System.putInt(getContentResolver(),
-					"hide_usb_debugging_notification", 1);
-		}
-
-		hide_adb.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-			public boolean onPreferenceClick(Preference preference) {
-				boolean checked = ((CheckBoxPreference) preference).isChecked();
-
-				if (checked) {
-					Settings.System.putInt(getContentResolver(),
-							"hide_usb_debugging_notification", 1);
-				} else {
-					Settings.System.putInt(getContentResolver(),
-							"hide_usb_debugging_notification", 0);
-				}
-				return true;
-			}
-
-		});
 
 		/*
 		 * preference stuff for lock screen selection
@@ -333,37 +301,6 @@ public class Main extends PreferenceActivity {
 
 				});
 
-		/*
-		 * lock screen wallpaper
-		 */
-
-		Preference lock_screen_wallpaper_pref = (Preference) findPreference("lock_screen_wallpaper_pref");
-
-		lock_screen_wallpaper_pref
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-
-						Intent intent = new Intent(Intent.ACTION_GET_CONTENT,
-								null);
-						intent.setType("image/*");
-						intent.putExtra("crop", "true");
-						intent.putExtra("aspectX", 3);
-						intent.putExtra("aspectY", 5);
-						intent.putExtra("outputX", 480);
-						intent.putExtra("outputY", 800);
-						intent.putExtra("scale", true);
-						intent.putExtra("return-data", false);
-						intent.putExtra(MediaStore.EXTRA_OUTPUT,
-								getLockscreenUri());
-						intent.putExtra("outputFormat",
-								Bitmap.CompressFormat.JPEG.toString());
-
-						startActivityForResult(intent, SELECT_PHOTO);
-						return true;
-
-					}
-				});
 
 		/*
 		 * custom lockscreen timeout
@@ -701,19 +638,8 @@ public class Main extends PreferenceActivity {
 				});
 
 		/*
-		 * restore defualt lockscreen wallpaper (sgs2)
+		 * about preference
 		 */
-		((Preference) findPreference("lockscreen_sgs2_restore_default"))
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						File f = new File("/mnt/sdcard/"
-								+ LOCKSCREEN_WALLPAPER_LOCATION);
-						f.delete();
-						return true;
-					}
-				});
-
 		findPreference("about_pref").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 
@@ -770,50 +696,40 @@ public class Main extends PreferenceActivity {
 
 	public void refreshLockscreenPreferences() {
 
-		Preference lock_screen_wallpaper_pref = (Preference) findPreference("lock_screen_wallpaper_pref");
+		//Preference lock_screen_wallpaper_pref = (Preference) findPreference("lock_screen_wallpaper_pref");
 
 		int key = Settings.System.getInt(getContentResolver(),
 				"lockscreen_type_key", 0);
 
-		if (key == 0 || key == 7) {
+		/*if (key == 0 || key == 7) {
 			findPreference("custom_app_pref").setEnabled(true);
 		} else {
 			findPreference("custom_app_pref").setEnabled(false);
-		}
+		}*/
 
 		// music options
-		if (key == 2 || key == 4 || key == 5 || key == 7 || key == 8
-				|| key == 9) {
-			findPreference("lockscreen_music_controls").setEnabled(false);
-			findPreference("lockscreen_always_music_controls")
-					.setEnabled(false);
-		} else {
+		if (key == 0 || key == 1 || key == 2 || key == 3) {
 			findPreference("lockscreen_music_controls").setEnabled(true);
-			findPreference("lockscreen_always_music_controls").setEnabled(true);
+			findPreference("lockscreen_always_music_controls")
+					.setEnabled(true);
+		} else {
+			findPreference("lockscreen_music_controls").setEnabled(false);
+			findPreference("lockscreen_always_music_controls").setEnabled(false);
 		}
 
 		// no lockscreen option
-		if (key == 9) {
-			findPreference("lockscreen_timeout_pref").setEnabled(false);
-			findPreference("lockscreen_delay_behavior").setEnabled(false);
-			findPreference("lockscreen_delay_timeout_pref").setEnabled(false);
-			findPreference("lockscreen_selection_pref").setSummary(
-					"Lockscreen disabled");
-
-		} else {
-			findPreference("lockscreen_timeout_pref").setEnabled(true);
-			findPreference("lockscreen_delay_behavior").setEnabled(true);
-			findPreference("lockscreen_delay_timeout_pref").setEnabled(true);
-		}
-
-		// enable SGS II lockscreen option
-		if (key == 8) {
-			lock_screen_wallpaper_pref.setEnabled(true);
-			findPreference("lockscreen_sgs2_restore_default").setEnabled(true);
-		} else {
-			lock_screen_wallpaper_pref.setEnabled(false);
-			findPreference("lockscreen_sgs2_restore_default").setEnabled(false);
-		}
+		// if (key == 9) {
+		// findPreference("lockscreen_timeout_pref").setEnabled(false);
+		// findPreference("lockscreen_delay_behavior").setEnabled(false);
+		// findPreference("lockscreen_delay_timeout_pref").setEnabled(false);
+		// findPreference("lockscreen_selection_pref").setSummary(
+		// "Lockscreen disabled");
+		//
+		// } else {
+		// findPreference("lockscreen_timeout_pref").setEnabled(true);
+		// findPreference("lockscreen_delay_behavior").setEnabled(true);
+		// findPreference("lockscreen_delay_timeout_pref").setEnabled(true);
+		// }
 
 		// refresh delay behavior summary
 		String[] entries = context.getResources().getStringArray(

@@ -1,32 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	    <string-array name="lock_screen_entries">
-        <item>4-Tab unlock</item>
-        <item>Epic unlock</item>
-        <item>Android unlock</item>
-        <item>Glass unlock</item>
-        <item>Rotary unlock</item>
-        <item>Puzzle unlock</item>
-        <item>Star Wars unlock</item>
-        <item>Miui unlock</item>
-        <item>SGSII unlock</item>
-        <item>Disable lockscreen</item>
-    </string-array>
-	<string-array
-		name="lock_screen_values">
+	<string-array name="lock_screen_entries">
+		<item>AOSP</item>
+		<item>O2X</item>
+		<item>4-Tab</item>
+		<item>Rotary</item>
+		<item>Star Wars</item>
+	</string-array>
+	<string-array name="lock_screen_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
 		<item>4</item>
-		<item>5</item>
-		<item>6</item>
-		<item>7</item>
-		<item>8</item>
-		<item>9</item>
 	</string-array>
-	<string-array
-		name="read_ahead_entries">
+	<string-array name="read_ahead_entries">
 		<item>128</item>
 		<item>256</item>
 		<item>512</item>
@@ -34,58 +22,36 @@
 		<item>2048</item>
 		<item>4096</item>
 	</string-array>
-	<string-array
-		name="lockscreen_delayed_behavior_entries">
+	<string-array name="lockscreen_delayed_behavior_entries">
 		<item>Only on screen timeout</item>
 		<item>Only on power button</item>
 		<item>On power button or timeout</item>
 		<item>Never</item>
 	</string-array>
-	<string-array
-		name="lockscreen_delayed_behavior_values">
+	<string-array name="lockscreen_delayed_behavior_values">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
 		<item>4</item>
 	</string-array>
-	<string-array
-		name="entries_animations">
-		<item>Off</item>
-		<item>Fast</item>
-		<item>Normal</item>
-		<item>Slow</item>
-		<item>Very Slow</item>
-	</string-array>
-	<string-array
-		name="entryvalues_animations">
-		<item>0.0</item>
-		<item>0.5</item>
-		<item>1.0</item>
-		<item>1.5</item>
-		<item>2.0</item>
-	</string-array>
-	<string-array
-		name="am_pm_values">
+	<string-array name="am_pm_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>
 	</string-array>
-	<string-array
-		name="am_pm_entries">
+	<string-array name="am_pm_entries">
 		<item>Show AM/PM</item>
 		<item>Small AM/PM</item>
 		<item>Hide AM/PM</item>
 		<item>Hide Clock</item>
 	</string-array>
-	<string-array
-		name="battery_text_display_entries">
+	<string-array name="battery_text_display_entries">
 		<item>Regular</item>
 		<item>Hide</item>
 		<item>Small %</item>
 	</string-array>
-	<string-array
-		name="battery_text_display_values">
+	<string-array name="battery_text_display_values">
 		<item>1</item>
 		<item>2</item>
 		<item>3</item>

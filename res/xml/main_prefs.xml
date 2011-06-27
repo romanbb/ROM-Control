@@ -11,15 +11,8 @@
 		<Preference
 			android:key="custom_app_pref"
 			android:title="Choose Custom App"></Preference>
-		<Preference
-			android:key="lock_screen_wallpaper_pref"
-			android:title="Set Lockscreen Wallpaper"
-			android:summary="Only works with the SGSII lockscreen. \nPress menu to restore the original." android:enabled="false"></Preference>
-		<Preference
-			android:key="lockscreen_sgs2_restore_default"
-			android:title="Restore Default Wallpaper" android:enabled="false"></Preference>
 		<PreferenceCategory
-			android:title="Timeout Settings" android:key="timeout_settings_cat">
+			android:title="Timeout Settings" android:key="timeout_settings_cat" android:enabled="false">
 			<ListPreference
 				android:entries="@array/lockscreen_delayed_behavior_entries"
 				android:entryValues="@array/lockscreen_delayed_behavior_values"
@@ -58,11 +51,7 @@
 		android:title="Other" android:key="other_cat"></PreferenceCategory>
 	<PreferenceScreen
 		android:title="Misc"
-		android:summary="SD Cache, Debugging visibility" android:enabled="false" android:key="misc_prefscreen">
-		<CheckBoxPreference
-			android:key="hide_adb"
-			android:title="Hide ADB Notification"
-			android:summary="Debugging Notification in the status bar"></CheckBoxPreference>
+		android:summary="SD Cache, Debugging visibility" android:key="misc_prefscreen">
 		<ListPreference
 			android:key="read_ahead_pref"
 			android:title="SD Read-Ahead Cache"
