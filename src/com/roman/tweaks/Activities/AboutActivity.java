@@ -1,7 +1,7 @@
 package com.roman.tweaks.Activities;
 
-import com.roman.edt.tweaks.R;
-import com.roman.edt.tweaks.R.xml;
+import com.roman.tweaks.R;
+import com.roman.tweaks.R.xml;
 
 import android.content.Intent;
 import android.net.Uri;

@@ -1,10 +1,10 @@
 package yuku.ambilwarna;
 
-import com.roman.edt.tweaks.R;
-import com.roman.edt.tweaks.R.dimen;
-import com.roman.edt.tweaks.R.id;
-import com.roman.edt.tweaks.R.layout;
-import com.roman.edt.tweaks.R.string;
+import com.roman.tweaks.R;
+import com.roman.tweaks.R.dimen;
+import com.roman.tweaks.R.id;
+import com.roman.tweaks.R.layout;
+import com.roman.tweaks.R.string;
 
 import android.app.AlertDialog;
 import android.content.Context;

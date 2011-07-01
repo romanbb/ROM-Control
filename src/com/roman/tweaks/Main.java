@@ -11,6 +11,7 @@ import java.io.OutputStream;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -46,7 +47,6 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.roman.edt.tweaks.R;
 import com.roman.tweaks.Activities.AboutActivity;
 import com.roman.tweaks.Activities.BatteryActivity;
 import com.roman.tweaks.ColorPickerDialog.OnColorChangedListener;

@@ -16,8 +16,6 @@
 
 package com.roman.tweaks;
 
-import com.roman.edt.tweaks.R;
-
 import android.content.Context;
 import android.os.Handler;
 import android.text.InputFilter;

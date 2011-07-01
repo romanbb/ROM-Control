@@ -1,7 +1,7 @@
 package yuku.ambilwarna;
 
-import com.roman.edt.tweaks.R;
-import com.roman.edt.tweaks.R.dimen;
+import com.roman.tweaks.R;
+import com.roman.tweaks.R.dimen;
 
 import android.content.Context;
 import android.graphics.Canvas;

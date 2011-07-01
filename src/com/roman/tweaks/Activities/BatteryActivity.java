@@ -4,9 +4,10 @@ package com.roman.tweaks.Activities;
 import yuku.ambilwarna.AmbilWarnaDialog;
 import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
 
-import com.roman.edt.tweaks.R;
-import com.roman.edt.tweaks.R.string;
-import com.roman.edt.tweaks.R.xml;
+import com.roman.tweaks.R;
+import com.roman.tweaks.R.string;
+import com.roman.tweaks.R.xml;
+
 
 import android.content.Context;
 import android.content.Intent;
