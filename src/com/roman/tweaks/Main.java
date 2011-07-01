@@ -21,6 +21,7 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -648,6 +649,26 @@ public class Main extends PreferenceActivity {
 					public boolean onPreferenceClick(Preference preference) {
 						Intent i = new Intent(context, AboutActivity.class);
 						startActivity(i);
+						return true;
+					}
+				});
+		
+		
+		/*
+		 * 4g/h statusbar icon
+		 */
+		findPreference("show_4g_icon").setOnPreferenceClickListener(
+				new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						if(((CheckBoxPreference)preference).isChecked()) {
+							Settings.System.putInt(getContentResolver(), "tweaks_show_4g_icon", 1);
+						} else {
+							Settings.System.putInt(getContentResolver(), "tweaks_show_4g_icon", 0);
+						}
+						Intent i = new Intent();
+						i.setAction(ConnectivityManager.CONNECTIVITY_ACTION);
+						sendBroadcast(i);
 						return true;
 					}
 				});
