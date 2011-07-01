@@ -1,5 +1,11 @@
 package yuku.ambilwarna;
 
+import com.roman.edt.tweaks.R;
+import com.roman.edt.tweaks.R.dimen;
+import com.roman.edt.tweaks.R.id;
+import com.roman.edt.tweaks.R.layout;
+import com.roman.edt.tweaks.R.string;
+
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -10,8 +16,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AbsoluteLayout;
 import android.widget.ImageView;
-
-import com.roman.edt.tweaks.R;
 
 
 public class AmbilWarnaDialog {
