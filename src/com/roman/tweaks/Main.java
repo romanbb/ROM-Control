@@ -8,10 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import yuku.ambilwarna.AmbilWarnaDialog;
-import yuku.ambilwarna.AmbilWarnaDialog.OnAmbilWarnaListener;
-
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -22,33 +18,30 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
-import android.preference.PreferenceActivity;
 import android.provider.MediaStore;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.util.Log;
 import android.view.ContextMenu;
-import android.view.ContextMenu.ContextMenuInfo;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.roman.tweaks.Activities.AboutActivity;
-import com.roman.tweaks.Activities.BatteryActivity;
+import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
 import com.roman.tweaks.ColorPickerDialog.OnColorChangedListener;
 
 public class Main extends PreferenceActivity {
@@ -100,120 +93,6 @@ public class Main extends PreferenceActivity {
 						return true;
 					}
 				});
-
-		/*
-		 * signal bar visibility
-		 */
-		Preference show_signal_bars = (Preference) findPreference("show_signal_bars");
-
-		try {
-			if (Settings.System
-					.getInt(getContentResolver(), "show_signal_bars") == 1) {
-				((CheckBoxPreference) show_signal_bars).setChecked(true);
-			} else {
-				((CheckBoxPreference) show_signal_bars).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) show_signal_bars).setChecked(true);
-			Settings.System.putInt(getContentResolver(), "show_signal_bars", 1);
-		}
-
-		show_signal_bars
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"show_signal_bars", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"show_signal_bars", 0);
-						}
-						return true;
-
-					}
-
-				});
-
-		/*
-		 * dbm visibility
-		 */
-
-		Preference show_signal_numbers = (Preference) findPreference("show_signal_numbers");
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					"show_signal_numbers") == 1) {
-				((CheckBoxPreference) show_signal_numbers).setChecked(true);
-			} else {
-				((CheckBoxPreference) show_signal_numbers).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) show_signal_numbers).setChecked(false);
-			Settings.System.putInt(getContentResolver(), "show_signal_numbers",
-					0);
-		}
-
-		show_signal_numbers
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-						Preference show_signal_dbm = (Preference) findPreference("show_signal_dbm");
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"show_signal_numbers", 1);
-							preference.setSummary("numbers visible");
-
-							show_signal_dbm.setEnabled(true);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"show_signal_numbers", 0);
-							preference.setSummary("numbers invisible");
-
-							show_signal_dbm.setEnabled(false);
-						}
-						return true;
-					}
-
-				});
-
-		Preference show_signal_dbm = (Preference) findPreference("show_signal_dbm");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(), "show_signal_dbm") == 1) {
-				((CheckBoxPreference) show_signal_dbm).setChecked(true);
-			} else {
-				((CheckBoxPreference) show_signal_dbm).setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) show_signal_dbm).setChecked(false);
-			Settings.System.putInt(getContentResolver(), "show_signal_dbm", 0);
-		}
-
-		show_signal_dbm
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"show_signal_dbm", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"show_signal_dbm", 0);
-						}
-						return true;
-					}
-
-				});
-
 
 		/*
 		 * preference stuff for lock screen selection
@@ -304,7 +183,6 @@ public class Main extends PreferenceActivity {
 
 				});
 
-
 		/*
 		 * custom lockscreen timeout
 		 */
@@ -346,37 +224,29 @@ public class Main extends PreferenceActivity {
 						edit.setText(Integer.toString(secs));
 
 						builder.setView(layout);
-						builder.setMessage("Lockscreen Timeout")
-								.setCancelable(false)
-								.setPositiveButton("Set",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												Log.e("EDT", edit.getText()
-														.toString());
-												int result = Integer
-														.parseInt(edit
-																.getText()
-																.toString());
-												Settings.System
-														.putInt(getContentResolver(),
-																"custom_lockscreen_timeout",
-																result * 1000);
-												Preference lockscreen_timeout_pref = (Preference) findPreference("lockscreen_timeout_pref");
-												lockscreen_timeout_pref
-														.setSummary(result
-																+ " seconds");
-											}
-										})
-								.setNegativeButton("Cancel",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
+						builder.setMessage("Lockscreen Timeout").setCancelable(
+								false).setPositiveButton("Set",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										Log.e("EDT", edit.getText().toString());
+										int result = Integer.parseInt(edit
+												.getText().toString());
+										Settings.System.putInt(
+												getContentResolver(),
+												"custom_lockscreen_timeout",
+												result * 1000);
+										Preference lockscreen_timeout_pref = (Preference) findPreference("lockscreen_timeout_pref");
+										lockscreen_timeout_pref
+												.setSummary(result + " seconds");
+									}
+								}).setNegativeButton("Cancel",
+								new DialogInterface.OnClickListener() {
+									public void onClick(DialogInterface dialog,
+											int id) {
+										dialog.cancel();
+									}
+								});
 						AlertDialog alert = builder.create();
 						alert.show();
 						return true;
@@ -593,8 +463,7 @@ public class Main extends PreferenceActivity {
 
 						builder.setView(layout);
 						builder.setMessage("Lockscreen Enable Delay")
-								.setCancelable(false)
-								.setPositiveButton("Set",
+								.setCancelable(false).setPositiveButton("Set",
 										new DialogInterface.OnClickListener() {
 											public void onClick(
 													DialogInterface dialog,
@@ -605,7 +474,8 @@ public class Main extends PreferenceActivity {
 																.getText()
 																.toString());
 												Settings.System
-														.putInt(getContentResolver(),
+														.putInt(
+																getContentResolver(),
 																"lockscreen_enable_delay_timeout",
 																result * 1000);
 												findPreference(
@@ -614,8 +484,7 @@ public class Main extends PreferenceActivity {
 																result
 																		+ " seconds");
 											}
-										})
-								.setNegativeButton("Cancel",
+										}).setNegativeButton("Cancel",
 										new DialogInterface.OnClickListener() {
 											public void onClick(
 													DialogInterface dialog,
@@ -653,25 +522,20 @@ public class Main extends PreferenceActivity {
 					}
 				});
 		
-		
 		/*
-		 * 4g/h statusbar icon
+		 * about preference
 		 */
-		findPreference("show_4g_icon").setOnPreferenceClickListener(
+		findPreference("signal_pref").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
 
 					public boolean onPreferenceClick(Preference preference) {
-						if(((CheckBoxPreference)preference).isChecked()) {
-							Settings.System.putInt(getContentResolver(), "tweaks_show_4g_icon", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(), "tweaks_show_4g_icon", 0);
-						}
-						Intent i = new Intent();
-						i.setAction(ConnectivityManager.CONNECTIVITY_ACTION);
-						sendBroadcast(i);
+						Intent i = new Intent(Main.this, SignalActivity.class);
+						Main.this.startActivity(i);
 						return true;
 					}
 				});
+
+		
 
 		/*
 		 * color picker
@@ -687,9 +551,9 @@ public class Main extends PreferenceActivity {
 						Settings.System.putInt(context.getContentResolver(),
 								"clock_color", color);
 
-						// Intent timeIntent = new Intent();
-						// timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
-						// sendBroadcast(timeIntent);
+						Intent timeIntent = new Intent();
+						timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
+						sendBroadcast(timeIntent);
 						sendTimeIntent();
 
 						String stringColor = color + "";
@@ -719,25 +583,26 @@ public class Main extends PreferenceActivity {
 
 	public void refreshLockscreenPreferences() {
 
-		//Preference lock_screen_wallpaper_pref = (Preference) findPreference("lock_screen_wallpaper_pref");
+		// Preference lock_screen_wallpaper_pref = (Preference)
+		// findPreference("lock_screen_wallpaper_pref");
 
 		int key = Settings.System.getInt(getContentResolver(),
 				"lockscreen_type_key", 0);
 
-		/*if (key == 0 || key == 7) {
-			findPreference("custom_app_pref").setEnabled(true);
-		} else {
-			findPreference("custom_app_pref").setEnabled(false);
-		}*/
+		/*
+		 * if (key == 0 || key == 7) {
+		 * findPreference("custom_app_pref").setEnabled(true); } else {
+		 * findPreference("custom_app_pref").setEnabled(false); }
+		 */
 
 		// music options
 		if (key == 0 || key == 1 || key == 2 || key == 3) {
 			findPreference("lockscreen_music_controls").setEnabled(true);
-			findPreference("lockscreen_always_music_controls")
-					.setEnabled(true);
+			findPreference("lockscreen_always_music_controls").setEnabled(true);
 		} else {
 			findPreference("lockscreen_music_controls").setEnabled(false);
-			findPreference("lockscreen_always_music_controls").setEnabled(false);
+			findPreference("lockscreen_always_music_controls")
+					.setEnabled(false);
 		}
 
 		// no lockscreen option

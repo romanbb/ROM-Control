@@ -56,4 +56,14 @@
 		<item>2</item>
 		<item>3</item>
 	</string-array>
+	<string-array name="signal_text_display_entries">
+		<item>Show</item>
+		<item>Small dBm</item>
+		<item>Hide</item>
+	</string-array>
+	<string-array name="signal_text_display_values">
+		<item>1</item>
+		<item>3</item>
+		<item>2</item>
+	</string-array>
 </resources>

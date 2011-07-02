@@ -6,7 +6,7 @@
 
 		
 
-		<yuku.ambilwarna.AmbilWarnaKotak
+		<com.roman.tweaks.AmbilWarnaKotak
 				android:id="@+id/ambilwarna_viewKotak"
 				android:layout_x="8dp"
 				android:layout_y="8dp"
