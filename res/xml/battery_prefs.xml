@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference
 		android:title="Show Battery Icon"
 		android:key="show_battery_icon" />
@@ -11,37 +10,30 @@
 		android:title="Battery Text Style"
 		android:key="battery_text_style_pref"
 		android:entryValues="@array/battery_text_display_values"
-		android:entries="@array/battery_text_display_entries"></ListPreference>
-	<PreferenceCategory
-		android:title="String Settings"></PreferenceCategory>
+		android:entries="@array/battery_text_display_entries" />
 
-	<EditTextPreference
-		android:key="battery_text_prepend"
-		android:title="Prepend Battery Text"></EditTextPreference>
-	<EditTextPreference
-		android:title="Append Battery Text"
-		android:key="battery_text_append"></EditTextPreference>
-	<PreferenceCategory
-		android:title="Color Settings"></PreferenceCategory>
+	<PreferenceCategory android:title="Color Settings">
 
-	<CheckBoxPreference
-		android:title="Automatically Color"
-		android:key="battery_automatically_color_pref"></CheckBoxPreference>
-	<Preference
-		android:key="battery_color_pref"
-		android:title="Static Battery Color"></Preference>
-	<Preference
-		android:key="battery_color_auto_charging"
-		android:title="[Auto] Charging Color"></Preference>
-	<Preference
-		android:title="[Auto] Regular Color"
-		android:key="battery_color_auto_regular"></Preference>
-	<Preference
-		android:key="battery_color_auto_medium"
-		android:summary="When battery is &lt; 40%"
-		android:title="[Auto] Medium Level Color"></Preference>
-	<Preference
-		android:key="battery_color_auto_low"
-		android:summary="When battery is &lt; 15%"
-		android:title="[Auto] Low Level Color"></Preference>
+		<CheckBoxPreference
+			android:title="Automatically Color"
+			android:key="battery_automatically_color_pref" />
+		<Preference
+			android:key="battery_color_pref"
+			android:title="Static Battery Color" />
+		<Preference
+			android:key="battery_color_auto_charging"
+			android:title="[Auto] Charging Color" />
+		<Preference
+			android:title="[Auto] Regular Color"
+			android:key="battery_color_auto_regular" />
+		<Preference
+			android:key="battery_color_auto_medium"
+			android:summary="When battery is &lt; 40%"
+			android:title="[Auto] Medium Level Color" />
+		<Preference
+			android:key="battery_color_auto_low"
+			android:summary="When battery is &lt; 15%"
+			android:title="[Auto] Low Level Color" />
+
+	</PreferenceCategory>
 </PreferenceScreen>

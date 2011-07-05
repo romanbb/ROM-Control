@@ -1,3 +1,4 @@
+
 package com.roman.tweaks;
 
 import android.content.Context;
@@ -15,281 +16,289 @@ import android.provider.Settings.SettingNotFoundException;
 
 import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
 
-public class SignalActivity extends PreferenceActivity implements
-		OnPreferenceClickListener, OnAmbilWarnaListener,
-		OnPreferenceChangeListener {
+public class SignalActivity extends PreferenceActivity implements OnPreferenceClickListener,
+        OnAmbilWarnaListener, OnPreferenceChangeListener {
 
-	private static final int STYLE_SHOW = 1;
-	private static final int STYLE_DISABLE = 2;
-	private static final int STYLE_SMALL_DBM = 3;
+    private static final int STYLE_SHOW = 1;
 
-	private static final int COLOR_0 = 4;
-	private static final int COLOR_1 = 5;
-	private static final int COLOR_2 = 6;
-	private static final int COLOR_3 = 7;
-	private static final int COLOR_4 = 8;
-	private static final int COLOR_STATIC = 9;
-	private static final int COLOR_AUTO = 10;
+    private static final int STYLE_DISABLE = 2;
 
-	private Context context;
-	private int signalTextColorPickerFlag;
-	AmbilWarnaDialog signalColorPickerDialog = null;
+    private static final int STYLE_SMALL_DBM = 3;
 
-	// color preference constants
-	private static final String PREF_SIGNAL_COLOR_0 = "signal_color_0";
-	private static final String PREF_SIGNAL_COLOR_1 = "signal_color_1";
-	private static final String PREF_SIGNAL_COLOR_2 = "signal_color_2";
-	private static final String PREF_SIGNAL_COLOR_3 = "signal_color_3";
-	private static final String PREF_SIGNAL_COLOR_4 = "signal_color_4";
-	private static final String PREF_SIGNAL_COLOR_STATIC = "signal_color_static";
-	private static final String PREF_AUTO_COLOR = "signal_automatically_color_pref";
-	private static final String PREF_SIGNAL_TEXT_STYLE = "signal_text_style_pref";
-	private static final String PREF_TOGGLE_4G_ICON = "tweaks_show_4g_icon";
-	private static final String PREF_SHOW_SIGNAL_BARS = "show_signal_bars";
+    private static final int COLOR_0 = 4;
 
-	//
-	Preference mSignalColor0;
-	Preference mSignalColor1;
-	Preference mSignalColor2;
-	Preference mSignalColor3;
-	Preference mSignalColor4;
-	Preference mSignalColorStatic;
-	CheckBoxPreference mSignalAutoColor;
-	CheckBoxPreference mShow4GIcon;
-	CheckBoxPreference mShowSignalBars;
-	ListPreference mSignalTextStyle;
+    private static final int COLOR_1 = 5;
 
-	public void onCreate(Bundle ofLove) {
-		super.onCreate(ofLove);
-		context = this.getApplicationContext();
-		addPreferencesFromResource(R.xml.signal_prefs);
-		signalColorPickerDialog = new AmbilWarnaDialog(this, 0xffffffff, this);
+    private static final int COLOR_2 = 6;
 
-		
-		//assign
-		PreferenceScreen prefs = getPreferenceScreen();
-		mSignalAutoColor = (CheckBoxPreference) prefs
-				.findPreference(PREF_AUTO_COLOR);
-		mSignalTextStyle = (ListPreference) prefs
-				.findPreference(PREF_SIGNAL_TEXT_STYLE);
-		mSignalColor0 = prefs.findPreference(PREF_SIGNAL_COLOR_0);
-		mSignalColor1 = prefs.findPreference(PREF_SIGNAL_COLOR_1);
-		mSignalColor2 = prefs.findPreference(PREF_SIGNAL_COLOR_2);
-		mSignalColor3 = prefs.findPreference(PREF_SIGNAL_COLOR_3);
-		mSignalColor4 = prefs.findPreference(PREF_SIGNAL_COLOR_4);
-		mSignalColorStatic = prefs.findPreference(PREF_SIGNAL_COLOR_STATIC);
-		mShow4GIcon = (CheckBoxPreference) prefs
-				.findPreference(PREF_TOGGLE_4G_ICON);
-		mShowSignalBars = (CheckBoxPreference) prefs
-				.findPreference(PREF_SHOW_SIGNAL_BARS);
+    private static final int COLOR_3 = 7;
 
-		//check enabled settings
-		mShowSignalBars.setChecked((Settings.System.getInt(
-				getContentResolver(), "tweaks_show_signal_bars", 1) == 1));
-		mSignalAutoColor
-				.setChecked((Settings.System.getInt(getContentResolver(),
-						"tweaks_signal_text_autocolor_enable", 0) == 1));
-		mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(),
-				"tweaks_show_4g_icon", 0) == 1));
+    private static final int COLOR_4 = 8;
 
-	}
+    private static final int COLOR_STATIC = 9;
 
-	public boolean onPreferenceClick(Preference preference) {
+    private static final int COLOR_AUTO = 10;
 
-		if (preference == mSignalColor0) {
-			signalTextColorPickerFlag = COLOR_0;
+    private Context context;
 
-			signalColorPickerDialog = new AmbilWarnaDialog(this,
-					Settings.System.getInt(getContentResolver(),
-							"tweaks_signal_text_color_0", 0xFFFFFFFF), this);
-			signalColorPickerDialog.show();
-			return true;
+    private int signalTextColorPickerFlag;
 
-		} else if (preference == mSignalColor1) {
-			signalTextColorPickerFlag = COLOR_1;
-			signalColorPickerDialog = new AmbilWarnaDialog(this,
-					Settings.System.getInt(getContentResolver(),
-							"tweaks_signal_text_color_1", 0xFFFFFFFF), this);
-			signalColorPickerDialog.show();
-			return true;
+    AmbilWarnaDialog signalColorPickerDialog = null;
 
-		} else if (preference == mSignalColor2) {
+    // color preference constants
+    private static final String PREF_SIGNAL_COLOR_0 = "signal_color_0";
 
-			signalTextColorPickerFlag = COLOR_2;
-			signalColorPickerDialog = new AmbilWarnaDialog(this,
-					Settings.System.getInt(getContentResolver(),
-							"tweaks_signal_text_color_2", 0xFFFFFFFF), this);
-			signalColorPickerDialog.show();
-			return true;
+    private static final String PREF_SIGNAL_COLOR_1 = "signal_color_1";
 
-		} else if (preference == mSignalColor3) {
+    private static final String PREF_SIGNAL_COLOR_2 = "signal_color_2";
 
-			signalTextColorPickerFlag = COLOR_3;
-			signalColorPickerDialog = new AmbilWarnaDialog(this,
-					Settings.System.getInt(getContentResolver(),
-							"tweaks_signal_text_color_3", 0xFFFFFFFF), this);
-			signalColorPickerDialog.show();
-			return true;
+    private static final String PREF_SIGNAL_COLOR_3 = "signal_color_3";
 
-		} else if (preference == mSignalColor4) {
+    private static final String PREF_SIGNAL_COLOR_4 = "signal_color_4";
 
-			signalTextColorPickerFlag = COLOR_4;
-			signalColorPickerDialog = new AmbilWarnaDialog(this,
-					Settings.System.getInt(getContentResolver(),
-							"tweaks_signal_text_color_4", 0xFFFFFFFF), this);
-			signalColorPickerDialog.show();
-			return true;
+    private static final String PREF_SIGNAL_COLOR_STATIC = "signal_color_static";
 
-		} else if (preference == mSignalColorStatic) {
+    private static final String PREF_AUTO_COLOR = "signal_automatically_color_pref";
 
-			signalTextColorPickerFlag = COLOR_STATIC;
-			signalColorPickerDialog = new AmbilWarnaDialog(this,
-					Settings.System.getInt(getContentResolver(),
-							"tweaks_signal_text_color", 0xFFFFFFFF), this);
-			signalColorPickerDialog.show();
-			return true;
+    private static final String PREF_SIGNAL_TEXT_STYLE = "signal_text_style_pref";
 
-		} else if (preference == mSignalAutoColor) {
-			if (mSignalAutoColor.isChecked()) {
-				Settings.System.putInt(getContentResolver(),
-						"tweaks_signal_text_autocolor_enable", 1);
+    private static final String PREF_TOGGLE_4G_ICON = "tweaks_show_4g_icon";
 
-			} else {
-				Settings.System.putInt(getContentResolver(),
-						"tweaks_signal_text_autocolor_enable", 0);
+    private static final String PREF_SHOW_SIGNAL_BARS = "show_signal_bars";
 
-			}
+    //
+    Preference mSignalColor0;
 
-			broadcastSignalChange();
-			return true;
+    Preference mSignalColor1;
 
-		} else if (preference == mShow4GIcon) {
-			if (((CheckBoxPreference) preference).isChecked()) {
-				Settings.System.putInt(getContentResolver(),
-						"tweaks_show_4g_icon", 1);
-			} else {
-				Settings.System.putInt(getContentResolver(),
-						"tweaks_show_4g_icon", 0);
-			}
-			broadcastDataChange();
-			return true;
+    Preference mSignalColor2;
 
-		} else if (preference == mShowSignalBars) {
-			if (mShowSignalBars.isChecked()) {
-				Settings.System.putInt(getContentResolver(),
-						"tweaks_show_signal_bars", 1);
-			} else {
-				Settings.System.putInt(getContentResolver(),
-						"tweaks_show_signal_bars", 0);
-			}
-			broadcastDataChange();
-			return true;
-		} else if (preference == mSignalTextStyle) {
+    Preference mSignalColor3;
 
-			preference = (ListPreference) preference;
-			Integer val = Integer
-					.parseInt((String) ((ListPreference) preference).getValue());
+    Preference mSignalColor4;
 
-			Settings.System.putInt(getContentResolver(),
-					"tweaks_signal_text_style", val);
+    Preference mSignalColorStatic;
 
-			broadcastSignalChange();
-			return true;
-		}
+    CheckBoxPreference mSignalAutoColor;
 
-		return false;
-	}
+    CheckBoxPreference mShow4GIcon;
 
-	public void onOk(AmbilWarnaDialog dialog, int color) {
+    CheckBoxPreference mShowSignalBars;
 
-		switch (signalTextColorPickerFlag) {
+    ListPreference mSignalTextStyle;
 
-		case COLOR_0:
+    public void onCreate(Bundle ofLove) {
+        super.onCreate(ofLove);
+        context = this.getApplicationContext();
+        addPreferencesFromResource(R.xml.signal_prefs);
+        signalColorPickerDialog = new AmbilWarnaDialog(this, 0xffffffff, this);
 
-			Settings.System.putInt(context.getContentResolver(),
-					"tweaks_signal_text_color_0", color);
-			broadcastSignalChange();
-			break;
+        // assign
+        PreferenceScreen prefs = getPreferenceScreen();
+        mSignalAutoColor = (CheckBoxPreference) prefs.findPreference(PREF_AUTO_COLOR);
+        mSignalTextStyle = (ListPreference) prefs.findPreference(PREF_SIGNAL_TEXT_STYLE);
+        mSignalColor0 = prefs.findPreference(PREF_SIGNAL_COLOR_0);
+        mSignalColor1 = prefs.findPreference(PREF_SIGNAL_COLOR_1);
+        mSignalColor2 = prefs.findPreference(PREF_SIGNAL_COLOR_2);
+        mSignalColor3 = prefs.findPreference(PREF_SIGNAL_COLOR_3);
+        mSignalColor4 = prefs.findPreference(PREF_SIGNAL_COLOR_4);
+        mSignalColorStatic = prefs.findPreference(PREF_SIGNAL_COLOR_STATIC);
+        mShow4GIcon = (CheckBoxPreference) prefs.findPreference(PREF_TOGGLE_4G_ICON);
+        mShowSignalBars = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_SIGNAL_BARS);
 
-		case COLOR_1:
+        // check enabled settings
+        mShowSignalBars.setChecked((Settings.System.getInt(getContentResolver(),
+                "tweaks_show_signal_bars", 1) == 1));
+        mSignalAutoColor.setChecked((Settings.System.getInt(getContentResolver(),
+                "tweaks_signal_text_autocolor_enable", 0) == 1));
+        mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(), "tweaks_show_4g_icon",
+                0) == 1));
 
-			Settings.System.putInt(context.getContentResolver(),
-					"tweaks_signal_text_color_1", color);
-			broadcastSignalChange();
-			break;
+    }
 
-		case COLOR_2:
+    public boolean onPreferenceClick(Preference preference) {
 
-			Settings.System.putInt(context.getContentResolver(),
-					"tweaks_signal_text_color_2", color);
-			broadcastSignalChange();
-			break;
+        if (preference == mSignalColor0) {
+            signalTextColorPickerFlag = COLOR_0;
 
-		case COLOR_3:
+            signalColorPickerDialog = new AmbilWarnaDialog(this, Settings.System.getInt(
+                    getContentResolver(), "tweaks_signal_text_color_0", 0xFFFFFFFF), this);
+            signalColorPickerDialog.show();
+            return true;
 
-			Settings.System.putInt(context.getContentResolver(),
-					"tweaks_signal_text_color_3", color);
-			broadcastSignalChange();
-			break;
+        } else if (preference == mSignalColor1) {
+            signalTextColorPickerFlag = COLOR_1;
+            signalColorPickerDialog = new AmbilWarnaDialog(this, Settings.System.getInt(
+                    getContentResolver(), "tweaks_signal_text_color_1", 0xFFFFFFFF), this);
+            signalColorPickerDialog.show();
+            return true;
 
-		case COLOR_4:
+        } else if (preference == mSignalColor2) {
 
-			Settings.System.putInt(context.getContentResolver(),
-					"tweaks_signal_text_color_4", color);
-			broadcastSignalChange();
-			break;
+            signalTextColorPickerFlag = COLOR_2;
+            signalColorPickerDialog = new AmbilWarnaDialog(this, Settings.System.getInt(
+                    getContentResolver(), "tweaks_signal_text_color_2", 0xFFFFFFFF), this);
+            signalColorPickerDialog.show();
+            return true;
 
-		case COLOR_STATIC:
+        } else if (preference == mSignalColor3) {
 
-			Settings.System.putInt(context.getContentResolver(),
-					"tweaks_signal_text_color", color);
-			broadcastSignalChange();
-			break;
-		}
+            signalTextColorPickerFlag = COLOR_3;
+            signalColorPickerDialog = new AmbilWarnaDialog(this, Settings.System.getInt(
+                    getContentResolver(), "tweaks_signal_text_color_3", 0xFFFFFFFF), this);
+            signalColorPickerDialog.show();
+            return true;
 
-		// sendTimeIntent();
-	}
+        } else if (preference == mSignalColor4) {
 
-	public void onCancel(AmbilWarnaDialog dialog) {
-		// cancel was selected by the user
-	}
+            signalTextColorPickerFlag = COLOR_4;
+            signalColorPickerDialog = new AmbilWarnaDialog(this, Settings.System.getInt(
+                    getContentResolver(), "tweaks_signal_text_color_4", 0xFFFFFFFF), this);
+            signalColorPickerDialog.show();
+            return true;
 
-	public void broadcastSignalChange() {
-		Intent i = new Intent();
-		i.setAction(CustomIntents.SIGNAL_ICON_ACTION);
-		sendBroadcast(i);
-		sendBroadcast(i);
-	}
+        } else if (preference == mSignalColorStatic) {
 
-	public void broadcastDataChange() {
-		Intent i = new Intent();
-		i.setAction(CustomIntents.DATA_ICON_ACTION);
-		sendBroadcast(i);
-		sendBroadcast(i);
-	}
+            signalTextColorPickerFlag = COLOR_STATIC;
+            signalColorPickerDialog = new AmbilWarnaDialog(this, Settings.System.getInt(
+                    getContentResolver(), "tweaks_signal_text_color", 0xFFFFFFFF), this);
+            signalColorPickerDialog.show();
+            return true;
 
-	public void refreshOptions() {
-		if (((CheckBoxPreference) findPreference("signal_automatically_color_pref"))
-				.isChecked()) {
-			findPreference("signal_color_static").setEnabled(false);
-			findPreference("signal_color_0").setEnabled(true);
-			findPreference("signal_color_1").setEnabled(true);
-			findPreference("signal_color_2").setEnabled(true);
-			findPreference("signal_color_3").setEnabled(true);
-			findPreference("signal_color_4").setEnabled(true);
-		} else {
-			findPreference("signal_color_static").setEnabled(true);
-			findPreference("signal_color_0").setEnabled(false);
-			findPreference("signal_color_1").setEnabled(false);
-			findPreference("signal_color_2").setEnabled(false);
-			findPreference("signal_color_3").setEnabled(false);
-			findPreference("signal_color_4").setEnabled(false);
-		}
-	}
+        } else if (preference == mSignalAutoColor) {
+            if (mSignalAutoColor.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "tweaks_signal_text_autocolor_enable",
+                        1);
 
-	public boolean onPreferenceChange(Preference preference, Object newValue) {
-		
-		return false;
-	}
+            } else {
+                Settings.System.putInt(getContentResolver(), "tweaks_signal_text_autocolor_enable",
+                        0);
+
+            }
+
+            broadcastSignalChange();
+            return true;
+
+        } else if (preference == mShow4GIcon) {
+            if (((CheckBoxPreference) preference).isChecked()) {
+                Settings.System.putInt(getContentResolver(), "tweaks_show_4g_icon", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "tweaks_show_4g_icon", 0);
+            }
+            broadcastDataChange();
+            return true;
+
+        } else if (preference == mShowSignalBars) {
+            if (mShowSignalBars.isChecked()) {
+                Settings.System.putInt(getContentResolver(), "tweaks_show_signal_bars", 1);
+            } else {
+                Settings.System.putInt(getContentResolver(), "tweaks_show_signal_bars", 0);
+            }
+            broadcastDataChange();
+            return true;
+        } else if (preference == mSignalTextStyle) {
+
+            preference = (ListPreference) preference;
+            Integer val = Integer.parseInt((String) ((ListPreference) preference).getValue());
+
+            Settings.System.putInt(getContentResolver(), "tweaks_signal_text_style", val);
+
+            broadcastSignalChange();
+            return true;
+        }
+
+        return false;
+    }
+
+    public void onOk(AmbilWarnaDialog dialog, int color) {
+
+        switch (signalTextColorPickerFlag) {
+
+            case COLOR_0:
+
+                Settings.System.putInt(context.getContentResolver(), "tweaks_signal_text_color_0",
+                        color);
+                broadcastSignalChange();
+                break;
+
+            case COLOR_1:
+
+                Settings.System.putInt(context.getContentResolver(), "tweaks_signal_text_color_1",
+                        color);
+                broadcastSignalChange();
+                break;
+
+            case COLOR_2:
+
+                Settings.System.putInt(context.getContentResolver(), "tweaks_signal_text_color_2",
+                        color);
+                broadcastSignalChange();
+                break;
+
+            case COLOR_3:
+
+                Settings.System.putInt(context.getContentResolver(), "tweaks_signal_text_color_3",
+                        color);
+                broadcastSignalChange();
+                break;
+
+            case COLOR_4:
+
+                Settings.System.putInt(context.getContentResolver(), "tweaks_signal_text_color_4",
+                        color);
+                broadcastSignalChange();
+                break;
+
+            case COLOR_STATIC:
+
+                Settings.System.putInt(context.getContentResolver(), "tweaks_signal_text_color",
+                        color);
+                broadcastSignalChange();
+                break;
+        }
+
+        // sendTimeIntent();
+    }
+
+    public void onCancel(AmbilWarnaDialog dialog) {
+        // cancel was selected by the user
+    }
+
+    public void broadcastSignalChange() {
+        Intent i = new Intent();
+        i.setAction(CustomIntents.SIGNAL_ICON_ACTION);
+        sendBroadcast(i);
+        sendBroadcast(i);
+    }
+
+    public void broadcastDataChange() {
+        Intent i = new Intent();
+        i.setAction(CustomIntents.DATA_ICON_ACTION);
+        sendBroadcast(i);
+        sendBroadcast(i);
+    }
+
+    public void refreshOptions() {
+        if (((CheckBoxPreference) findPreference("signal_automatically_color_pref")).isChecked()) {
+            findPreference("signal_color_static").setEnabled(false);
+            findPreference("signal_color_0").setEnabled(true);
+            findPreference("signal_color_1").setEnabled(true);
+            findPreference("signal_color_2").setEnabled(true);
+            findPreference("signal_color_3").setEnabled(true);
+            findPreference("signal_color_4").setEnabled(true);
+        } else {
+            findPreference("signal_color_static").setEnabled(true);
+            findPreference("signal_color_0").setEnabled(false);
+            findPreference("signal_color_1").setEnabled(false);
+            findPreference("signal_color_2").setEnabled(false);
+            findPreference("signal_color_3").setEnabled(false);
+            findPreference("signal_color_4").setEnabled(false);
+        }
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+        return false;
+    }
 
 }
