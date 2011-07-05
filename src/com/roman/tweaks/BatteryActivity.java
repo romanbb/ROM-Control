@@ -3,6 +3,7 @@ package com.roman.tweaks;
 import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
 
 import android.content.Context;
+import android.content.CustomIntents;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -51,7 +52,7 @@ public class BatteryActivity extends PreferenceActivity implements
 
 								Settings.System.putInt(getContentResolver(),
 										"battery_text_style", val);
-								sendTimeIntent();
+								sendBatteryUpdateIntent();
 								return true;
 							}
 						});
@@ -187,6 +188,31 @@ public class BatteryActivity extends PreferenceActivity implements
 				});
 
 		/*
+		 * check box to enable/disable battery text
+		 */
+
+		findPreference("show_cm_battery_icon").setOnPreferenceClickListener(
+				new OnPreferenceClickListener() {
+
+					public boolean onPreferenceClick(Preference preference) {
+						boolean checked = ((CheckBoxPreference) preference)
+								.isChecked();
+
+						if (checked) {
+							Settings.System.putInt(getContentResolver(),
+									Settings.System.STATUS_BAR_CM_BATTERY, 1);
+						} else {
+							Settings.System.putInt(getContentResolver(),
+									Settings.System.STATUS_BAR_CM_BATTERY, 0);
+						}
+						// sendTimeIntent();
+						sendBatteryUpdateIntent();
+						return true;
+					}
+
+				});
+
+		/*
 		 * battery icon
 		 */
 		Preference show_battery_icon = (Preference) findPreference("show_battery_icon");
@@ -218,10 +244,8 @@ public class BatteryActivity extends PreferenceActivity implements
 							Settings.System.putInt(getContentResolver(),
 									"show_battery_icon", 0);
 						}
-						//sendTimeIntent();
-						Intent i = new Intent();
-						i.setAction(Intent.ACTION_BATTERY_UPDATE);
-						sendBroadcast(i);
+						// sendTimeIntent();
+						sendBatteryUpdateIntent();
 						return true;
 					}
 
@@ -234,6 +258,13 @@ public class BatteryActivity extends PreferenceActivity implements
 		timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
 		sendBroadcast(timeIntent);
 		refreshOptions();
+	}
+
+	public void sendBatteryUpdateIntent() {
+		Intent i = new Intent();
+		i.setAction(CustomIntents.ACTION_BATTERY_UPDATE);
+		sendBroadcast(i);
+		sendBroadcast(i);
 	}
 
 	public boolean onPreferenceClick(Preference preference) {

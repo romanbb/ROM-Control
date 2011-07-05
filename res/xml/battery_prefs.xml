@@ -3,7 +3,10 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 	<CheckBoxPreference
 		android:title="Show Battery Icon"
-		android:key="show_battery_icon"></CheckBoxPreference>
+		android:key="show_battery_icon" />
+	<CheckBoxPreference
+		android:title="Show CM Batt Bar"
+		android:key="show_cm_battery_icon" />
 	<ListPreference
 		android:title="Battery Text Style"
 		android:key="battery_text_style_pref"
@@ -11,7 +14,7 @@
 		android:entries="@array/battery_text_display_entries"></ListPreference>
 	<PreferenceCategory
 		android:title="String Settings"></PreferenceCategory>
-	
+
 	<EditTextPreference
 		android:key="battery_text_prepend"
 		android:title="Prepend Battery Text"></EditTextPreference>
@@ -20,7 +23,7 @@
 		android:key="battery_text_append"></EditTextPreference>
 	<PreferenceCategory
 		android:title="Color Settings"></PreferenceCategory>
-	
+
 	<CheckBoxPreference
 		android:title="Automatically Color"
 		android:key="battery_automatically_color_pref"></CheckBoxPreference>

@@ -1,6 +1,7 @@
 package com.roman.tweaks;
 
 import android.content.Context;
+import android.content.CustomIntents;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.os.Bundle;
@@ -93,7 +94,7 @@ public class SignalActivity extends PreferenceActivity implements
 						}
 
 						Intent i = new Intent();
-						i.setAction(ConnectivityManager.DATA_ICON_ACTION);
+						i.setAction(CustomIntents.DATA_ICON_ACTION);
 						sendBroadcast(i);
 						sendBroadcast(i);
 
@@ -119,7 +120,7 @@ public class SignalActivity extends PreferenceActivity implements
 								"tweaks_signal_text_style", val);
 
 						Intent i = new Intent();
-						i.setAction(ConnectivityManager.SIGNAL_ICON_ACTION);
+						i.setAction(CustomIntents.SIGNAL_ICON_ACTION);
 						sendBroadcast(i);
 						sendBroadcast(i);
 						return true;
@@ -159,7 +160,7 @@ public class SignalActivity extends PreferenceActivity implements
 									"tweaks_show_signal_bars", 0);
 						}
 						Intent i = new Intent();
-						i.setAction(ConnectivityManager.DATA_ICON_ACTION);
+						i.setAction(CustomIntents.DATA_ICON_ACTION);
 						sendBroadcast(i);
 
 						sendBroadcast(i);
@@ -198,7 +199,7 @@ public class SignalActivity extends PreferenceActivity implements
 									"tweaks_show_4g_icon", 0);
 						}
 						Intent i = new Intent();
-						i.setAction(ConnectivityManager.DATA_ICON_ACTION);
+						i.setAction(CustomIntents.DATA_ICON_ACTION);
 						sendBroadcast(i);
 
 						sendBroadcast(i);
@@ -321,7 +322,7 @@ public class SignalActivity extends PreferenceActivity implements
 	
 	public void broadcastColorChange() {
 		Intent i = new Intent();
-		i.setAction(ConnectivityManager.SIGNAL_ICON_ACTION);
+		i.setAction(CustomIntents.SIGNAL_ICON_ACTION);
 		sendBroadcast(i);
 		sendBroadcast(i);
 	}
