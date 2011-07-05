@@ -1,56 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen
 	xmlns:android="http://schemas.android.com/apk/res/android">
-	<PreferenceScreen
-		android:title="Lock Screen Options"
-		android:key="lockscreen_prefscreen">
-		<ListPreference
-			android:entryValues="@array/lock_screen_values"
-			android:entries="@array/lock_screen_entries"
-			android:key="lockscreen_selection_pref"
-			android:title="Lock Screen Selection"
-			android:enabled="false" />
-		<Preference
-			android:key="custom_app_pref"
-			android:title="Choose Custom App"></Preference>
-		<PreferenceCategory
-			android:title="Timeout Settings"
-			android:key="timeout_settings_cat"
-			android:enabled="false">
-			<ListPreference
-				android:entries="@array/lockscreen_delayed_behavior_entries"
-				android:entryValues="@array/lockscreen_delayed_behavior_values"
-				android:dialogTitle="When to delay the lockscreen"
-				android:key="lockscreen_delay_behavior"
-				android:title="Delay Behavior"
-				android:enabled="false"></ListPreference>
-			<Preference
-				android:key="lockscreen_delay_timeout_pref"
-				android:title="Lockscreen Delay"
-				android:enabled="false"></Preference>
-			<Preference
-				android:key="lockscreen_timeout_pref"
-				android:title="Lockscreen Timeout"
-				android:enabled="false"></Preference>
-
-		</PreferenceCategory>
-		<PreferenceCategory
-			android:title="Music Controls"
-			android:key="music_controls_cat">
-			<CheckBoxPreference
-				android:key="lockscreen_music_controls"
-				android:title="Music Controls "></CheckBoxPreference>
-			<CheckBoxPreference
-				android:key="lockscreen_always_music_controls"
-				android:title="Always Music Controls"></CheckBoxPreference>
-		</PreferenceCategory>
-	</PreferenceScreen>
 	<PreferenceCategory
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
 		<Preference
 			android:title="Battery Options"
-			android:key="battery_options_pref">
+			android:key="battery_options_pref"
+			android:enabled="false">
 		</Preference>
 
 		<Preference

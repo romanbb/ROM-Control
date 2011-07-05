@@ -17,7 +17,7 @@
 			android:name=".Main">
 			<intent-filter>
 				<action
-					android:name="android.intent.action.MAIN" />
+					android:name="android.intent.action.MAIN"></action>
 			</intent-filter>
 		</activity>
 
@@ -26,6 +26,8 @@
 			<intent-filter>
 				<action
 					android:name="com.roman.tweaks.OPEN"></action>
+				<action
+					android:name="com.roman.intents.HARD_REBOOT_ACTION"></action>
 			</intent-filter>
 		</receiver>
 
