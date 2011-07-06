@@ -2,16 +2,15 @@
 package com.roman.tweaks;
 
 import android.content.Context;
+import android.content.CustomIntents;
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.EditTextPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
-import android.preference.Preference.OnPreferenceClickListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
+import android.preference.Preference.OnPreferenceClickListener;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 

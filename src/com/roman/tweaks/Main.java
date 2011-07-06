@@ -94,165 +94,7 @@ public class Main extends PreferenceActivity {
 					}
 				});
 
-		/*
-		 * preference stuff for lock screen selection
-		 */
 
-		ListPreference lockscreen_selection_pref = (ListPreference) findPreference("lockscreen_selection_pref");
-
-		try {
-			Settings.System.getInt(getContentResolver(), "lockscreen_type_key");
-		} catch (SettingNotFoundException e) {
-			Settings.System.putInt(getContentResolver(), "lockscreen_type_key",
-					0);
-			lockscreen_selection_pref.setValueIndex(0);
-		}
-
-		final CharSequence[] lockScreenNames = getResources().getTextArray(
-				R.array.lock_screen_entries);
-
-		lockscreen_selection_pref.setSummary(lockscreen_selection_pref
-				.getEntry());
-
-		lockscreen_selection_pref
-				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-					public boolean onPreferenceChange(Preference preference,
-							Object newValue) {
-						Integer selection = Integer.parseInt(newValue
-								.toString());
-
-						preference.setSummary(lockScreenNames[selection]);
-						Settings.System.putInt(getContentResolver(),
-								"lockscreen_type_key", selection);
-
-						if (selection == 9) {
-							Settings.System.putInt(getContentResolver(),
-									"lockscreen_enable", 0);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"lockscreen_enable", 1);
-						}
-
-						refreshLockscreenPreferences();
-						return true;
-					}
-				});
-
-		/*
-		 * custom intent chooser
-		 */
-
-		Preference custom_app_preference = (Preference) findPreference("custom_app_pref");
-
-		if (Settings.System.getString(getContentResolver(),
-				"custom_edt_app_name") == null
-				|| Settings.System.getString(getContentResolver(),
-						"custom_edt_app_intent") == null) {
-			Settings.System.putString(getContentResolver(),
-					"custom_edt_app_name", "Mms");
-			Settings.System
-					.putString(
-							getContentResolver(),
-							"custom_edt_app_intent",
-							"#Intent;action=android.intent.action.MAIN;category=android.intent.category.LAUNCHER;component=com.android.mms/.ui.ConversationList;end");
-
-		}
-
-		custom_app_preference.setSummary(Settings.System.getString(
-				getContentResolver(), "custom_edt_app_name"));
-
-		custom_app_preference
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						// launch native android activity picker
-						preference
-								.setSummary("**** List is loading, please be patient!****");
-
-						Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-						mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-
-						Intent pickIntent = new Intent(
-								Intent.ACTION_PICK_ACTIVITY);
-						pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
-						startActivityForResult(pickIntent, SELECT_ACTIVITY);
-
-						return true;
-					}
-
-				});
-
-		/*
-		 * custom lockscreen timeout
-		 */
-		Preference lockscreen_timeout_pref = (Preference) findPreference("lockscreen_timeout_pref");
-		int timeoutInMs = 5000;
-
-		try {
-			timeoutInMs = Settings.System.getInt(getContentResolver(),
-					"custom_lockscreen_timeout");
-			if (timeoutInMs < 3000) {
-				Settings.System.putInt(getContentResolver(),
-						"custom_lockscreen_timeout", 3000);
-			}
-		} catch (SettingNotFoundException e) {
-			Settings.System.putInt(getContentResolver(),
-					"custom_lockscreen_timeout", timeoutInMs);
-			timeoutInMs = 5000;
-		}
-
-		lockscreen_timeout_pref.setSummary((timeoutInMs / 1000) + " seconds");
-
-		// builder = new AlertDialog.Builder(this);
-
-		lockscreen_timeout_pref
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-
-						LayoutInflater inflater = (LayoutInflater) context
-								.getSystemService(LAYOUT_INFLATER_SERVICE);
-						//
-						View layout = inflater.inflate(
-								R.layout.number_picker_layout, null);
-						final EditText edit = (EditText) layout
-								.findViewById(R.id.timepicker_input);
-						int secs = Settings.System.getInt(getContentResolver(),
-								"custom_lockscreen_timeout", 5) / 1000;
-						// edit.setText("11");
-						edit.setText(Integer.toString(secs));
-
-						builder.setView(layout);
-						builder.setMessage("Lockscreen Timeout").setCancelable(
-								false).setPositiveButton("Set",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										Log.e("EDT", edit.getText().toString());
-										int result = Integer.parseInt(edit
-												.getText().toString());
-										Settings.System.putInt(
-												getContentResolver(),
-												"custom_lockscreen_timeout",
-												result * 1000);
-										Preference lockscreen_timeout_pref = (Preference) findPreference("lockscreen_timeout_pref");
-										lockscreen_timeout_pref
-												.setSummary(result + " seconds");
-									}
-								}).setNegativeButton("Cancel",
-								new DialogInterface.OnClickListener() {
-									public void onClick(DialogInterface dialog,
-											int id) {
-										dialog.cancel();
-									}
-								});
-						AlertDialog alert = builder.create();
-						alert.show();
-						return true;
-					}
-
-				});
 
 		/*
 		 * read ahead setter
@@ -288,216 +130,7 @@ public class Main extends PreferenceActivity {
 					}
 				});
 
-		/*
-		 * lock screen music controls
-		 */
-		Preference lockscreen_music_controls = (Preference) findPreference("lockscreen_music_controls");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					"lockscreen_music_controls") == 1) {
-				((CheckBoxPreference) lockscreen_music_controls)
-						.setChecked(true);
-				findPreference("lockscreen_always_music_controls").setEnabled(
-						true);
-			} else {
-				((CheckBoxPreference) lockscreen_music_controls)
-						.setChecked(false);
-				findPreference("lockscreen_always_music_controls").setEnabled(
-						false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) lockscreen_music_controls).setChecked(true);
-			Settings.System.putInt(getContentResolver(),
-					"lockscreen_music_controls", 1);
-			findPreference("lockscreen_always_music_controls").setEnabled(true);
-		}
-
-		lockscreen_music_controls
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"lockscreen_music_controls", 1);
-							findPreference("lockscreen_always_music_controls")
-									.setEnabled(true);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"lockscreen_music_controls", 0);
-							findPreference("lockscreen_always_music_controls")
-									.setEnabled(false);
-						}
-						return true;
-					}
-
-				});
-
-		/*
-		 * lock always screen music controls
-		 */
-		Preference lockscreen_always_music_controls = (Preference) findPreference("lockscreen_always_music_controls");
-
-		try {
-			if (Settings.System.getInt(getContentResolver(),
-					"lockscreen_always_music_controls") == 1) {
-				((CheckBoxPreference) lockscreen_always_music_controls)
-						.setChecked(true);
-			} else {
-				((CheckBoxPreference) lockscreen_always_music_controls)
-						.setChecked(false);
-			}
-		} catch (SettingNotFoundException e) {
-			((CheckBoxPreference) lockscreen_always_music_controls)
-					.setChecked(true);
-			Settings.System.putInt(getContentResolver(),
-					"lockscreen_always_music_controls", 1);
-		}
-
-		lockscreen_always_music_controls
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-						boolean checked = ((CheckBoxPreference) preference)
-								.isChecked();
-
-						if (checked) {
-							Settings.System.putInt(getContentResolver(),
-									"lockscreen_always_music_controls", 1);
-						} else {
-							Settings.System.putInt(getContentResolver(),
-									"lockscreen_always_music_controls", 0);
-						}
-						return true;
-					}
-
-				});
-
-		/*
-		 * enable lockscreen default setting
-		 */
-		try {
-			Settings.System.getInt(getContentResolver(), "lockscreen_enable");
-		} catch (SettingNotFoundException e) {
-			Settings.System
-					.putInt(getContentResolver(), "lockscreen_enable", 1);
-		}
-
-		/*
-		 * lockscreen_delay_behavior
-		 */
-
-		ListPreference lockscreen_delay_behavior = (ListPreference) findPreference("lockscreen_delay_behavior");
-
-		try {
-			Settings.System.getInt(getContentResolver(),
-					"lockscreen_delay_behavior");
-		} catch (SettingNotFoundException e) {
-			Settings.System.putInt(getContentResolver(),
-					"lockscreen_delay_behavior", 1);
-			lockscreen_delay_behavior.setValueIndex(0);
-		}
-
-		// lockscreen_delay_behavior.setSummary(lockscreen_delay_behavior
-		// .getEntry());
-
-		lockscreen_delay_behavior
-				.setOnPreferenceChangeListener(new OnPreferenceChangeListener() {
-
-					public boolean onPreferenceChange(Preference preference,
-							Object newValue) {
-
-						Integer selection = Integer.parseInt(newValue
-								.toString());
-						Log.i("EDT", "Setting delay_behavior to " + selection);
-						Settings.System.putInt(getContentResolver(),
-								"lockscreen_delay_behavior", selection);
-						// refreshCustomAppChooser();
-						// preference.setSummary(selection.toString());
-
-						refreshLockscreenPreferences();
-						return true;
-					}
-				});
-
-		/*
-		 * custom lockscreen timeout
-		 */
-		Preference lockscreen_delay_timeout_pref = (Preference) findPreference("lockscreen_delay_timeout_pref");
-		int timeoutDelayInMs = 5000;
-
-		try {
-			timeoutDelayInMs = Settings.System.getInt(getContentResolver(),
-					"lockscreen_enable_delay_timeout");
-		} catch (SettingNotFoundException e) {
-			timeoutDelayInMs = 5000;
-			Settings.System.putInt(getContentResolver(),
-					"lockscreen_enable_delay_timeout", timeoutInMs);
-
-		}
-
-		lockscreen_delay_timeout_pref.setSummary((timeoutDelayInMs / 1000)
-				+ " seconds");
-
-		lockscreen_delay_timeout_pref
-				.setOnPreferenceClickListener(new OnPreferenceClickListener() {
-
-					public boolean onPreferenceClick(Preference preference) {
-
-						LayoutInflater inflater = (LayoutInflater) context
-								.getSystemService(LAYOUT_INFLATER_SERVICE);
-						//
-						View layout = inflater.inflate(
-								R.layout.number_picker_layout, null);
-
-						final EditText edit = (EditText) layout
-								.findViewById(R.id.timepicker_input);
-
-						int secs = Settings.System.getInt(getContentResolver(),
-								"lockscreen_enable_delay_timeout", 5000) / 1000;
-
-						edit.setText(Integer.toString(secs));
-
-						builder.setView(layout);
-						builder.setMessage("Lockscreen Enable Delay")
-								.setCancelable(false).setPositiveButton("Set",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-
-												int result = Integer
-														.parseInt(edit
-																.getText()
-																.toString());
-												Settings.System
-														.putInt(
-																getContentResolver(),
-																"lockscreen_enable_delay_timeout",
-																result * 1000);
-												findPreference(
-														"lockscreen_delay_timeout_pref")
-														.setSummary(
-																result
-																		+ " seconds");
-											}
-										}).setNegativeButton("Cancel",
-										new DialogInterface.OnClickListener() {
-											public void onClick(
-													DialogInterface dialog,
-													int id) {
-												dialog.cancel();
-											}
-										});
-						AlertDialog alert = builder.create();
-						alert.show();
-						return true;
-					}
-
-				});
+	
 
 		findPreference("battery_options_pref").setOnPreferenceClickListener(
 				new OnPreferenceClickListener() {
@@ -586,8 +219,8 @@ public class Main extends PreferenceActivity {
 		// Preference lock_screen_wallpaper_pref = (Preference)
 		// findPreference("lock_screen_wallpaper_pref");
 
-		int key = Settings.System.getInt(getContentResolver(),
-				"lockscreen_type_key", 0);
+		// int key = Settings.System.getInt(getContentResolver(),
+		// "lockscreen_type_key", 0);
 
 		/*
 		 * if (key == 0 || key == 7) {
@@ -595,15 +228,6 @@ public class Main extends PreferenceActivity {
 		 * findPreference("custom_app_pref").setEnabled(false); }
 		 */
 
-		// music options
-		if (key == 0 || key == 1 || key == 2 || key == 3) {
-			findPreference("lockscreen_music_controls").setEnabled(true);
-			findPreference("lockscreen_always_music_controls").setEnabled(true);
-		} else {
-			findPreference("lockscreen_music_controls").setEnabled(false);
-			findPreference("lockscreen_always_music_controls")
-					.setEnabled(false);
-		}
 
 		// no lockscreen option
 		// if (key == 9) {
@@ -620,12 +244,6 @@ public class Main extends PreferenceActivity {
 		// }
 
 		// refresh delay behavior summary
-		String[] entries = context.getResources().getStringArray(
-				R.array.lockscreen_delayed_behavior_entries);
-		String entry = entries[Settings.System.getInt(getContentResolver(),
-				"lockscreen_delay_behavior", 1) - 1].toLowerCase();
-		findPreference("lockscreen_delay_behavior").setSummary(
-				"Lockscreen will delay " + entry);
 
 	}
 
@@ -756,16 +374,18 @@ public class Main extends PreferenceActivity {
 
 	public void onResume() {
 		super.onResume();
-		Preference custom_app_preference = (Preference) findPreference("custom_app_pref");
-		custom_app_preference.setSummary(Settings.System.getString(
-				getContentResolver(), "custom_edt_app_name"));
-
-		Preference lockscreen_timeout_pref = (Preference) findPreference("lockscreen_timeout_pref");
-		int i = (Settings.System.getInt(getContentResolver(),
-				"custom_lockscreen_timeout", 5000) / 1000);
-
-		lockscreen_timeout_pref.setSummary(i + " seconds");
-		refreshLockscreenPreferences();
+		// Preference custom_app_preference = (Preference)
+		// findPreference("custom_app_pref");
+		// custom_app_preference.setSummary(Settings.System.getString(
+		// getContentResolver(), "custom_edt_app_name"));
+		//
+		// Preference lockscreen_timeout_pref = (Preference)
+		// findPreference("lockscreen_timeout_pref");
+		// int i = (Settings.System.getInt(getContentResolver(),
+		// "custom_lockscreen_timeout", 5000) / 1000);
+		//
+		// lockscreen_timeout_pref.setSummary(i + " seconds");
+		// refreshLockscreenPreferences();
 	}
 
 	@Override
