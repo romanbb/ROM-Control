@@ -7,7 +7,7 @@
 		<Preference
 			android:title="Battery Options"
 			android:key="battery_options_pref"
-			android:enabled="false">
+			android:enabled="true">
 		</Preference>
 
 		<Preference
