@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string-array
-		name="lock_screen_entries">
-		<item>AOSP</item>
-		<item>O2X</item>
-		<item>4-Tab</item>
-		<item>Rotary</item>
-		<item>Star Wars</item>
-	</string-array>
-	<string-array
-		name="lock_screen_values">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
-	<string-array
 		name="read_ahead_entries">
 		<item>128</item>
 		<item>256</item>
@@ -68,13 +52,13 @@
 	<string-array
 		name="signal_text_display_entries">
 		<item>Show</item>
-		<item>Small dBm</item>
+		<item>Small w/dBm</item>
 		<item>Hide</item>
 	</string-array>
 	<string-array
 		name="signal_text_display_values">
 		<item>1</item>
-		<item>3</item>
 		<item>2</item>
+		<item>0</item>
 	</string-array>
 </resources>

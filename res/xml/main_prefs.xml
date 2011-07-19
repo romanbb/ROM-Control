@@ -1,50 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 	<PreferenceCategory
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
 		<Preference
 			android:title="Battery Options"
 			android:key="battery_options_pref"
-			android:enabled="true">
-		</Preference>
+			android:enabled="true" />
 
 		<Preference
 			android:title="Signal Options"
-			android:key="signal_pref">
-		</Preference>
+			android:key="signal_pref" />
 
-		<PreferenceScreen
-			android:title="Clock Options">
+		<PreferenceScreen android:title="Clock Options">
 			<ListPreference
 				android:key="clock_am_pm"
 				android:entries="@array/am_pm_entries"
 				android:entryValues="@array/am_pm_values"
-				android:title="Display Style"></ListPreference>
+				android:title="Display Style" />
 			<Preference
 				android:key="clock_color_pref"
-				android:title="Choose Clock Color"></Preference>
+				android:title="Choose Clock Color" />
 		</PreferenceScreen>
 	</PreferenceCategory>
 
 
 	<PreferenceCategory
 		android:title="Other"
-		android:key="other_cat"></PreferenceCategory>
-	<PreferenceScreen
-		android:title="Misc"
-		android:summary="SD Cache, Debugging visibility"
-		android:key="misc_prefscreen">
-		<ListPreference
-			android:key="read_ahead_pref"
-			android:title="SD Read-Ahead Cache"
-			android:entryValues="@array/read_ahead_entries"
-			android:entries="@array/read_ahead_entries"></ListPreference>
-	</PreferenceScreen>
-	<Preference
-		android:title="About"
-		android:key="about_pref"
-		android:summary="Thread &amp; Twitter links!"></Preference>
+		android:key="other_cat">
+		<PreferenceScreen
+			android:title="Misc"
+			android:summary="SD Cache, Debugging visibility"
+			android:key="misc_prefscreen">
+			<ListPreference
+				android:key="read_ahead_pref"
+				android:title="SD Read-Ahead Cache"
+				android:entryValues="@array/read_ahead_entries"
+				android:entries="@array/read_ahead_entries" />
+		</PreferenceScreen>
+		<Preference
+			android:title="About"
+			android:key="about_pref"
+			android:summary="Thread &amp; Twitter links!" />
+		<CheckBoxPreference
+			android:title="Enable BLN"
+			android:key="bln_pref"
+			android:summary="For notifications" />
 
+	</PreferenceCategory>
 </PreferenceScreen>

@@ -40,7 +40,11 @@ public class Main extends PreferenceActivity {
 
     private static final String GPS_DISBLED_NAME = "disabled_gps";
 
+    private static final String PREF_BLN = "bln_pref";
+
     CheckBoxPreference mEnableGPS;
+
+    CheckBoxPreference mBLN;
 
     /** Called when the activity is first created. */
     @Override
@@ -52,6 +56,7 @@ public class Main extends PreferenceActivity {
         builder = new AlertDialog.Builder(this);
         PreferenceScreen prefs = getPreferenceScreen();
 
+        //vibrant specific settings
         if (Build.DEVICE.contains("vibrantmtd")) {
             this.addPreferencesFromResource(R.xml.vibrant_prefs);
 
@@ -66,6 +71,13 @@ public class Main extends PreferenceActivity {
             boolean checked = output.equals("gpsd");
             mEnableGPS.setChecked(checked);
         }
+        
+        //bln
+        mBLN = (CheckBoxPreference) prefs.findPreference(PREF_BLN);
+        
+        boolean checkBLN = Settings.System.getInt(getContentResolver(), Settings.System.TRACKBALL_NOTIFICATION_ON, 1) == 1;
+        mBLN.setChecked(checkBLN);
+        
 
         /*
          * ampm options
@@ -217,7 +229,7 @@ public class Main extends PreferenceActivity {
                 } else {
                     ShellInterface.getProcessOutput(enableCommand);
                 }
-                
+
                 preference.setSummary("Reboot to apply the change!");
                 ShellInterface.getProcessOutput("mount -o ro,remount /system");
                 return true;
