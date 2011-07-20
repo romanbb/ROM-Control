@@ -1,9 +1,6 @@
 
 package com.roman.tweaks;
 
-import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
-import com.roman.tweaks.ColorPickerDialog.OnColorChangedListener;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -13,17 +10,20 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
-import android.preference.PreferenceScreen;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
+import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.provider.Settings.SettingNotFoundException;
 import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.View;
-import android.view.ContextMenu.ContextMenuInfo;
+
+import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
+import com.roman.tweaks.ColorPickerDialog.OnColorChangedListener;
 
 public class Main extends PreferenceActivity {
     String pref;
@@ -234,6 +234,10 @@ public class Main extends PreferenceActivity {
                 ShellInterface.getProcessOutput("mount -o ro,remount /system");
                 return true;
             }
+        } else if (preference == mBLN) {
+            boolean checked = mBLN.isChecked();
+            int value = (checked ? 1 : 0);
+            Settings.System.putInt(getContentResolver(), Settings.System.TRACKBALL_NOTIFICATION_ON, value);            
         }
 
         return false;
