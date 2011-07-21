@@ -115,6 +115,9 @@ public class SignalActivity extends PreferenceActivity implements OnAmbilWarnaLi
                 Settings.System.STATUS_BAR_TWEAKS_SHOW_4G_ICON, 0) == 1));
 
         mSignalTextStyle.setOnPreferenceChangeListener(this);
+        mSignalTextStyle.setValueIndex(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_SIGNAL_STYLE, 0));
+
         refreshOptions();
     }
 
