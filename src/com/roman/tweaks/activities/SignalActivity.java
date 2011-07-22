@@ -1,5 +1,5 @@
 
-package com.roman.tweaks;
+package com.roman.tweaks.activities;
 
 import android.content.Context;
 import android.content.CustomIntents;
@@ -14,7 +14,10 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.roman.tweaks.AmbilWarnaDialog;
+import com.roman.tweaks.R;
 import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
+import com.roman.tweaks.R.xml;
 
 public class SignalActivity extends PreferenceActivity implements OnAmbilWarnaListener,
         OnPreferenceChangeListener {

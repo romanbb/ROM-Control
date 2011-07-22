@@ -3,27 +3,19 @@
 	<PreferenceCategory
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
+		
+		
+		<Preference
+			android:title="Clock Options"
+			android:key="clock_options_pref" />
 		<Preference
 			android:title="Battery Options"
-			android:key="battery_options_pref"
-			android:enabled="true" />
-
+			android:key="battery_options_pref" />
 		<Preference
 			android:title="Signal Options"
-			android:key="signal_pref" />
+			android:key="signal_options_pref" />
 
-		<PreferenceScreen android:title="Clock Options">
-			<ListPreference
-				android:key="clock_am_pm"
-				android:entries="@array/am_pm_entries"
-				android:entryValues="@array/am_pm_values"
-				android:title="Display Style" />
-			<Preference
-				android:key="clock_color_pref"
-				android:title="Choose Clock Color" />
-		</PreferenceScreen>
 	</PreferenceCategory>
-
 
 	<PreferenceCategory
 		android:title="Other"
@@ -40,8 +32,7 @@
 		</PreferenceScreen>
 		<Preference
 			android:title="About"
-			android:key="about_pref"
-			android:summary="Thread &amp; Twitter links!" />
+			android:key="about_pref" />
 		<CheckBoxPreference
 			android:title="Enable BLN"
 			android:key="bln_pref"

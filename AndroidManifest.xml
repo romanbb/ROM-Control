@@ -32,15 +32,16 @@
 		</receiver>
 
 		<activity
-			android:label="EDT Tweaks - About"
-			android:name=".AboutActivity"></activity>
-		<activity
-			android:label="EDT Tweaks - Battery Options"
-			android:name=".BatteryActivity"></activity>
+			android:label="Tweaks - Clock Options"
+			android:name=".activities.ClockActivity"></activity>
+			
+			<activity
+			android:label="Tweaks - Battery Options"
+			android:name=".activities.BatteryActivity"></activity>
 
 		<activity
-			android:label="EDT Tweaks - Signal Options"
-			android:name=".SignalActivity"></activity>
+			android:label="Tweaks - Signal Options"
+			android:name=".activities.SignalActivity"></activity>
 
 	</application>
 </manifest>
