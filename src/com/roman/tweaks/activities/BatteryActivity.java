@@ -125,7 +125,6 @@ public class BatteryActivity extends PreferenceActivity implements
 
             Settings.System.putInt(getContentResolver(),
                     Settings.System.STATUS_BAR_CM_BATTERY, val);
-            sendBatteryUpdateIntent();
             return true;
         }
         return false;
@@ -182,18 +181,17 @@ public class BatteryActivity extends PreferenceActivity implements
 
             preference.setSummary((checked ? R.string.automatic_battery_enabled
                     : R.string.automatic_battery_disabled));
+            
+            refreshOptions();
             return true;
 
         } else if (preference == mShowBatteryIcon) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
+            int value = (checked ? 1 : 0);
 
-            if (checked) {
-                Settings.System.putInt(getContentResolver(),
-                        "show_battery_icon", 1);
-            } else {
-                Settings.System.putInt(getContentResolver(),
-                        "show_battery_icon", 0);
-            }
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.STATUS_BAR_BATTERY, value);
+
             return true;
 
         } else if (preference == mShowCMBatteryIcon) {
