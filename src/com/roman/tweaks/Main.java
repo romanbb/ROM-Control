@@ -1,6 +1,10 @@
 
 package com.roman.tweaks;
 
+import com.roman.tweaks.activities.BatteryActivity;
+import com.roman.tweaks.activities.ClockActivity;
+import com.roman.tweaks.activities.SignalActivity;
+
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
@@ -14,10 +18,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-
-import com.roman.tweaks.activities.BatteryActivity;
-import com.roman.tweaks.activities.ClockActivity;
-import com.roman.tweaks.activities.SignalActivity;
 
 public class Main extends PreferenceActivity {
     String pref;
