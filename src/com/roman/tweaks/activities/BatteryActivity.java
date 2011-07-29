@@ -18,8 +18,7 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
-public class BatteryActivity extends PreferenceActivity implements
-        OnPreferenceChangeListener {
+public class BatteryActivity extends PreferenceActivity implements OnPreferenceChangeListener {
     Context context;
 
     private static final int COLOR_BATTERY = 1;
@@ -42,6 +41,8 @@ public class BatteryActivity extends PreferenceActivity implements
 
     private static final String PREF_SHOW_CM_BATTERY_BAR = "show_cm_battery_icon";
 
+    private static final String PREF_SHOW_MIUI_BATTERY = "show_miui_battery";
+
     private static final String PREF_COLOR_AUTOMATICALLY = "battery_automatically_color_pref";
 
     private static final String PREF_COLOR_STATIC = "battery_color_pref";
@@ -62,6 +63,8 @@ public class BatteryActivity extends PreferenceActivity implements
 
     CheckBoxPreference mColorAutomatically;
 
+    CheckBoxPreference mShowMiuiBattery;
+
     Preference mColorStatic;
 
     Preference mColorCharging;
@@ -81,23 +84,30 @@ public class BatteryActivity extends PreferenceActivity implements
 
         PreferenceScreen prefs = getPreferenceScreen();
 
-        mBatteryTextStyle = (ListPreference) prefs
-                .findPreference(PREF_BATTERY_TEXT_STYLE);
-        mShowBatteryIcon = (CheckBoxPreference) prefs
-                .findPreference(PREF_SHOW_BATTERY_ICON);
-        mShowCMBatteryIcon = (CheckBoxPreference) prefs
-                .findPreference(PREF_SHOW_CM_BATTERY_BAR);
-        mColorAutomatically = (CheckBoxPreference) prefs
-                .findPreference(PREF_COLOR_AUTOMATICALLY);
+        mBatteryTextStyle = (ListPreference) prefs.findPreference(PREF_BATTERY_TEXT_STYLE);
+        mShowBatteryIcon = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_BATTERY_ICON);
+        mShowCMBatteryIcon = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_CM_BATTERY_BAR);
+        mShowMiuiBattery = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_MIUI_BATTERY);
+        mColorAutomatically = (CheckBoxPreference) prefs.findPreference(PREF_COLOR_AUTOMATICALLY);
         mColorStatic = prefs.findPreference(PREF_COLOR_STATIC);
         mColorCharging = prefs.findPreference(PREF_COLOR_CHARGING);
         mColorRegular = prefs.findPreference(PREF_COLOR_REGULAR);
         mColorMedium = prefs.findPreference(PREF_COLOR_MEDIUM);
         mColorLow = prefs.findPreference(PREF_COLOR_LOW);
 
-        mBatteryTextStyle.setValueIndex(0);
-
+        int batteryStyleIndex = Settings.System.getInt(getContentResolver(),
+                PREF_BATTERY_TEXT_STYLE, 1);
+        mBatteryTextStyle.setValueIndex(batteryStyleIndex);
         mBatteryTextStyle.setOnPreferenceChangeListener(this);
+
+        mShowBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_BATTERY, 0) == 1);
+
+        mShowCMBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_CM_BATTERY_ICON, 0) == 1);
+
+        mShowMiuiBattery.setChecked(Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_TWEAKS_MIUI_BATTERY, 0) == 1);
 
         refreshOptions();
     }
@@ -123,8 +133,8 @@ public class BatteryActivity extends PreferenceActivity implements
 
             int val = Integer.valueOf((String) newValue);
 
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_CM_BATTERY, val);
+            Settings.System
+                    .putInt(getContentResolver(), Settings.System.STATUS_BAR_CM_BATTERY, val);
             return true;
         }
         return false;
@@ -132,14 +142,12 @@ public class BatteryActivity extends PreferenceActivity implements
 
     public ColorPickerDialog generateDialog(String preference) {
         ColorPickerDialog cp = new ColorPickerDialog(this, mColorChangeListener,
-                Settings.System.getInt(getContentResolver(),
-                        preference,
+                Settings.System.getInt(getContentResolver(), preference,
                         Settings.System.getInt(getContentResolver(), preference, Color.WHITE)));
         return cp;
     }
 
-    public boolean onPreferenceTreeClick(PreferenceScreen screen,
-            Preference preference) {
+    public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
         // String key = preference.getKey();
 
         if (preference == mColorCharging) {
@@ -181,7 +189,7 @@ public class BatteryActivity extends PreferenceActivity implements
 
             preference.setSummary((checked ? R.string.automatic_battery_enabled
                     : R.string.automatic_battery_disabled));
-            
+
             refreshOptions();
             return true;
 
@@ -189,8 +197,7 @@ public class BatteryActivity extends PreferenceActivity implements
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             int value = (checked ? 1 : 0);
 
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_BATTERY, value);
+            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_BATTERY, value);
 
             return true;
 
@@ -205,6 +212,10 @@ public class BatteryActivity extends PreferenceActivity implements
                         Settings.System.STATUS_BAR_CM_BATTERY_ICON, 0);
             }
             return true;
+        } else if (preference == mShowMiuiBattery) {
+            int val = ((CheckBoxPreference) preference).isChecked() ? 1 : 0;
+            Settings.System.putInt(getContentResolver(),
+                    Settings.System.STATUS_BAR_TWEAKS_MIUI_BATTERY, val);
 
         }
 
@@ -215,14 +226,12 @@ public class BatteryActivity extends PreferenceActivity implements
 
         @Override
         public void colorUpdate(int color) {
-            Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag,
-                    color);
+            Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag, color);
         }
 
         @Override
         public void colorChanged(int color) {
-            Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag,
-                    color);
+            Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag, color);
 
         }
     };

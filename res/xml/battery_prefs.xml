@@ -6,6 +6,9 @@
 	<CheckBoxPreference
 		android:title="Show CM Batt Bar"
 		android:key="show_cm_battery_icon" />
+	<CheckBoxPreference
+		android:title="Show MIUI Battery bar"
+		android:key="show_miui_battery" />
 	<ListPreference
 		android:title="Battery Text Style"
 		android:key="battery_text_style_pref"
