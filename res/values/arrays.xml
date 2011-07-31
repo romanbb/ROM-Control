@@ -8,29 +8,25 @@
 		<item>2048</item>
 		<item>4096</item>
 	</string-array>
-	<string-array name="lockscreen_delayed_behavior_entries">
-		<item>Only on screen timeout</item>
-		<item>Only on power button</item>
-		<item>On power button or timeout</item>
-		<item>Never</item>
-	</string-array>
-	<string-array name="lockscreen_delayed_behavior_values">
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
 	<string-array name="am_pm_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
-		<item>3</item>
 	</string-array>
 	<string-array name="am_pm_entries">
 		<item>Show AM/PM</item>
 		<item>Small AM/PM</item>
 		<item>Hide AM/PM</item>
-		<item>Hide Clock</item>
+	</string-array>
+	<string-array name="clock_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array name="clock_entries">
+		<item>Hide clock</item>
+		<item>Show - right</item>
+		<item>Show - center</item>
 	</string-array>
 	<string-array name="battery_text_display_entries">
 		<item>Regular</item>

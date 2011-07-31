@@ -26,7 +26,11 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
     private static final String PREF_CLOCK_DISPLAY_STYLE = "clock_am_pm";
 
+    private static final String PREF_CLOCK_STYLE = "clock_style";
+
     private static final String PREF_CLOCK_COLOR = "clock_color_pref";
+
+    ListPreference mAmPmStyle;
 
     ListPreference mClockStyle;
 
@@ -40,16 +44,18 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
         addPreferencesFromResource(R.xml.clock_prefs);
         PreferenceScreen prefs = getPreferenceScreen();
 
-        mClockStyle = (ListPreference) prefs.findPreference(PREF_CLOCK_DISPLAY_STYLE);
+        mClockStyle = (ListPreference) prefs.findPreference(PREF_CLOCK_STYLE);
+        mAmPmStyle = (ListPreference) prefs.findPreference(PREF_CLOCK_DISPLAY_STYLE);
         mColorPref = prefs.findPreference(PREF_CLOCK_COLOR);
 
-        /**
-         * 3 should hide, others should follow pattern in Clock in SystemUI
-         */
-        int styleValue = (Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_CLOCK, 1) == 0) ? 3 : Settings.System.getInt(
-                getContentResolver(), Settings.System.STATUS_BAR_AM_PM, 2);
-        mClockStyle.setValueIndex(styleValue);
+        int styleValue = Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_AM_PM, 2);
+        mAmPmStyle.setValueIndex(styleValue);
+        mAmPmStyle.setOnPreferenceChangeListener(this);
+
+        int clockVal = Settings.System.getInt(getContentResolver(),
+                Settings.System.STATUS_BAR_CLOCK, 1);
+        mClockStyle.setValueIndex(clockVal);
         mClockStyle.setOnPreferenceChangeListener(this);
 
     }
@@ -83,18 +89,21 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
     @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
-        if (preference == mClockStyle) {
+        if (preference == mAmPmStyle) {
             int statusBarAmPm = Integer.valueOf((String) newValue);
 
-            if (statusBarAmPm == 3)
-                Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK, 0);
-            else {
-                Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK, 1);
-                Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_AM_PM,
-                        statusBarAmPm);
-            }
+            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_AM_PM,
+                    statusBarAmPm);
+            return true;
+
+        } else if (preference == mClockStyle) {
+            int val = Integer.valueOf((String) newValue);
+
+            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK, val);
+
             return true;
         }
+
         return false;
     }
 }
