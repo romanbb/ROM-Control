@@ -96,12 +96,12 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
         mColorLow = prefs.findPreference(PREF_COLOR_LOW);
 
         int batteryStyleIndex = Settings.System.getInt(getContentResolver(),
-                PREF_BATTERY_TEXT_STYLE, 1);
+                Settings.System.STATUS_BAR_CM_BATTERY, 1);
         mBatteryTextStyle.setValueIndex(batteryStyleIndex);
         mBatteryTextStyle.setOnPreferenceChangeListener(this);
 
         mShowBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_BATTERY, 0) == 1);
+                Settings.System.STATUS_BAR_BATTERY, 1) == 1);
 
         mShowCMBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
                 Settings.System.STATUS_BAR_CM_BATTERY_ICON, 0) == 1);

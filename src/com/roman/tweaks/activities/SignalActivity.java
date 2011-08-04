@@ -18,8 +18,7 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 
-public class SignalActivity extends PreferenceActivity implements
-        OnPreferenceChangeListener {
+public class SignalActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
     private String signalTextColorPickerFlag;
 
@@ -103,8 +102,7 @@ public class SignalActivity extends PreferenceActivity implements
 
     public ColorPickerDialog generateDialog(String preference) {
         ColorPickerDialog cp = new ColorPickerDialog(this, mColorChangeListener,
-                Settings.System.getInt(getContentResolver(),
-                        preference,
+                Settings.System.getInt(getContentResolver(), preference,
                         Settings.System.getInt(getContentResolver(), preference, Color.WHITE)));
         return cp;
     }
@@ -159,7 +157,8 @@ public class SignalActivity extends PreferenceActivity implements
             boolean enable = mShow4GIcon.isChecked();
             Settings.System.putInt(getContentResolver(),
                     Settings.System.STATUS_BAR_TWEAKS_SHOW_4G_ICON, (enable ? 1 : 0));
-
+            Intent i = new Intent(CustomIntents.DATA_ICON_ACTION);
+            sendBroadcast(i);
             return true;
 
         } else if (preference == mShowSignalBars) {
@@ -193,14 +192,12 @@ public class SignalActivity extends PreferenceActivity implements
 
         @Override
         public void colorUpdate(int color) {
-            Settings.System.putInt(getContentResolver(), signalTextColorPickerFlag,
-                    color);
+            Settings.System.putInt(getContentResolver(), signalTextColorPickerFlag, color);
         }
 
         @Override
         public void colorChanged(int color) {
-            Settings.System.putInt(getContentResolver(), signalTextColorPickerFlag,
-                    color);
+            Settings.System.putInt(getContentResolver(), signalTextColorPickerFlag, color);
 
         }
     };
