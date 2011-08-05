@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen>
+	<PreferenceScreen
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:title="Misc"
+		android:summary="SD Cache, Debugging visibility"
+		android:key="misc_prefscreen">
+		<ListPreference
+			android:key="read_ahead_pref"
+			android:title="SD Read-Ahead Cache"
+			android:entryValues="@array/read_ahead_entries"
+			android:entries="@array/read_ahead_entries" />
+	</PreferenceScreen>

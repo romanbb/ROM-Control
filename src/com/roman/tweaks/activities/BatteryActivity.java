@@ -96,21 +96,6 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
         refreshOptions();
     }
 
-    public void sendTimeIntent() {
-        Intent timeIntent = new Intent();
-        timeIntent.setAction(Intent.ACTION_TIME_CHANGED);
-        sendBroadcast(timeIntent);
-        refreshOptions();
-    }
-
-    public void sendBatteryUpdateIntent() {
-        Intent i = new Intent();
-        i.setAction(CustomIntents.ACTION_BATTERY_UPDATE);
-        sendBroadcast(i);
-        sendBroadcast(i);
-        refreshOptions();
-    }
-
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mBatteryTextStyle) {
             // preference = (ListPreference) preference;
@@ -200,7 +185,7 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
             int val = ((CheckBoxPreference) preference).isChecked() ? 1 : 0;
             Settings.System.putInt(getContentResolver(),
                     Settings.System.STATUS_BAR_TWEAKS_MIUI_BATTERY, val);
-
+            return true;
         }
 
         return false;

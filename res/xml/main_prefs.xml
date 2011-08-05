@@ -20,16 +20,6 @@
 	<PreferenceCategory
 		android:title="Other"
 		android:key="other_cat">
-		<PreferenceScreen
-			android:title="Misc"
-			android:summary="SD Cache, Debugging visibility"
-			android:key="misc_prefscreen">
-			<ListPreference
-				android:key="read_ahead_pref"
-				android:title="SD Read-Ahead Cache"
-				android:entryValues="@array/read_ahead_entries"
-				android:entries="@array/read_ahead_entries" />
-		</PreferenceScreen>
 		<Preference
 			android:title="About"
 			android:key="about_pref" />
