@@ -1,8 +1,6 @@
 
 package com.roman.tweaks.activities;
 
-import com.roman.tweaks.AmbilWarnaDialog;
-import com.roman.tweaks.AmbilWarnaDialog.OnAmbilWarnaListener;
 import com.roman.tweaks.R;
 
 import android.content.Context;
@@ -20,20 +18,6 @@ import android.provider.Settings;
 
 public class BatteryActivity extends PreferenceActivity implements OnPreferenceChangeListener {
     Context context;
-
-    private static final int COLOR_BATTERY = 1;
-
-    private static final int COLOR_AUTO_CHARGING = 2;
-
-    private static final int COLOR_AUTO_MEDIUM = 3;
-
-    private static final int COLOR_AUTO_REGULAR = 4;
-
-    private static final int COLOR_AUTO_LOW = 5;
-
-    private int batteryColorPickerFlag;
-
-    AmbilWarnaDialog batteryColorPickerDialog = null;
 
     private static final String PREF_BATTERY_TEXT_STYLE = "battery_text_style_pref";
 

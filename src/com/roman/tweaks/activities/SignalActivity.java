@@ -1,10 +1,8 @@
 
 package com.roman.tweaks.activities;
 
-import com.roman.tweaks.AmbilWarnaDialog;
 import com.roman.tweaks.R;
 
-import android.content.Context;
 import android.content.CustomIntents;
 import android.content.Intent;
 import android.graphics.Color;
