@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, Main!</string>
-    <string name="app_name">EDT Tweaks</string>
-    <string name="ambilwarna_cancel">Cancel</string>
-    <string name="ambilwarna_ok">OK</string>
-    <string name="automatic_battery_enabled">Color will changes based on current level</string>
-    <string name="automatic_battery_disabled">Battery text has a static color</string>
+	<string name="hello">Hello World, Main!</string>
+	<string name="app_name">Tweaks</string>
+	<string name="ambilwarna_cancel">Cancel</string>
+	<string name="ambilwarna_ok">OK</string>
+	<string name="automatic_battery_enabled">Color will changes based on current level</string>
+	<string name="automatic_battery_disabled">Battery text has a static color</string>
+
+
+	<string name="use_custom_app_title">Use custom application</string>
+	<string name="use_custom_app_summary">Use custom application instead of the recent applications dialog</string>
+	<string name="select_custom_app_title">Select custom application</string>
+	<string name="group_applications">Applications</string>
 </resources>

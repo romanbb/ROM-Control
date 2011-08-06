@@ -3,8 +3,15 @@
 	<PreferenceCategory
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
-		
-		
+		<PreferenceScreen
+			android:title="Lockscreen Settings"
+			android:key="lockscreen_settings">
+			<intent
+				android:action="android.intent.action.MAIN"
+				android:targetPackage="com.roman.tweaks"
+				android:targetClass="com.roman.tweaks.activities.LockscreenActivity" />
+		</PreferenceScreen>
+
 		<Preference
 			android:title="Clock Options"
 			android:key="clock_options_pref" />
@@ -20,9 +27,6 @@
 	<PreferenceCategory
 		android:title="Other"
 		android:key="other_cat">
-		<Preference
-			android:title="About"
-			android:key="about_pref" />
 		<CheckBoxPreference
 			android:title="Enable BLN"
 			android:key="bln_pref"

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	android:title="Lockscreen preferences"
+	android:key="lockscreen_prefscreen">
+	<Preference
+		android:key="cmparts_lockscreen"
+		android:title="Launch Cyanogenmod lockscreen settings"
+		android:summary="Shortcut for ease of use">
+		<intent
+			android:action="android.intent.action.MAIN"
+			android:targetPackage="com.cyanogenmod.cmparts"
+			android:targetClass="com.cyanogenmod.cmparts.activities.LockscreenActivity" />
+	</Preference>
+	<ListPreference
+		android:key="pref_lockscreen_style"
+		android:title="Choose lockscreen style"
+		android:entries="@array/pref_lockscreen_style_entries"
+		android:entryValues="@array/pref_lockscreen_style_values" />
+
+	<CheckBoxPreference
+		android:title="Show Honeycomb clock font"
+		android:key="pref_clock" />
+
+	<PreferenceCategory android:title="Custom Application Launchers">
+
+		<Preference
+			android:key="pref_quadrant_1"
+			android:title="Quadrant 1 Activity"
+			android:summary="" />
+		<Preference
+			android:key="pref_quadrant_2"
+			android:title="Quadrant 2 Activity"
+			android:summary="" />
+		<Preference
+			android:key="pref_quadrant_3"
+			android:title="Quadrant 3 Activity"
+			android:summary="" />
+		<Preference
+			android:key="pref_quadrant_4"
+			android:title="Quadrant 4 Activity"
+			android:summary="" />
+
+
+	</PreferenceCategory>
+
+
+</PreferenceScreen>
