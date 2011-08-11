@@ -3,8 +3,6 @@ package com.roman.tweaks.activities;
 
 import com.roman.tweaks.R;
 
-import android.content.CustomIntents;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -81,15 +79,15 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
 
         // check enabled settings
         mShowSignalBars.setChecked((Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_TWEAKS_SHOW_SIGNAL, 1) == 1));
+                "tweaks_signal_icon_enabled", 1) == 1));
         mSignalAutoColor.setChecked((Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_TWEAKS_AUTOCOLOR, 0) == 1));
+                "tweaks_signal_text_autocolor_enabled", 0) == 1));
         mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_TWEAKS_SHOW_4G_ICON, 0) == 1));
+                "tweaks_signal_icon_show4g_icon", 0) == 1));
 
         mSignalTextStyle.setOnPreferenceChangeListener(this);
         mSignalTextStyle.setValueIndex(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_SIGNAL_STYLE, 0));
+                "tweaks_signal_text_style", 0));
 
         refreshOptions();
     }
@@ -109,60 +107,58 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
 
         if (preference == mSignalColor0) {
 
-            signalTextColorPickerFlag = Settings.System.STATUS_BAR_TWEAKS_0_BARS;
+            signalTextColorPickerFlag = "tweaks_signal_text_color_0_bar";
 
             generateDialog(signalTextColorPickerFlag).show();
             return true;
 
         } else if (preference == mSignalColor1) {
-            signalTextColorPickerFlag = Settings.System.STATUS_BAR_TWEAKS_1_BARS;
+            signalTextColorPickerFlag = "tweaks_signal_text_color_1_bar";
 
             generateDialog(signalTextColorPickerFlag).show();
             return true;
 
         } else if (preference == mSignalColor2) {
 
-            signalTextColorPickerFlag = Settings.System.STATUS_BAR_TWEAKS_2_BARS;
+            signalTextColorPickerFlag = "tweaks_signal_text_color_2_bar";
             generateDialog(signalTextColorPickerFlag).show();
             return true;
 
         } else if (preference == mSignalColor3) {
 
-            signalTextColorPickerFlag = Settings.System.STATUS_BAR_TWEAKS_3_BARS;
+            signalTextColorPickerFlag = "tweaks_signal_text_color_3_bar";
             generateDialog(signalTextColorPickerFlag).show();
             return true;
 
         } else if (preference == mSignalColor4) {
 
-            signalTextColorPickerFlag = Settings.System.STATUS_BAR_TWEAKS_4_BARS;
+            signalTextColorPickerFlag = "tweaks_signal_text_color_4_bar";
             generateDialog(signalTextColorPickerFlag).show();
             return true;
 
         } else if (preference == mSignalColorStatic) {
 
-            signalTextColorPickerFlag = Settings.System.STATUS_BAR_TWEAKS_REGULAR_COLOR;
+            signalTextColorPickerFlag = "tweaks_signal_text_color_static";
             generateDialog(signalTextColorPickerFlag).show();
             return true;
 
         } else if (preference == mSignalAutoColor) {
             boolean enable = mSignalAutoColor.isChecked();
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_TWEAKS_AUTOCOLOR, (enable ? 1 : 0));
+                    "tweaks_signal_text_autocolor_enabled", (enable ? 1 : 0));
             refreshOptions();
             return true;
 
         } else if (preference == mShow4GIcon) {
             boolean enable = mShow4GIcon.isChecked();
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_TWEAKS_SHOW_4G_ICON, (enable ? 1 : 0));
-            Intent i = new Intent(CustomIntents.DATA_ICON_ACTION);
-            sendBroadcast(i);
+                    "tweaks_signal_icon_show4g_icon", (enable ? 1 : 0));
             return true;
 
         } else if (preference == mShowSignalBars) {
             boolean enable = mShowSignalBars.isChecked();
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_TWEAKS_SHOW_SIGNAL, (enable ? 1 : 0));
+                    "tweaks_signal_icon_enabled", (enable ? 1 : 0));
 
             return true;
 
@@ -178,7 +174,7 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
             preference = (ListPreference) preference;
 
             int val = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_SIGNAL_STYLE,
+            Settings.System.putInt(getContentResolver(), "tweaks_signal_text_style",
                     val);
             return true;
         }

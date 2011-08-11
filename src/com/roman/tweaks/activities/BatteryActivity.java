@@ -4,8 +4,6 @@ package com.roman.tweaks.activities;
 import com.roman.tweaks.R;
 
 import android.content.Context;
-import android.content.CustomIntents;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -23,10 +21,6 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
     private static final String PREF_SHOW_BATTERY_ICON = "show_battery_icon";
 
-    private static final String PREF_SHOW_CM_BATTERY_BAR = "show_cm_battery_icon";
-
-    private static final String PREF_SHOW_MIUI_BATTERY = "show_miui_battery";
-
     private static final String PREF_COLOR_AUTOMATICALLY = "battery_automatically_color_pref";
 
     private static final String PREF_COLOR_STATIC = "battery_color_pref";
@@ -39,15 +33,13 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
     private static final String PREF_COLOR_LOW = "battery_color_auto_low";
 
+    private static final String CONST_BATTERY_TEXT = "tweaks_battery_text_style";
+
     ListPreference mBatteryTextStyle;
 
     CheckBoxPreference mShowBatteryIcon;
 
-    CheckBoxPreference mShowCMBatteryIcon;
-
     CheckBoxPreference mColorAutomatically;
-
-    CheckBoxPreference mShowMiuiBattery;
 
     Preference mColorStatic;
 
@@ -70,8 +62,6 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
         mBatteryTextStyle = (ListPreference) prefs.findPreference(PREF_BATTERY_TEXT_STYLE);
         mShowBatteryIcon = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_BATTERY_ICON);
-        mShowCMBatteryIcon = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_CM_BATTERY_BAR);
-        mShowMiuiBattery = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_MIUI_BATTERY);
         mColorAutomatically = (CheckBoxPreference) prefs.findPreference(PREF_COLOR_AUTOMATICALLY);
         mColorStatic = prefs.findPreference(PREF_COLOR_STATIC);
         mColorCharging = prefs.findPreference(PREF_COLOR_CHARGING);
@@ -80,18 +70,12 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
         mColorLow = prefs.findPreference(PREF_COLOR_LOW);
 
         int batteryStyleIndex = Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_CM_BATTERY, 1);
+                CONST_BATTERY_TEXT, 1);
         mBatteryTextStyle.setValueIndex(batteryStyleIndex);
         mBatteryTextStyle.setOnPreferenceChangeListener(this);
 
         mShowBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_BATTERY, 1) == 1);
-
-        mShowCMBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_CM_BATTERY_ICON, 0) == 1);
-
-        mShowMiuiBattery.setChecked(Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_TWEAKS_MIUI_BATTERY, 0) == 1);
+                "tweaks_show_battery", 1) == 1);
 
         refreshOptions();
     }
@@ -103,7 +87,7 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
             int val = Integer.valueOf((String) newValue);
 
             Settings.System
-                    .putInt(getContentResolver(), Settings.System.STATUS_BAR_CM_BATTERY, val);
+                    .putInt(getContentResolver(), CONST_BATTERY_TEXT, val);
             return true;
         }
         return false;
@@ -120,31 +104,31 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
         // String key = preference.getKey();
 
         if (preference == mColorCharging) {
-            sCurrentPrefColorFlag = Settings.System.STATUS_BAR_CM_BATTERY_TEXT_COLOR_AUTO_CHARGING;
+            sCurrentPrefColorFlag = "tweaks_batt_color_auto_charging";
 
             generateDialog(sCurrentPrefColorFlag).show();
             return true;
 
         } else if (preference == mColorRegular) {
-            sCurrentPrefColorFlag = Settings.System.STATUS_BAR_CM_BATTERY_TEXT_COLOR_AUTO_REG;
+            sCurrentPrefColorFlag = "tweaks_batt_color_auto_regular";
 
             generateDialog(sCurrentPrefColorFlag).show();
             return true;
 
         } else if (preference == mColorMedium) {
-            sCurrentPrefColorFlag = Settings.System.STATUS_BAR_CM_BATTERY_TEXT_COLOR_AUTO_MEDIUM;
+            sCurrentPrefColorFlag = "tweaks_batt_color_auto_medium";
 
             generateDialog(sCurrentPrefColorFlag).show();
             return true;
 
         } else if (preference == mColorLow) {
-            sCurrentPrefColorFlag = Settings.System.STATUS_BAR_CM_BATTERY_TEXT_COLOR_AUTO_LOW;
+            sCurrentPrefColorFlag = "tweaks_batt_color_auto_low";
 
             generateDialog(sCurrentPrefColorFlag).show();
             return true;
 
         } else if (preference == mColorStatic) {
-            sCurrentPrefColorFlag = Settings.System.STATUS_BAR_CM_BATTERY_TEXT_COLOR_STATIC;
+            sCurrentPrefColorFlag = "tweaks_batt_color_static";
 
             generateDialog(sCurrentPrefColorFlag).show();
             return true;
@@ -154,7 +138,7 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
             int value = (checked ? 1 : 0);
 
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_CM_BATTERY_TEXT_DO_AUTO_COLOR, value);
+                    "tweaks_batt_color_auto_enabled", value);
 
             preference.setSummary((checked ? R.string.automatic_battery_enabled
                     : R.string.automatic_battery_disabled));
@@ -166,26 +150,10 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             int value = (checked ? 1 : 0);
 
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_BATTERY, value);
+            Settings.System.putInt(getContentResolver(), "tweaks_show_battery", value);
 
             return true;
 
-        } else if (preference == mShowCMBatteryIcon) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
-
-            if (checked) {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.STATUS_BAR_CM_BATTERY_ICON, 1);
-            } else {
-                Settings.System.putInt(getContentResolver(),
-                        Settings.System.STATUS_BAR_CM_BATTERY_ICON, 0);
-            }
-            return true;
-        } else if (preference == mShowMiuiBattery) {
-            int val = ((CheckBoxPreference) preference).isChecked() ? 1 : 0;
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.STATUS_BAR_TWEAKS_MIUI_BATTERY, val);
-            return true;
         }
 
         return false;

@@ -103,7 +103,7 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         /* Lockscreen Style and related related settings */
         mLockscreenStylePref = (ListPreference) prefSet.findPreference(LOCKSCREEN_STYLE_PREF);
         mLockscreenStyle = LockscreenStyle.getStyleById(Settings.System.getInt(
-                getContentResolver(), Settings.System.LOCKSCREEN_STYLE_PREF, 3));
+                getContentResolver(), "tweaks_lockscreen_style", 3));
         mLockscreenStylePref
                 .setValue(String.valueOf(LockscreenStyle.getIdByStyle(mLockscreenStyle)));
         mLockscreenStylePref.setOnPreferenceChangeListener(this);
@@ -123,25 +123,25 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
 
         if (preference == mHoneyQuadrant1Pref) {
             mCurrentCustomActivityPreference = preference;
-            mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_1;
+            mCurrentCustomActivityString = "tweaks_lockscreen_hc_activity_1";
             mPicker.pickShortcut();
             return true;
 
         } else if (preference == mHoneyQuadrant2Pref) {
             mCurrentCustomActivityPreference = preference;
-            mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_2;
+            mCurrentCustomActivityString = "tweaks_lockscreen_hc_activity_2";
             mPicker.pickShortcut();
             return true;
 
         } else if (preference == mHoneyQuadrant3Pref) {
             mCurrentCustomActivityPreference = preference;
-            mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_3;
+            mCurrentCustomActivityString = "tweaks_lockscreen_hc_activity_3";
             mPicker.pickShortcut();
             return true;
 
         } else if (preference == mHoneyQuadrant4Pref) {
             mCurrentCustomActivityPreference = preference;
-            mCurrentCustomActivityString = Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_4;
+            mCurrentCustomActivityString = "tweaks_lockscreen_hc_activity_4";
             mPicker.pickShortcut();
             return true;
         } else if (preference == mShowHoneyClock) {
@@ -149,7 +149,7 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
             int value = (checked ? 1 : 0);
             
             Settings.System.putInt(getContentResolver(),
-                    Settings.System.CLOCK_FONT, value);
+                    "tweaks_lockscreen_hc_clock_enabled", value);
         }
 
         return false;
@@ -165,7 +165,7 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         String val = newValue.toString();
         if (preference == mLockscreenStylePref) {
             mLockscreenStyle = LockscreenStyle.getStyleById((String) newValue);
-            Settings.System.putInt(getContentResolver(), Settings.System.LOCKSCREEN_STYLE_PREF,
+            Settings.System.putInt(getContentResolver(), "tweaks_lockscreen_style",
                     LockscreenStyle.getIdByStyle(mLockscreenStyle));
             // updateStylePrefs(mLockscreenStyle, mInCallStyle);
             return true;

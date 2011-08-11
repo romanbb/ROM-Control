@@ -10,21 +10,15 @@
 	</string-array>
 
 	<string-array name="pref_lockscreen_style_entries">
-		<item>Sliding Tab</item>
-		<item>Rotary</item>
-		<item>Rotary revamped</item>
-		<item>Lense</item>
-		<item>Honeycomb</item>
+		<item>HTC Sense</item>
+		<item>Android</item>
 	</string-array>
 
 	<string-array
 		name="pref_lockscreen_style_values"
 		translatable="false">
+		<item>0</item>
 		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-		<item>5</item>
 	</string-array>
 
 	<string-array name="am_pm_values">
@@ -41,12 +35,10 @@
 	<string-array name="clock_values">
 		<item>0</item>
 		<item>1</item>
-		<item>2</item>
 	</string-array>
 	<string-array name="clock_entries">
 		<item>Hide clock</item>
-		<item>Show - right</item>
-		<item>Show - center</item>
+		<item>Show clock</item>
 	</string-array>
 
 	<string-array name="battery_text_display_entries">

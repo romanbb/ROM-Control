@@ -2,32 +2,27 @@
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	package="com.roman.tweaks"
-	android:sharedUserId="android.uid.system">
+	android:versionCode="1">
 
-	<uses-permission
-		android:name="android.permission.WRITE_SETTINGS"></uses-permission>
-	<uses-permission
-		android:name="android.permission.SET_TIME_ZONE"></uses-permission>
+	<uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
+	<uses-permission android:name="android.permission.SET_TIME_ZONE"></uses-permission>
 
 	<application
 		android:icon="@drawable/icon"
 		android:label="@string/app_name">
 		<activity
 			android:label="@string/app_name"
-			android:name=".Main">
+			android:name=".Main"
+			android:launchMode="singleTask">
 			<intent-filter>
-				<action
-					android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN"></action>
 			</intent-filter>
 		</activity>
 
-		<receiver
-			android:name="Receiver">
+		<receiver android:name="Receiver">
 			<intent-filter>
-				<action
-					android:name="com.roman.tweaks.OPEN"></action>
-				<action
-					android:name="com.roman.intents.HARD_REBOOT_ACTION"></action>
+				<action android:name="com.roman.tweaks.OPEN"></action>
+				<action android:name="com.roman.intents.HARD_REBOOT_ACTION"></action>
 			</intent-filter>
 		</receiver>
 
@@ -35,16 +30,15 @@
 			android:label="Tweaks - Lockscreen Settings"
 			android:name=".activities.LockscreenActivity">
 			<intent-filter>
-				<action
-					android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN"></action>
 			</intent-filter>
 		</activity>
 
 		<activity
 			android:label="Tweaks - Clock Options"
 			android:name=".activities.ClockActivity"></activity>
-			
-			<activity
+
+		<activity
 			android:label="Tweaks - Battery Options"
 			android:name=".activities.BatteryActivity"></activity>
 

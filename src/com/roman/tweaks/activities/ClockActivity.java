@@ -49,12 +49,12 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
         mColorPref = prefs.findPreference(PREF_CLOCK_COLOR);
 
         int styleValue = Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_AM_PM, 2);
+                "tweaks_clock_ampm_style", 2);
         mAmPmStyle.setValueIndex(styleValue);
         mAmPmStyle.setOnPreferenceChangeListener(this);
 
         int clockVal = Settings.System.getInt(getContentResolver(),
-                Settings.System.STATUS_BAR_CLOCK, 1);
+                "tweaks_clock_style", 1);
         mClockStyle.setValueIndex(clockVal);
         mClockStyle.setOnPreferenceChangeListener(this);
 
@@ -64,7 +64,7 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
         if (preference == mColorPref) {
             ColorPickerDialog cp = new ColorPickerDialog(this, mColorChangeListener,
                     Settings.System.getInt(getContentResolver(),
-                            Settings.System.STATUS_BAR_CLOCK_COLOR, Color.WHITE));
+                            "tweaks_clock_color", Color.WHITE));
             cp.show();
         }
 
@@ -75,13 +75,13 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
         @Override
         public void colorUpdate(int color) {
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK_COLOR,
+            Settings.System.putInt(getContentResolver(), "tweaks_clock_color",
                     color);
         }
 
         @Override
         public void colorChanged(int color) {
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK_COLOR,
+            Settings.System.putInt(getContentResolver(), "tweaks_clock_color",
                     color);
 
         }
@@ -92,14 +92,14 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
         if (preference == mAmPmStyle) {
             int statusBarAmPm = Integer.valueOf((String) newValue);
 
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_AM_PM,
+            Settings.System.putInt(getContentResolver(),"tweaks_clock_ampm_style",
                     statusBarAmPm);
             return true;
 
         } else if (preference == mClockStyle) {
             int val = Integer.valueOf((String) newValue);
 
-            Settings.System.putInt(getContentResolver(), Settings.System.STATUS_BAR_CLOCK, val);
+            Settings.System.putInt(getContentResolver(), "tweaks_clock_style", val);
 
             return true;
         }

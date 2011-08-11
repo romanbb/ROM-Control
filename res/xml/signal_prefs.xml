@@ -18,11 +18,11 @@
 		android:title="Automatically Color"
 		android:key="signal_automatically_color_pref" />
 
-
 	<CheckBoxPreference
 		android:key="show_4g_icon"
 		android:title="Show 4G Icon"
-		android:summary="Instead of H" />
+		android:summary="Instead of H" 
+		android:enabled="false" />
 
 	<PreferenceCategory
 		android:title="Color Settings">

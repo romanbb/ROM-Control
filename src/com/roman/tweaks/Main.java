@@ -9,12 +9,9 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
-import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
@@ -42,9 +39,11 @@ public class Main extends PreferenceActivity {
 
     private static final String PREF_SIGNAL = "signal_options_pref";
 
+    private static final String PREF_RECENT_APPS = "show_recent_apps";
+
     CheckBoxPreference mEnableGPS;
 
-    CheckBoxPreference mBLN;
+    CheckBoxPreference mShowRecentApps;
 
     Preference mBattery;
 
@@ -62,66 +61,18 @@ public class Main extends PreferenceActivity {
         builder = new AlertDialog.Builder(this);
         PreferenceScreen prefs = getPreferenceScreen();
 
-        // vibrant specific settings
-        if (Build.DEVICE.contains("vibrantmtd")) {
-            this.addPreferencesFromResource(R.xml.vibrant_prefs);
-
-            mEnableGPS = (CheckBoxPreference) prefs.findPreference(PREF_ENABLE_GPS);
-
-            String output = "";
-            if (ShellInterface.isSuAvailable())
-                output = ShellInterface.getProcessOutput("ls /system/vendor/bin | grep gpsd");
-            if (output == null)
-                output = "was null";
-
-            boolean checked = output.equals("gpsd");
-            mEnableGPS.setChecked(checked);
-        }
-
-        // bln
-        mBLN = (CheckBoxPreference) prefs.findPreference(PREF_BLN);
-        mBattery = prefs.findPreference(PREF_BATTERY);
-        mClock = prefs.findPreference(PREF_CLOCK);
-        mSignal = prefs.findPreference(PREF_SIGNAL);
-
-        boolean checkBLN = Settings.System.getInt(getContentResolver(),
-                Settings.System.TRACKBALL_NOTIFICATION_ON, 1) == 1;
-        mBLN.setChecked(checkBLN);
-
+        mShowRecentApps = (CheckBoxPreference) prefs.findPreference(PREF_RECENT_APPS);
+        boolean checked = (Settings.System
+                .getInt(getContentResolver(), "tweaks_show_recent_apps", 0) == 1) ? true : false;
+        mShowRecentApps.setChecked(checked);
         
+        mClock = prefs.findPreference(PREF_CLOCK);
+        mBattery = prefs.findPreference(PREF_BATTERY);
+        mSignal = prefs.findPreference(PREF_SIGNAL);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
-        if (preference == mEnableGPS) {
-
-            boolean enabled = !((CheckBoxPreference) preference).isChecked();
-
-            String dir = "/system/vendor/bin/";
-            String enableCommand = "mv \"" + dir + GPS_DISBLED_NAME + "\" \"" + dir
-                    + GPS_ENABLED_NAME + "\"";
-            String disableCommand = "mv \"" + dir + GPS_ENABLED_NAME + "\" \"" + dir
-                    + GPS_DISBLED_NAME + "\"";
-
-            if (ShellInterface.isSuAvailable()) {
-                ShellInterface.getProcessOutput("mount -o rw,remount /system");
-                // ShellInterface.getProcessOutput("cd /system/vendor/bin");
-                if (enabled) {
-                    ShellInterface.getProcessOutput(disableCommand);
-                } else {
-                    ShellInterface.getProcessOutput(enableCommand);
-                }
-
-                preference.setSummary("Reboot to apply the change!");
-                ShellInterface.getProcessOutput("mount -o ro,remount /system");
-                return true;
-            }
-        } else if (preference == mBLN) {
-            boolean checked = mBLN.isChecked();
-            int value = (checked ? 1 : 0);
-            Settings.System.putInt(getContentResolver(), Settings.System.TRACKBALL_NOTIFICATION_ON,
-                    value);
-            return true;
-        } else if (preference == mClock) {
+        if (preference == mClock) {
             startActivity(new Intent(context, ClockActivity.class));
             return true;
         } else if (preference == mBattery) {
@@ -129,6 +80,11 @@ public class Main extends PreferenceActivity {
             return true;
         } else if (preference == mSignal) {
             startActivity(new Intent(context, SignalActivity.class));
+            return true;
+        } else if (preference == mShowRecentApps) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            Settings.System
+                    .putInt(getContentResolver(), "tweaks_show_recent_apps", checked ? 1 : 0);
             return true;
         }
 
