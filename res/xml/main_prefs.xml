@@ -5,24 +5,42 @@
 	<PreferenceCategory
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
-		<PreferenceScreen
+
+		<Preference
 			android:title="Lockscreen settings"
 			android:key="lockscreen_settings">
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
 				android:targetClass="com.roman.tweaks.activities.LockscreenActivity" />
-		</PreferenceScreen>
+		</Preference>
 
 		<Preference
 			android:title="Clock options"
-			android:key="clock_options_pref" />
+			android:key="clock_options_pref">
+			<intent
+				android:action="android.intent.action.MAIN"
+				android:targetPackage="com.roman.tweaks"
+				android:targetClass="com.roman.tweaks.activities.ClockActivity" />
+		</Preference>
+
 		<Preference
 			android:title="Battery options"
-			android:key="battery_options_pref" />
+			android:key="battery_options_pref">
+			<intent
+				android:action="android.intent.action.MAIN"
+				android:targetPackage="com.roman.tweaks"
+				android:targetClass="com.roman.tweaks.activities.BatteryActivity" />
+		</Preference>
+
 		<Preference
 			android:title="Signal options"
-			android:key="signal_options_pref" />
+			android:key="signal_options_pref">
+			<intent
+				android:action="android.intent.action.MAIN"
+				android:targetPackage="com.roman.tweaks"
+				android:targetClass="com.roman.tweaks.activities.SignalActivity" />
+		</Preference>
 
 	</PreferenceCategory>
 
@@ -34,6 +52,14 @@
 			android:key="show_recent_apps"
 			android:title="Show recent apps"
 			android:summary="In the dropdown. Will need a reboot after disabling." />
+
+		<CheckBoxPreference
+			android:key="pref_animate_off"
+			android:title="Animate screen off" />
+
+		<CheckBoxPreference
+			android:key="pref_animate_on"
+			android:title="Animate screen ob" />
 
 	</PreferenceCategory>
 </PreferenceScreen>

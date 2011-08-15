@@ -41,9 +41,17 @@ public class Main extends PreferenceActivity {
 
     private static final String PREF_RECENT_APPS = "show_recent_apps";
 
+    private static final String PREF_SCREEN_OFF = "pref_animate_off";
+
+    private static final String PREF_SCREEN_ON = "pref_animate_on";
+
     CheckBoxPreference mEnableGPS;
 
     CheckBoxPreference mShowRecentApps;
+
+    CheckBoxPreference mAnimateScreenOff;
+
+    CheckBoxPreference mAnimateScreenOn;
 
     Preference mBattery;
 
@@ -65,26 +73,40 @@ public class Main extends PreferenceActivity {
         boolean checked = (Settings.System
                 .getInt(getContentResolver(), "tweaks_show_recent_apps", 0) == 1) ? true : false;
         mShowRecentApps.setChecked(checked);
-        
+
         mClock = prefs.findPreference(PREF_CLOCK);
         mBattery = prefs.findPreference(PREF_BATTERY);
         mSignal = prefs.findPreference(PREF_SIGNAL);
+
+        checked = (Settings.System
+                .getInt(getContentResolver(), "tweaks_crt_off", 0) == 1) ? true : false;
+        mAnimateScreenOff = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_OFF);
+        mAnimateScreenOff.setChecked(checked);
+
+        checked = (Settings.System
+                .getInt(getContentResolver(), "tweaks_crt_ob", 0) == 1) ? true : false;
+        mAnimateScreenOn = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_ON);
+        mAnimateScreenOn.setChecked(checked);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
-        if (preference == mClock) {
-            startActivity(new Intent(context, ClockActivity.class));
-            return true;
-        } else if (preference == mBattery) {
-            startActivity(new Intent(context, BatteryActivity.class));
-            return true;
-        } else if (preference == mSignal) {
-            startActivity(new Intent(context, SignalActivity.class));
-            return true;
-        } else if (preference == mShowRecentApps) {
+        if (preference == mShowRecentApps) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
+
             Settings.System
                     .putInt(getContentResolver(), "tweaks_show_recent_apps", checked ? 1 : 0);
+            return true;
+        } else if (preference == mAnimateScreenOff) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+            Settings.System
+                    .putInt(getContentResolver(), "tweaks_crt_off", checked ? 1 : 0);
+            return true;
+        } else if (preference == mAnimateScreenOn) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+            Settings.System
+                    .putInt(getContentResolver(), "tweaks_crt_on", checked ? 1 : 0);
             return true;
         }
 

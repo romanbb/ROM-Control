@@ -13,6 +13,7 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
+import android.util.Log;
 
 public class BatteryActivity extends PreferenceActivity implements OnPreferenceChangeListener {
     Context context;
@@ -71,7 +72,8 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
         int batteryStyleIndex = Settings.System.getInt(getContentResolver(),
                 CONST_BATTERY_TEXT, 1);
-        mBatteryTextStyle.setValueIndex(batteryStyleIndex);
+        // Log.d("LOL", batteryStyleIndex + "");
+        mBatteryTextStyle.setValue(batteryStyleIndex + "");
         mBatteryTextStyle.setOnPreferenceChangeListener(this);
 
         mShowBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
