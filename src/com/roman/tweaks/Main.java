@@ -1,22 +1,19 @@
 
 package com.roman.tweaks;
 
-import com.roman.tweaks.activities.BatteryActivity;
-import com.roman.tweaks.activities.ClockActivity;
-import com.roman.tweaks.activities.SignalActivity;
-
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
+import android.preference.ListPreference;
 import android.preference.Preference;
+import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 
-public class Main extends PreferenceActivity {
+public class Main extends PreferenceActivity implements OnPreferenceChangeListener {
     String pref;
 
     Context context;
@@ -45,6 +42,8 @@ public class Main extends PreferenceActivity {
 
     private static final String PREF_SCREEN_ON = "pref_animate_on";
 
+    private static final String OVERSCROLL_PREF = "pref_overscroll_effect";
+
     CheckBoxPreference mEnableGPS;
 
     CheckBoxPreference mShowRecentApps;
@@ -52,6 +51,8 @@ public class Main extends PreferenceActivity {
     CheckBoxPreference mAnimateScreenOff;
 
     CheckBoxPreference mAnimateScreenOn;
+
+    ListPreference mOverscrollPref;
 
     Preference mBattery;
 
@@ -84,9 +85,26 @@ public class Main extends PreferenceActivity {
         mAnimateScreenOff.setChecked(checked);
 
         checked = (Settings.System
-                .getInt(getContentResolver(), "tweaks_crt_ob", 0) == 1) ? true : false;
+                .getInt(getContentResolver(), "tweaks_crt_on", 0) == 1) ? true : false;
         mAnimateScreenOn = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_ON);
         mAnimateScreenOn.setChecked(checked);
+
+        mOverscrollPref = (ListPreference) prefs.findPreference(OVERSCROLL_PREF);
+        int overscrollEffect = Settings.System.getInt(getContentResolver(),
+                "overscroll_effect", 1);
+        mOverscrollPref.setValue(String.valueOf(overscrollEffect));
+        mOverscrollPref.setOnPreferenceChangeListener(this);
+    }
+
+    public boolean onPreferenceChange(Preference preference, Object newValue) {
+
+        if (preference == mOverscrollPref) {
+            int overscrollEffect = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getContentResolver(), "overscroll_effect",
+                    overscrollEffect);
+            return true;
+        }
+        return false;
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
