@@ -13,9 +13,10 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.widget.Toast;
-
-import java.io.File;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
+import android.view.MenuInflater;
+import android.view.View;
 
 public class LockscreenActivity extends PreferenceActivity implements OnPreferenceChangeListener,
         ShortcutPickHelper.OnPickListener {
@@ -29,13 +30,21 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
     private static final String LOCKSCREEN_QUADRANT_3_PREF = "pref_quadrant_3";
 
     private static final String LOCKSCREEN_QUADRANT_4_PREF = "pref_quadrant_4";
-    
+
+    private static final String LOCKSCREEN_SILENCE_Q1_PREF = "pref_silent_quadrant_1";
+
+    private static final String LOCKSCREEN_SILENCE_Q2_PREF = "pref_silent_quadrant_2";
+
+    private static final String LOCKSCREEN_SILENCE_Q3_PREF = "pref_silent_quadrant_3";
+
+    private static final String LOCKSCREEN_SILENCE_Q4_PREF = "pref_silent_quadrant_4";
+
     private static final String LOCKSCREEN_CLOCK_PREF = "pref_clock";
 
     private LockscreenStyle mLockscreenStyle;
 
     private ListPreference mLockscreenStylePref;
-    
+
     private CheckBoxPreference mShowHoneyClock;
 
     private Preference mHoneyQuadrant1Pref;
@@ -46,11 +55,29 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
 
     private Preference mHoneyQuadrant4Pref;
 
+    private Preference mSilenceQuad1Pref;
+
+    private Preference mSilenceQuad2Pref;
+
+    private Preference mSilenceQuad3Pref;
+
+    private Preference mSilenceQuad4Pref;
+
     private Preference mCurrentCustomActivityPreference;
 
     private String mCurrentCustomActivityString;
 
     private ShortcutPickHelper mPicker;
+
+    private String mQ1Setting;
+
+    private String mQ2Setting;
+
+    private String mQ3Setting;
+
+    private String mQ4Setting;
+
+    private static final String TOGGLE_SILENT = "silent_mode";
 
     enum LockscreenStyle {
         Slider, Rotary, RotaryRevamped, Lense, Honeycomb;
@@ -100,6 +127,11 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
 
         PreferenceScreen prefSet = getPreferenceScreen();
 
+        mQ1Setting = Settings.System.getString(getContentResolver(), LOCKSCREEN_QUADRANT_1_PREF);
+        mQ2Setting = Settings.System.getString(getContentResolver(), LOCKSCREEN_QUADRANT_2_PREF);
+        mQ3Setting = Settings.System.getString(getContentResolver(), LOCKSCREEN_QUADRANT_3_PREF);
+        mQ4Setting = Settings.System.getString(getContentResolver(), LOCKSCREEN_QUADRANT_4_PREF);
+
         /* Lockscreen Style and related related settings */
         mLockscreenStylePref = (ListPreference) prefSet.findPreference(LOCKSCREEN_STYLE_PREF);
         mLockscreenStyle = LockscreenStyle.getStyleById(Settings.System.getInt(
@@ -112,10 +144,41 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         mHoneyQuadrant2Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_2_PREF);
         mHoneyQuadrant3Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_3_PREF);
         mHoneyQuadrant4Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_4_PREF);
-        
+
+        mSilenceQuad1Pref = prefSet.findPreference(LOCKSCREEN_SILENCE_Q1_PREF);
+        mSilenceQuad2Pref = prefSet.findPreference(LOCKSCREEN_SILENCE_Q2_PREF);
+        mSilenceQuad3Pref = prefSet.findPreference(LOCKSCREEN_SILENCE_Q3_PREF);
+        mSilenceQuad4Pref = prefSet.findPreference(LOCKSCREEN_SILENCE_Q4_PREF);
+
         mShowHoneyClock = (CheckBoxPreference) prefSet.findPreference(LOCKSCREEN_CLOCK_PREF);
-        
+
         mPicker = new ShortcutPickHelper(this, this);
+    }
+
+    public void refreshSettings() {
+        if (mQ1Setting.equals(TOGGLE_SILENT)) {
+            mHoneyQuadrant1Pref.setSummary("Silent mode");
+        } else {
+            mHoneyQuadrant1Pref.setSummary(mPicker.getFriendlyNameForUri(mQ1Setting));
+        }
+
+        if (mQ2Setting.equals(TOGGLE_SILENT)) {
+            mHoneyQuadrant2Pref.setSummary("Silent mode");
+        } else {
+            mHoneyQuadrant2Pref.setSummary(mPicker.getFriendlyNameForUri(mQ2Setting));
+        }
+
+        if (mQ3Setting.equals(TOGGLE_SILENT)) {
+            mHoneyQuadrant3Pref.setSummary("Silent mode");
+        } else {
+            mHoneyQuadrant3Pref.setSummary(mPicker.getFriendlyNameForUri(mQ3Setting));
+        }
+
+        if (mQ4Setting.equals(TOGGLE_SILENT)) {
+            mHoneyQuadrant4Pref.setSummary("Silent mode");
+        } else {
+            mHoneyQuadrant4Pref.setSummary(mPicker.getFriendlyNameForUri(mQ4Setting));
+        }
     }
 
     @Override
@@ -147,9 +210,30 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         } else if (preference == mShowHoneyClock) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             int value = (checked ? 1 : 0);
-            
-            Settings.System.putInt(getContentResolver(),
-                    Settings.System.CLOCK_FONT, value);
+
+            Settings.System.putInt(getContentResolver(), Settings.System.CLOCK_FONT, value);
+
+            return true;
+        } else if (preference == mSilenceQuad1Pref) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_1, TOGGLE_SILENT);
+            return true;
+
+        } else if (preference == mSilenceQuad2Pref) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_2, TOGGLE_SILENT);
+            return true;
+
+        } else if (preference == mSilenceQuad3Pref) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_3, TOGGLE_SILENT);
+            return true;
+
+        } else if (preference == mSilenceQuad4Pref) {
+            Settings.System.putString(getContentResolver(),
+                    Settings.System.LOCKSCREEN_CUSTOM_APP_HONEY_4, TOGGLE_SILENT);
+            return true;
+
         }
 
         return false;

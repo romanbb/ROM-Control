@@ -43,6 +43,28 @@
 
 
 	</PreferenceCategory>
+	
+	<PreferenceCategory android:title="Silent Toggle Enablers">
+
+		<Preference
+			android:key="pref_silent_quadrant_1"
+			android:title="Silence on Q1"
+			android:summary="" />
+		<Preference
+			android:key="pref_silent_quadrant_2"
+			android:title="Silence on Q2"
+			android:summary="" />
+		<Preference
+			android:key="pref_silent_quadrant_3"
+			android:title="Silence on Q3"
+			android:summary="" />
+		<Preference
+			android:key="pref_silent_quadrant_4"
+			android:title="Silence on Q4"
+			android:summary="" />
+
+
+	</PreferenceCategory>
 
 
 </PreferenceScreen>
