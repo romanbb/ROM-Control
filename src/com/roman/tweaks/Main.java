@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.ListPreference;
@@ -46,6 +47,10 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
 
     private static final String OVERSCROLL_PREF = "pref_overscroll_effect";
 
+    private static final String TWITTER_PREF = "twitter_link";
+
+    private static final String THREAD_PREF = "thread_link";
+
     CheckBoxPreference mEnableGPS;
 
     CheckBoxPreference mShowRecentApps;
@@ -62,6 +67,10 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
 
     Preference mSignal;
 
+    Preference mTwitter;
+
+    Preference mThread;
+
     /** Called when the activity is first created. */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +81,18 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
 
         if (isKanged("Bulletproof")) {
             addPreferencesFromResource(R.xml.kanged);
+            mTwitter = findPreference(TWITTER_PREF);
+            mThread = findPreference(THREAD_PREF);
+
             check = true;
         }
 
         addPreferencesFromResource(R.xml.main_prefs);
 
+        PreferenceScreen prefs = getPreferenceScreen();
+
         d = new Dialog(this);
         builder = new AlertDialog.Builder(this);
-        PreferenceScreen prefs = getPreferenceScreen();
 
         mClock = prefs.findPreference(PREF_CLOCK);
         mBattery = prefs.findPreference(PREF_BATTERY);
@@ -210,6 +223,19 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
 
             Settings.System
                     .putInt(getContentResolver(), "tweaks_crt_on", checked ? 1 : 0);
+            return true;
+        } else if (preference == mTwitter) {
+
+            Intent twitterIntent = new Intent(
+                    Intent.ACTION_VIEW, Uri
+                            .parse("http://twitter.com/romanbb"));
+            startActivity(twitterIntent);
+            return true;
+        } else if (preference == mThread) {
+
+            Intent i = new Intent(Intent.ACTION_VIEW,
+                    Uri.parse("http://goo.gl/EGY58"));
+            startActivity(i);
             return true;
         }
 
