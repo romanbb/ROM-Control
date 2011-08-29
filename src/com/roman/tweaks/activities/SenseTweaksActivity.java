@@ -1,4 +1,3 @@
-
 package com.roman.tweaks.activities;
 
 import com.roman.tweaks.R;
@@ -20,177 +19,201 @@ import java.net.URISyntaxException;
 
 public class SenseTweaksActivity extends PreferenceActivity {
 
-    public static final int SELECT_ACTIVITY = 2;
+	public static final int SELECT_ACTIVITY = 2;
 
-    private static final String PREF_CUSTOM_ACTIVITY = "pref_rosie_activity";
+	private static final String PREF_CUSTOM_ACTIVITY = "pref_rosie_activity";
 
-    private static final String PREF_RECENT_APPS = "show_recent_apps";
+	private static final String PREF_RECENT_APPS = "show_recent_apps";
 
-    private static final String PREF_RESET_ROSIE = "use_custom_rosie_activity";
+	private static final String PREF_RESET_ROSIE = "use_custom_rosie_activity";
 
-    private static final String PREF_ENABLE_SCREENSHOTS = "enable_screenshots";
+	private static final String PREF_ENABLE_SCREENSHOTS = "enable_screenshots";
 
-    private static final String PREF_ENABLE_UNLOCK_ANIM = "enable_unlock_animation";
+	private static final String PREF_ENABLE_UNLOCK_ANIM = "enable_unlock_animation";
 
-    private static final String PREF_NUM_COLUMNS_APP_DRAWER = "app_drawer_app_columns";
+	private static final String PREF_NUM_COLUMNS_APP_DRAWER = "app_drawer_app_columns";
 
-    CheckBoxPreference mShowRecentApps;
+	private static final String PREF_SUPER_QUICK_SETTINGS = "super_quick_settings";
 
-    CheckBoxPreference mEnableScreenshots;
+	CheckBoxPreference mShowRecentApps;
 
-    CheckBoxPreference mEnableUnlockAnimation;
+	CheckBoxPreference mEnableScreenshots;
 
-    CheckBoxPreference mEnableFiveColumns;
+	CheckBoxPreference mEnableUnlockAnimation;
 
-    Preference mRosieActivity;
+	CheckBoxPreference mEnableFiveColumns;
 
-    CheckBoxPreference mUseRosieCustomActivity;
+	CheckBoxPreference mEnableQuickQuickSettings;
 
-    public void onCreate(Bundle ofLove) {
-        super.onCreate(ofLove);
-        addPreferencesFromResource(R.xml.sense_prefs);
+	Preference mRosieActivity;
 
-        PreferenceScreen prefs = getPreferenceScreen();
+	CheckBoxPreference mUseRosieCustomActivity;
 
-        mRosieActivity = prefs.findPreference(PREF_CUSTOM_ACTIVITY);
-        mUseRosieCustomActivity = (CheckBoxPreference) prefs.findPreference(PREF_RESET_ROSIE);
-        mShowRecentApps = (CheckBoxPreference) prefs.findPreference(PREF_RECENT_APPS);
-        mEnableScreenshots = (CheckBoxPreference) prefs.findPreference(PREF_ENABLE_SCREENSHOTS);
-        mEnableUnlockAnimation = (CheckBoxPreference) prefs.findPreference(PREF_ENABLE_UNLOCK_ANIM);
-        mEnableFiveColumns = (CheckBoxPreference) prefs.findPreference(PREF_NUM_COLUMNS_APP_DRAWER);
+	public void onCreate(Bundle ofLove) {
+		super.onCreate(ofLove);
+		addPreferencesFromResource(R.xml.sense_prefs);
 
-        String activityName = Settings.System.getString(getContentResolver(),
-                "tweaks_rosie_activity_name");
-        mRosieActivity.setSummary(activityName == null ? "Browser" : activityName);
+		PreferenceScreen prefs = getPreferenceScreen();
 
-        boolean checked = (Settings.System
-                .getInt(getContentResolver(), "tweaks_show_recent_apps", 0) == 1) ? true : false;
-        mShowRecentApps.setChecked(checked);
+		mRosieActivity = prefs.findPreference(PREF_CUSTOM_ACTIVITY);
+		mUseRosieCustomActivity = (CheckBoxPreference) prefs
+				.findPreference(PREF_RESET_ROSIE);
+		mShowRecentApps = (CheckBoxPreference) prefs
+				.findPreference(PREF_RECENT_APPS);
+		mEnableScreenshots = (CheckBoxPreference) prefs
+				.findPreference(PREF_ENABLE_SCREENSHOTS);
+		mEnableUnlockAnimation = (CheckBoxPreference) prefs
+				.findPreference(PREF_ENABLE_UNLOCK_ANIM);
+		mEnableFiveColumns = (CheckBoxPreference) prefs
+				.findPreference(PREF_NUM_COLUMNS_APP_DRAWER);
+		mEnableQuickQuickSettings = (CheckBoxPreference) prefs
+				.findPreference(PREF_SUPER_QUICK_SETTINGS);
 
-        checked = (Settings.System
-                .getInt(getContentResolver(), "tweaks_rosie_remap_personalize", 1) == 1) ? true
-                : false;
-        mUseRosieCustomActivity.setChecked(checked);
+		String activityName = Settings.System.getString(getContentResolver(),
+				"tweaks_rosie_activity_name");
+		mRosieActivity.setSummary(activityName == null ? "Browser"
+				: activityName);
 
-        checked = (Settings.System
-                .getInt(getContentResolver(), "tweaks_enable_screenshot", 1) == 1) ? true
-                : false;
-        mEnableScreenshots.setChecked(checked);
+		boolean checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_show_recent_apps", 0) == 1) ? true : false;
+		mShowRecentApps.setChecked(checked);
 
-        /* unlock animation */
-        checked = (Settings.System.getInt(getContentResolver(),
-                "tweaks_rosie_skip_unlock_animation", 0) == 0);
-        mEnableUnlockAnimation.setChecked(checked);
+		checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_rosie_remap_personalize", 1) == 1) ? true : false;
+		mUseRosieCustomActivity.setChecked(checked);
 
-        /* columns */
-        checked = (Settings.System.getInt(getContentResolver(),
-                "tweaks_rosie_app_drawer_columns", 4) == 5);
-        mEnableFiveColumns.setChecked(checked);
+		checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_enable_screenshot", 1) == 1) ? true : false;
+		mEnableScreenshots.setChecked(checked);
 
-    }
+		/* unlock animation */
+		checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_rosie_skip_unlock_animation", 0) == 0);
+		mEnableUnlockAnimation.setChecked(checked);
 
-    public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
-        if (preference == mShowRecentApps) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
+		/* columns */
+		checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_rosie_app_drawer_columns", 4) == 5);
+		mEnableFiveColumns.setChecked(checked);
 
-            Settings.System
-                    .putInt(getContentResolver(), "tweaks_show_recent_apps", checked ? 1 : 0);
-            return true;
+		/* quick quick settings */
+		checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_auto_quick_settings", 0) == 1);
+		mEnableQuickQuickSettings.setChecked(checked);
 
-        } else if (preference == mRosieActivity) {
-            // launch native android activity picker
-            preference
-                    .setSummary("**** List is loading, please be patient!****");
+	}
 
-            Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
-            mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+	public boolean onPreferenceTreeClick(PreferenceScreen screen,
+			Preference preference) {
+		if (preference == mShowRecentApps) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
-            Intent pickIntent = new Intent(
-                    Intent.ACTION_PICK_ACTIVITY);
-            pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
-            startActivityForResult(pickIntent, SELECT_ACTIVITY);
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_show_recent_apps", checked ? 1 : 0);
+			return true;
 
-            return true;
+		} else if (preference == mRosieActivity) {
+			// launch native android activity picker
+			preference
+					.setSummary("**** List is loading, please be patient!****");
 
-        } else if (preference == mUseRosieCustomActivity) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
+			Intent mainIntent = new Intent(Intent.ACTION_MAIN, null);
+			mainIntent.addCategory(Intent.CATEGORY_LAUNCHER);
 
-            Settings.System.putInt(getContentResolver(), "tweaks_rosie_remap_personalize",
-                    checked ? 1 : 0);
-            return true;
+			Intent pickIntent = new Intent(Intent.ACTION_PICK_ACTIVITY);
+			pickIntent.putExtra(Intent.EXTRA_INTENT, mainIntent);
+			startActivityForResult(pickIntent, SELECT_ACTIVITY);
 
-        } else if (preference == mEnableScreenshots) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
+			return true;
 
-            Settings.System.putInt(getContentResolver(), "tweaks_enable_screenshot",
-                    checked ? 1 : 0);
-            return true;
+		} else if (preference == mUseRosieCustomActivity) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
-        } else if (preference == mEnableUnlockAnimation) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_rosie_remap_personalize", checked ? 1 : 0);
+			return true;
 
-            Settings.System.putInt(getContentResolver(), "tweaks_rosie_skip_unlock_animation",
-                    !checked ? 1 : 0);
-            return true;
+		} else if (preference == mEnableScreenshots) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
-        } else if (preference == mEnableFiveColumns) {
-            boolean checked = ((CheckBoxPreference) preference).isChecked();
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_enable_screenshot", checked ? 1 : 0);
+			return true;
 
-            Settings.System.putInt(getContentResolver(), "tweaks_rosie_app_drawer_columns",
-                    checked ? 5 : 4);
-            return true;
-        }
+		} else if (preference == mEnableUnlockAnimation) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
-        return false;
-    }
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_rosie_skip_unlock_animation", !checked ? 1 : 0);
+			return true;
 
-    protected void onResume() {
-        super.onResume();
-        String activityName = Settings.System.getString(getContentResolver(),
-                "tweaks_rosie_activity_name");
-        mRosieActivity.setSummary(activityName == null ? "Browser" : activityName);
-    }
+		} else if (preference == mEnableFiveColumns) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
-    public void openUserActivity(Context sup) {
-        String activityUri = Settings.System.getString(sup.getContentResolver(),
-                "tweaks_rosie_activity_intent");
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_rosie_app_drawer_columns", checked ? 5 : 4);
+			return true;
+		} else if (preference == mEnableQuickQuickSettings) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
-        if (activityUri == null) {
-            String packageName = "com.android.browser";
-            String className = "com.android.browser.BrowserActivity";
-            Intent internetIntent = new Intent(Intent.ACTION_VIEW);
-            internetIntent.addCategory(Intent.CATEGORY_LAUNCHER);
-            internetIntent.setClassName(packageName, className);
-            sup.startActivity(internetIntent);
-        } else {
-            try {
-                sup.startActivity(Intent.getIntent(activityUri));
-            } catch (URISyntaxException e) {
-                Toast.makeText(sup, "Invalid activity intent", Toast.LENGTH_SHORT);
-            }
-        }
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_auto_quick_settings", checked ? 1 : 0);
 
-    }
+		}
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == SELECT_ACTIVITY && resultCode != Activity.RESULT_CANCELED) {
-            // launch the application that we just picked
-            // startActivity(data);
+		return false;
+	}
 
-            PackageManager pm = getPackageManager();
-            ResolveInfo ac = pm.resolveActivity(data,
-                    PackageManager.MATCH_DEFAULT_ONLY);
+	protected void onResume() {
+		super.onResume();
+		String activityName = Settings.System.getString(getContentResolver(),
+				"tweaks_rosie_activity_name");
+		mRosieActivity.setSummary(activityName == null ? "Browser"
+				: activityName);
+	}
 
-            String appName = ac.loadLabel(pm).toString();
+	public void openUserActivity(Context sup) {
+		String activityUri = Settings.System.getString(
+				sup.getContentResolver(), "tweaks_rosie_activity_intent");
 
-            String uri = data.toUri(Intent.URI_INTENT_SCHEME);
-            // uri = uri.substring(7, uri.length());
+		if (activityUri == null) {
+			String packageName = "com.android.browser";
+			String className = "com.android.browser.BrowserActivity";
+			Intent internetIntent = new Intent(Intent.ACTION_VIEW);
+			internetIntent.addCategory(Intent.CATEGORY_LAUNCHER);
+			internetIntent.setClassName(packageName, className);
+			sup.startActivity(internetIntent);
+		} else {
+			try {
+				sup.startActivity(Intent.getIntent(activityUri));
+			} catch (URISyntaxException e) {
+				Toast.makeText(sup, "Invalid activity intent",
+						Toast.LENGTH_SHORT);
+			}
+		}
 
-            Settings.System.putString(getContentResolver(),
-                    "tweaks_rosie_activity_name", appName);
-            Settings.System.putString(getContentResolver(),
-                    "tweaks_rosie_activity_intent", uri);
-        }
-    }
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == SELECT_ACTIVITY
+				&& resultCode != Activity.RESULT_CANCELED) {
+			// launch the application that we just picked
+			// startActivity(data);
+
+			PackageManager pm = getPackageManager();
+			ResolveInfo ac = pm.resolveActivity(data,
+					PackageManager.MATCH_DEFAULT_ONLY);
+
+			String appName = ac.loadLabel(pm).toString();
+
+			String uri = data.toUri(Intent.URI_INTENT_SCHEME);
+			// uri = uri.substring(7, uri.length());
+
+			Settings.System.putString(getContentResolver(),
+					"tweaks_rosie_activity_name", appName);
+			Settings.System.putString(getContentResolver(),
+					"tweaks_rosie_activity_intent", uri);
+		}
+	}
 
 }

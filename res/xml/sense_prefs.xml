@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<PreferenceCategory android:title="Sense Launcher Tweaks">
+	<PreferenceCategory
+		android:title="Sense Launcher Tweaks">
 
 		<CheckBoxPreference
 			android:key="use_custom_rosie_activity"
@@ -23,7 +25,8 @@
 			android:summary="Requires a reboot of the system or Rosie" />
 	</PreferenceCategory>
 
-	<PreferenceCategory android:title="Other Interface Tweaks">
+	<PreferenceCategory
+		android:title="Other Interface Tweaks">
 		<CheckBoxPreference
 			android:key="show_recent_apps"
 			android:title="Show recent apps"
@@ -33,5 +36,10 @@
 			android:key="enable_screenshots"
 			android:title="Enable sceenshot function"
 			android:summary="With Power + Home" />
+
+		<CheckBoxPreference
+			android:key="super_quick_settings"
+			android:title="Quick-quick settings"
+			android:summary="Automatically show quick settings when there are no notifications to clear." />
 	</PreferenceCategory>
 </PreferenceScreen>
