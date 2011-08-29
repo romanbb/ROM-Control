@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+	<PreferenceCategory android:title="Tweaks Info">
+		<Preference
+			android:summary="Tweaks originally appear in the ROM Bulletproof. Click here to visit its thread."
+			android:title="NOTICE"></Preference>
+		<Preference
+			android:title="Follow @romanbb"
+			android:key="twiter_link"></Preference>
+
+
+	</PreferenceCategory>
+</PreferenceScreen>

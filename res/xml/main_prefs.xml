@@ -8,7 +8,8 @@
 
 		<Preference
 			android:title="Lockscreen settings"
-			android:key="lockscreen_settings">
+			android:key="lockscreen_settings"
+			android:enabled="false">
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
@@ -42,16 +43,20 @@
 				android:targetClass="com.roman.tweaks.activities.SignalActivity" />
 		</Preference>
 
+		<Preference
+			android:title="Sense options"
+			android:key="sense_options_pref">
+			<intent
+				android:action="android.intent.action.MAIN"
+				android:targetPackage="com.roman.tweaks"
+				android:targetClass="com.roman.tweaks.activities.SenseTweaksActivity" />
+		</Preference>
+
 	</PreferenceCategory>
 
 	<PreferenceCategory
 		android:title="Other"
 		android:key="other_cat">
-
-		<CheckBoxPreference
-			android:key="show_recent_apps"
-			android:title="Show recent apps"
-			android:summary="In the dropdown. Will need a reboot after disabling." />
 
 		<CheckBoxPreference
 			android:key="pref_animate_off"
@@ -66,6 +71,8 @@
 			android:title="Overscroll Settings"
 			android:entries="@array/pref_overscroll_effect_entries"
 			android:entryValues="@array/pref_overscroll_effect_values" />
+
+
 
 	</PreferenceCategory>
 </PreferenceScreen>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="Sense Launcher Tweaks">
+
+		<CheckBoxPreference
+			android:key="use_custom_rosie_activity"
+			android:title="Enable custom personalize button" />
+
+		<Preference
+			android:key="pref_rosie_activity"
+			android:title="Custom Personalize button"
+			android:dependency="use_custom_rosie_activity" />
+
+
+		<CheckBoxPreference
+			android:key="enable_unlock_animation"
+			android:title="Enable unlock animation" />
+
+		<CheckBoxPreference
+			android:key="app_drawer_app_columns"
+			android:title="5 column app drawer"
+			android:summary="Requires a reboot of the system or Rosie" />
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="Other Interface Tweaks">
+		<CheckBoxPreference
+			android:key="show_recent_apps"
+			android:title="Show recent apps"
+			android:summary="In the dropdown. Will need a reboot after disabling." />
+
+		<CheckBoxPreference
+			android:key="enable_screenshots"
+			android:title="Enable sceenshot function"
+			android:summary="With Power + Home" />
+	</PreferenceCategory>
+</PreferenceScreen>

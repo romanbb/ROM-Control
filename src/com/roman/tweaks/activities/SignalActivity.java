@@ -83,7 +83,7 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
         mSignalAutoColor.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_text_autocolor_enabled", 0) == 1));
         mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(),
-                "tweaks_signal_icon_show4g_icon", 0) == 1));
+                "tweaks_show_4g_icon", 0) == 1));
 
         mSignalTextStyle.setOnPreferenceChangeListener(this);
         mSignalTextStyle.setValueIndex(Settings.System.getInt(getContentResolver(),
@@ -152,7 +152,7 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
         } else if (preference == mShow4GIcon) {
             boolean enable = mShow4GIcon.isChecked();
             Settings.System.putInt(getContentResolver(),
-                    "tweaks_signal_icon_show4g_icon", (enable ? 1 : 0));
+                    "tweaks_show_4g_icon", (enable ? 1 : 0));
             return true;
 
         } else if (preference == mShowSignalBars) {
