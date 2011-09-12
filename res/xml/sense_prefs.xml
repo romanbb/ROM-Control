@@ -23,6 +23,13 @@
 			android:key="app_drawer_app_columns"
 			android:title="5 column app drawer"
 			android:summary="Requires a reboot of the system or Rosie" />
+
+		<CheckBoxPreference
+			android:key="paginated_apps"
+			android:title="Paginated app drawer"
+			android:summary="Use pages when scrolling?" />
+
+
 	</PreferenceCategory>
 
 	<PreferenceCategory

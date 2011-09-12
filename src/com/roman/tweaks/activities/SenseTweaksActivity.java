@@ -20,34 +20,23 @@ import java.net.URISyntaxException;
 public class SenseTweaksActivity extends PreferenceActivity {
 
 	public static final int SELECT_ACTIVITY = 2;
-
 	private static final String PREF_CUSTOM_ACTIVITY = "pref_rosie_activity";
-
 	private static final String PREF_RECENT_APPS = "show_recent_apps";
-
 	private static final String PREF_RESET_ROSIE = "use_custom_rosie_activity";
-
 	private static final String PREF_ENABLE_SCREENSHOTS = "enable_screenshots";
-
 	private static final String PREF_ENABLE_UNLOCK_ANIM = "enable_unlock_animation";
-
 	private static final String PREF_NUM_COLUMNS_APP_DRAWER = "app_drawer_app_columns";
-
 	private static final String PREF_SUPER_QUICK_SETTINGS = "super_quick_settings";
+	private static final String PREF_USE_PAGINATED_APPS = "paginated_apps";
 
 	CheckBoxPreference mShowRecentApps;
-
 	CheckBoxPreference mEnableScreenshots;
-
 	CheckBoxPreference mEnableUnlockAnimation;
-
 	CheckBoxPreference mEnableFiveColumns;
-
 	CheckBoxPreference mEnableQuickQuickSettings;
-
 	Preference mRosieActivity;
-
 	CheckBoxPreference mUseRosieCustomActivity;
+	CheckBoxPreference mUsePaginatedAppDrawer;
 
 	public void onCreate(Bundle ofLove) {
 		super.onCreate(ofLove);
@@ -68,6 +57,8 @@ public class SenseTweaksActivity extends PreferenceActivity {
 				.findPreference(PREF_NUM_COLUMNS_APP_DRAWER);
 		mEnableQuickQuickSettings = (CheckBoxPreference) prefs
 				.findPreference(PREF_SUPER_QUICK_SETTINGS);
+		mUsePaginatedAppDrawer = (CheckBoxPreference) prefs
+				.findPreference(PREF_USE_PAGINATED_APPS);
 
 		String activityName = Settings.System.getString(getContentResolver(),
 				"tweaks_rosie_activity_name");
@@ -100,6 +91,11 @@ public class SenseTweaksActivity extends PreferenceActivity {
 		checked = (Settings.System.getInt(getContentResolver(),
 				"tweaks_auto_quick_settings", 0) == 1);
 		mEnableQuickQuickSettings.setChecked(checked);
+
+		/* page drawer */
+		checked = (Settings.System.getInt(getContentResolver(),
+				"tweaks_rosie_paginated_apps", 0) == 1);
+		mUsePaginatedAppDrawer.setChecked(checked);
 
 	}
 
@@ -158,6 +154,12 @@ public class SenseTweaksActivity extends PreferenceActivity {
 
 			Settings.System.putInt(getContentResolver(),
 					"tweaks_auto_quick_settings", checked ? 1 : 0);
+
+		} else if (preference == mUsePaginatedAppDrawer) {
+			boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+			Settings.System.putInt(getContentResolver(),
+					"tweaks_rosie_paginated_apps", checked ? 1 : 0);
 
 		}
 
