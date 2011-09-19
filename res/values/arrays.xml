@@ -33,10 +33,12 @@
 	<string-array name="clock_values">
 		<item>0</item>
 		<item>1</item>
+		<item>2</item>
 	</string-array>
 	<string-array name="clock_entries">
 		<item>Hide clock</item>
 		<item>Show clock</item>
+		<item>Center clock</item>
 	</string-array>
 
 	<string-array name="battery_text_display_entries">

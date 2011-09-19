@@ -14,50 +14,34 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 
-public class SignalActivity extends PreferenceActivity implements OnPreferenceChangeListener {
+public class SignalActivitySup extends PreferenceActivity implements OnPreferenceChangeListener {
 
     private String signalTextColorPickerFlag;
 
     // color preference constants
     private static final String PREF_SIGNAL_COLOR_0 = "signal_color_0";
-
     private static final String PREF_SIGNAL_COLOR_1 = "signal_color_1";
-
     private static final String PREF_SIGNAL_COLOR_2 = "signal_color_2";
-
     private static final String PREF_SIGNAL_COLOR_3 = "signal_color_3";
-
     private static final String PREF_SIGNAL_COLOR_4 = "signal_color_4";
-
     private static final String PREF_SIGNAL_COLOR_STATIC = "signal_color_static";
-
     private static final String PREF_AUTO_COLOR = "signal_automatically_color_pref";
-
     private static final String PREF_SIGNAL_TEXT_STYLE = "signal_text_style_pref";
-
     private static final String PREF_TOGGLE_4G_ICON = "show_4g_icon";
-
+    private static final String PREF_TOGGLE_2G_ICON = "show_2g_icon";
     private static final String PREF_SHOW_SIGNAL_BARS = "show_signal_bars";
 
     //
     Preference mSignalColor0;
-
     Preference mSignalColor1;
-
     Preference mSignalColor2;
-
     Preference mSignalColor3;
-
     Preference mSignalColor4;
-
     Preference mSignalColorStatic;
-
     CheckBoxPreference mSignalAutoColor;
-
     CheckBoxPreference mShow4GIcon;
-
+    CheckBoxPreference mShow2GIcon;
     CheckBoxPreference mShowSignalBars;
-
     ListPreference mSignalTextStyle;
 
     public void onCreate(Bundle ofLove) {
@@ -75,6 +59,7 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
         mSignalColor4 = prefs.findPreference(PREF_SIGNAL_COLOR_4);
         mSignalColorStatic = prefs.findPreference(PREF_SIGNAL_COLOR_STATIC);
         mShow4GIcon = (CheckBoxPreference) prefs.findPreference(PREF_TOGGLE_4G_ICON);
+        mShow2GIcon = (CheckBoxPreference) prefs.findPreference(PREF_TOGGLE_2G_ICON);
         mShowSignalBars = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_SIGNAL_BARS);
 
         // check enabled settings
@@ -84,6 +69,8 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
                 "tweaks_signal_text_autocolor_enabled", 0) == 1));
         mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_show_4g_icon", 0) == 1));
+        mShow2GIcon.setChecked((Settings.System.getInt(getContentResolver(),
+                "tweaks_show_2g_icon", 0) == 1));
 
         mSignalTextStyle.setOnPreferenceChangeListener(this);
         mSignalTextStyle.setValueIndex(Settings.System.getInt(getContentResolver(),
@@ -153,6 +140,14 @@ public class SignalActivity extends PreferenceActivity implements OnPreferenceCh
             boolean enable = mShow4GIcon.isChecked();
             Settings.System.putInt(getContentResolver(),
                     "tweaks_show_4g_icon", (enable ? 1 : 0));
+            return true;
+
+        } else if (preference == mShow2GIcon) {
+            boolean enable = ((CheckBoxPreference) preference).isChecked();
+
+            Log.e("Roman", "2G toggle");
+            Settings.System.putInt(getContentResolver(),
+                    "tweaks_show_2g_icon", (enable ? 1 : 0));
             return true;
 
         } else if (preference == mShowSignalBars) {

@@ -23,8 +23,12 @@
 		android:title="Show 4G Icon"
 		android:summary="Instead of H" />
 
-	<PreferenceCategory
-		android:title="Color Settings">
+	<CheckBoxPreference
+		android:key="show_2g_icon"
+		android:title="Show 2G Icon"
+		android:summary="Instead of E" />
+
+	<PreferenceCategory android:title="Color Settings">
 
 		<Preference
 			android:key="signal_color_static"

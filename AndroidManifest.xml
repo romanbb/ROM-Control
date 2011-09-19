@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.roman.tweaks"
-	android:versionCode="2">
+	package="com.roman.tweaks" android:versionCode="11">
 
 	<uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
 	<uses-permission android:name="android.permission.SET_TIME_ZONE"></uses-permission>
@@ -11,6 +10,7 @@
 		android:largeScreens="true"
 		android:smallScreens="true"
 		android:normalScreens="true"></supports-screens>
+	<uses-sdk android:targetSdkVersion="10" android:minSdkVersion="10"></uses-sdk>
 
 	<application
 		android:icon="@drawable/icon"
@@ -57,7 +57,7 @@
 
 		<activity
 			android:label="Tweaks - Signal Options"
-			android:name=".activities.SignalActivity">
+			android:name=".activities.SignalActivitySup">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"></action>
 			</intent-filter>
@@ -65,7 +65,7 @@
 
 		<activity
 			android:label="Tweaks - Sense Options"
-			android:name=".activities.SenseTweaksActivity">
+			android:name=".activities.SenseActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"></action>
 			</intent-filter>
