@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preference android:key="which_prefs" android:title="Select settings to hide"></Preference>
-
+<PreferenceScreen
+	xmlns:android="http://schemas.android.com/apk/res/android">
+	<Preference
+		android:key="which_prefs"
+		android:title="Select settings to hide"></Preference>
+	<CheckBoxPreference
+		android:key="test"
+		android:title="Torch" />
 </PreferenceScreen>

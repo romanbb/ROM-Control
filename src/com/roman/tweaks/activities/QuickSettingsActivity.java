@@ -5,12 +5,15 @@ import com.roman.tweaks.R;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.hardware.Camera;
+import android.hardware.Camera.Parameters;
 import android.os.Bundle;
+import android.os.Handler;
+import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.StringTokenizer;
@@ -22,12 +25,17 @@ public class QuickSettingsActivity extends PreferenceActivity {
     static final String WHICH_PREF = "which_prefs";
 
     Preference hiddenSelectionPref;
+    CheckBoxPreference test;
+
+    Handler handler = new Handler();
+    Camera mCamera;
 
     public void onCreate(Bundle ofLove) {
         super.onCreate(ofLove);
 
         addPreferencesFromResource(R.xml.quick_setting_pref);
         hiddenSelectionPref = findPreference(WHICH_PREF);
+        test = (CheckBoxPreference) findPreference("test");
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
@@ -56,25 +64,55 @@ public class QuickSettingsActivity extends PreferenceActivity {
             builder.setMultiChoiceItems(R.array.quick_settings_entries, items,
                     new DialogInterface.OnMultiChoiceClickListener() {
 
-                        @Override
                         public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                             items[which] = isChecked;
                             publishVals(items);
                         }
                     })
 
-                    .setNegativeButton("For Science!", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            dialog.cancel();
-                        }
-                    });
-            ;
+            .setNegativeButton("For Science!", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int id) {
+                    dialog.cancel();
+                }
+            });
             AlertDialog alert = builder.create();
             alert.show();
             return true;
+        } else if (preference == test) {
+            if (((CheckBoxPreference) preference).isChecked()) {
+                mCameraOpenTask.run();
+            } else {
+                mCameraCloseTask.run();
+            }
         }
         return false;
     }
+
+    private Runnable mCameraOpenTask = new Runnable() {
+        public void run() {
+            mCamera = Camera.open();
+            if (mCamera != null) {
+                Parameters params = mCamera.getParameters();
+                params.setFlashMode(Parameters.FLASH_MODE_TORCH);
+                mCamera.setParameters(params);
+                mCamera.release();
+            }
+        }
+    };
+
+    private Runnable mCameraCloseTask = new Runnable() {
+
+        public void run() {
+            mCamera = Camera.open();
+            if (mCamera != null) {
+                Parameters params = mCamera.getParameters();
+                params.setFlashMode(Parameters.FLASH_MODE_OFF);
+                mCamera.setParameters(params);
+                mCamera.release();
+            }
+
+        }
+    };
 
     public void publishVals(boolean[] items) {
         String s = "";

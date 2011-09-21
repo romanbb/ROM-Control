@@ -73,13 +73,11 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
     ColorPickerDialog.OnColorChangedListener mColorChangeListener = new ColorPickerDialog.OnColorChangedListener() {
 
-        @Override
         public void colorUpdate(int color) {
             Settings.System.putInt(getContentResolver(), "tweaks_clock_color",
                     color);
         }
 
-        @Override
         public void colorChanged(int color) {
             Settings.System.putInt(getContentResolver(), "tweaks_clock_color",
                     color);
@@ -87,7 +85,6 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
         }
     };
 
-    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         if (preference == mAmPmStyle) {
             int statusBarAmPm = Integer.valueOf((String) newValue);

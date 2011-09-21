@@ -179,12 +179,10 @@ public class SignalActivitySup extends PreferenceActivity implements OnPreferenc
 
     ColorPickerDialog.OnColorChangedListener mColorChangeListener = new ColorPickerDialog.OnColorChangedListener() {
 
-        @Override
         public void colorUpdate(int color) {
             Settings.System.putInt(getContentResolver(), signalTextColorPickerFlag, color);
         }
 
-        @Override
         public void colorChanged(int color) {
             Settings.System.putInt(getContentResolver(), signalTextColorPickerFlag, color);
 

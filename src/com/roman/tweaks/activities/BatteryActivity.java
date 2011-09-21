@@ -163,12 +163,12 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
     ColorPickerDialog.OnColorChangedListener mColorChangeListener = new ColorPickerDialog.OnColorChangedListener() {
 
-        @Override
+
         public void colorUpdate(int color) {
             Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag, color);
         }
 
-        @Override
+
         public void colorChanged(int color) {
             Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag, color);
 

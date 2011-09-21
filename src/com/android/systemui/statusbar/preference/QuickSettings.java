@@ -31,8 +31,9 @@ public class QuickSettings extends LinearLayout {
     private static final int TASK_MANAGER = 9;
     private static final int VOLUME = 10;
     private static final int VIBRATION = 11;
+    private static final int TORCH = 12;
 
-    private static final int ITEM_NUMBER = 12;
+    private static final int ITEM_NUMBER = 13;
 
     static final boolean HTC_DEBUG = false;
     static final String TAG = "QuickSettings";
@@ -85,6 +86,7 @@ public class QuickSettings extends LinearLayout {
         mSettingItems[TASK_MANAGER] = new TaskManager(mContext, findViewById(0x7f0a001c));
         mSettingItems[VOLUME] = new Volume(mContext, findViewById(0x7f0a0012));
         mSettingItems[VIBRATION] = new VibrationMode(mContext, findViewById(0x7f0a004e));
+        mSettingItems[TORCH] = new Torch(mContext, findViewById(0x7f0a0052));
 
         mTitleBar = (TextView) findViewById(0x7f0a0010);
         mTitleBar.setHeight(0x4c);

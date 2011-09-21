@@ -118,7 +118,6 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         mPicker = new ShortcutPickHelper(this, this);
     }
 
-    @Override
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
 
         if (preference == mHoneyQuadrant1Pref) {
@@ -155,12 +154,10 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         return false;
     }
 
-    @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         mPicker.onActivityResult(requestCode, resultCode, data);
     }
 
-    @Override
     public boolean onPreferenceChange(Preference preference, Object newValue) {
         String val = newValue.toString();
         if (preference == mLockscreenStylePref) {
@@ -174,7 +171,6 @@ public class LockscreenActivity extends PreferenceActivity implements OnPreferen
         return false;
     }
 
-    @Override
     public void shortcutPicked(String uri, String friendlyName, boolean isApplication) {
         if (Settings.System.putString(getContentResolver(), mCurrentCustomActivityString, uri)) {
             mCurrentCustomActivityPreference.setSummary(friendlyName);
