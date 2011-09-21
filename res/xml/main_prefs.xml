@@ -6,14 +6,18 @@
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
 
+		<!-- <Preference android:title="Lockscreen settings" android:key="lockscreen_settings" android:enabled="false"> 
+			<intent android:action="android.intent.action.MAIN" android:targetPackage="com.roman.tweaks" android:targetClass="com.roman.tweaks.activities.LockscreenActivity" 
+			/> </Preference> -->
+
+
 		<Preference
-			android:title="Lockscreen settings"
-			android:key="lockscreen_settings"
-			android:enabled="false">
+			android:title="Quick settings... settings"
+			android:key="quick_settings">
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.LockscreenActivity" />
+				android:targetClass="com.roman.tweaks.activities.QuickSettingsActivity" />
 		</Preference>
 
 		<Preference

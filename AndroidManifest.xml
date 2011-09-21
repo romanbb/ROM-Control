@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.roman.tweaks" android:versionCode="11">
+	package="com.roman.tweaks"
+	android:versionCode="11">
 
 	<uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
 	<uses-permission android:name="android.permission.SET_TIME_ZONE"></uses-permission>
@@ -10,7 +11,9 @@
 		android:largeScreens="true"
 		android:smallScreens="true"
 		android:normalScreens="true"></supports-screens>
-	<uses-sdk android:targetSdkVersion="10" android:minSdkVersion="10"></uses-sdk>
+	<uses-sdk
+		android:targetSdkVersion="10"
+		android:minSdkVersion="10"></uses-sdk>
 
 	<application
 		android:icon="@drawable/icon"
@@ -24,7 +27,7 @@
 			</intent-filter>
 		</activity>
 
-		<receiver android:name="Receiver">
+		<receiver android:name=".Receiver">
 			<intent-filter>
 				<action android:name="com.roman.tweaks.OPEN"></action>
 				<action android:name="com.roman.intents.HARD_REBOOT_ACTION"></action>
@@ -32,8 +35,8 @@
 		</receiver>
 
 		<activity
-			android:label="Tweaks - Lockscreen Settings"
-			android:name=".activities.LockscreenActivity">
+			android:label="Tweaks - Quick Settings"
+			android:name=".activities.QuickSettingsActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"></action>
 			</intent-filter>

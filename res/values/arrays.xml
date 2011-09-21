@@ -79,4 +79,20 @@
 		<item>2</item>
 		<item>3</item>
 	</string-array>
+
+	<string-array name="quick_settings_entries">
+		<item>Auto rotation</item>
+		<item>Wi-Fi</item>
+		<item>Bluetooth</item>
+		<item>Mobile Network</item>
+		<item>Brightness</item>
+		<item>Wi-Fi HotSpot</item>
+		<item>All settings</item>
+		<item>GPS</item>
+		<item>Ringer volume</item>
+		<item>Task Manager</item>
+		<item>Media volume</item>
+		<item>Vibration</item>
+	</string-array>
+
 </resources>
