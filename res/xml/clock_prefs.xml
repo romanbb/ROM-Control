@@ -6,7 +6,7 @@
 			android:entries="@array/clock_entries"
 			android:entryValues="@array/clock_values"
 			android:title="Clock Style" />
-		
+
 		<ListPreference
 			android:key="clock_am_pm"
 			android:entries="@array/am_pm_entries"
@@ -15,5 +15,9 @@
 		<Preference
 			android:key="clock_color_pref"
 			android:title="Choose Clock Color" />
+		<CheckBoxPreference
+			android:key="alarm"
+			android:summary="When unchecking this, make sure to go and disable/enable your alarms or they will not show"
+			android:title="Hide alarm icon" />
 	</PreferenceCategory>
 </PreferenceScreen>

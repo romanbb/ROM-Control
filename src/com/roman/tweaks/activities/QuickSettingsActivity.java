@@ -36,6 +36,9 @@ public class QuickSettingsActivity extends PreferenceActivity {
         addPreferencesFromResource(R.xml.quick_setting_pref);
         hiddenSelectionPref = findPreference(WHICH_PREF);
         test = (CheckBoxPreference) findPreference("test");
+
+        // torch pref only for testing!
+        getPreferenceScreen().removePreference(test);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen screen, Preference preference) {
@@ -70,11 +73,11 @@ public class QuickSettingsActivity extends PreferenceActivity {
                         }
                     })
 
-            .setNegativeButton("For Science!", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int id) {
-                    dialog.cancel();
-                }
-            });
+                    .setNegativeButton("For Science!", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            dialog.cancel();
+                        }
+                    });
             AlertDialog alert = builder.create();
             alert.show();
             return true;

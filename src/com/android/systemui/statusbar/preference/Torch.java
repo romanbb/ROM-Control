@@ -39,10 +39,6 @@ public class Torch extends StatusBarPreference {
 
     }
 
-    public void updateResources() {
-
-    }
-
     private View.OnClickListener mClickListener = new View.OnClickListener() {
 
         public void onClick(View v) {

@@ -54,7 +54,7 @@
 
 		<activity
 			android:label="Tweaks - Clock Options"
-			android:name=".activities.ClockActivity">
+			android:name=".activities.ClocksActivity">
 			<intent-filter>
 				<action
 					android:name="android.intent.action.MAIN"></action>
