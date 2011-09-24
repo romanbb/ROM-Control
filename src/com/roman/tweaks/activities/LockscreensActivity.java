@@ -19,31 +19,19 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
         ShortcutPickHelper.OnPickListener {
 
     private static final String LOCKSCREEN_STYLE_PREF = "pref_lockscreen_style";
-
     private static final String LOCKSCREEN_QUADRANT_1_PREF = "pref_quadrant_1";
-
     private static final String LOCKSCREEN_QUADRANT_2_PREF = "pref_quadrant_2";
-
     private static final String LOCKSCREEN_QUADRANT_3_PREF = "pref_quadrant_3";
-
     private static final String LOCKSCREEN_QUADRANT_4_PREF = "pref_quadrant_4";
-
     private static final String LOCKSCREEN_CLOCK_PREF = "pref_clock";
 
     private ListPreference mLockscreenStylePref;
-
     private CheckBoxPreference mShowHoneyClock;
-
     private Preference mHoneyQuadrant1Pref;
-
     private Preference mHoneyQuadrant2Pref;
-
     private Preference mHoneyQuadrant3Pref;
-
     private Preference mHoneyQuadrant4Pref;
-
     private Preference mCurrentCustomActivityPreference;
-
     private String mCurrentCustomActivityString;
 
     private ShortcutPickHelper mPicker;
@@ -62,20 +50,15 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
         // mLockscreenStylePref.setValueIndex(lockScreenStyle);
         mLockscreenStylePref.setOnPreferenceChangeListener(this);
 
-        mHoneyQuadrant1Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_1_PREF);
-        mHoneyQuadrant2Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_2_PREF);
-        mHoneyQuadrant3Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_3_PREF);
-        mHoneyQuadrant4Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_4_PREF);
-
-        mShowHoneyClock = (CheckBoxPreference) prefSet.findPreference(LOCKSCREEN_CLOCK_PREF);
+//        mHoneyQuadrant1Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_1_PREF);
+//        mHoneyQuadrant2Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_2_PREF);
+//        mHoneyQuadrant3Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_3_PREF);
+//        mHoneyQuadrant4Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_4_PREF);
+//
+//        mShowHoneyClock = (CheckBoxPreference) prefSet.findPreference(LOCKSCREEN_CLOCK_PREF);
 
         mPicker = new ShortcutPickHelper(this, this);
 
-        prefSet.removePreference(mHoneyQuadrant1Pref);
-        prefSet.removePreference(mHoneyQuadrant2Pref);
-        prefSet.removePreference(mHoneyQuadrant3Pref);
-        prefSet.removePreference(mHoneyQuadrant4Pref);
-        prefSet.removePreference(mShowHoneyClock);
     }
 
     public boolean onPreferenceTreeClick(PreferenceScreen preferenceScreen, Preference preference) {
@@ -109,6 +92,7 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
 
             Settings.System.putInt(getContentResolver(),
                     "tweaks_lockscreen_hc_clock_enabled", value);
+            return true;
         }
 
         return false;
@@ -134,7 +118,7 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
             int newint = Integer.parseInt(entries[index] + "");
             Settings.System.putInt(getContentResolver(), "tweaks_lockscreen_style",
                     newint);
-            Log.e("Roman", "new val: " + newint);
+            // Log.e("Roman", "new val: " + newint);
             // updateStylePrefs(mLockscreenStyle, mInCallStyle);
             return true;
         }

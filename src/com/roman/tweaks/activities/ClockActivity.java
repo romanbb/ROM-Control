@@ -17,7 +17,7 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 
-public class ClocksActivity extends PreferenceActivity implements OnPreferenceChangeListener {
+public class ClockActivity extends PreferenceActivity implements OnPreferenceChangeListener {
     String pref;
 
     Context mContext;

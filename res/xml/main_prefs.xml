@@ -35,7 +35,7 @@
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.ClocksActivity" />
+				android:targetClass="com.roman.tweaks.activities.ClockActivity" />
 		</Preference>
 
 		<Preference
@@ -53,7 +53,7 @@
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.SignalActivitySup" />
+				android:targetClass="com.roman.tweaks.activities.SignalsActivity" />
 		</Preference>
 
 		<Preference

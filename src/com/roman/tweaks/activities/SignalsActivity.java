@@ -14,7 +14,7 @@ import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
 
-public class SignalActivitySup extends PreferenceActivity implements OnPreferenceChangeListener {
+public class SignalsActivity extends PreferenceActivity implements OnPreferenceChangeListener {
 
     private String signalTextColorPickerFlag;
 
@@ -62,6 +62,9 @@ public class SignalActivitySup extends PreferenceActivity implements OnPreferenc
         mShow2GIcon = (CheckBoxPreference) prefs.findPreference(PREF_TOGGLE_2G_ICON);
         mShowSignalBars = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_SIGNAL_BARS);
 
+        
+        
+        
         // check enabled settings
         mShowSignalBars.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_icon_enabled", 1) == 1));

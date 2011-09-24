@@ -36,39 +36,23 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
     public static final int SELECT_ACTIVITY = 2;
 
     private static final String PREF_BATTERY = "battery_options_pref";
-
     private static final String PREF_CLOCK = "clock_options_pref";
-
     private static final String PREF_SIGNAL = "signal_options_pref";
-
     private static final String PREF_SCREEN_OFF = "pref_animate_off";
-
     private static final String PREF_SCREEN_ON = "pref_animate_on";
-
     private static final String OVERSCROLL_PREF = "pref_overscroll_effect";
-
     private static final String TWITTER_PREF = "twitter_link";
-
     private static final String THREAD_PREF = "thread_link";
 
     CheckBoxPreference mEnableGPS;
-
     CheckBoxPreference mShowRecentApps;
-
     CheckBoxPreference mAnimateScreenOff;
-
     CheckBoxPreference mAnimateScreenOn;
-
     ListPreference mOverscrollPref;
-
     Preference mBattery;
-
     Preference mClock;
-
     Preference mSignal;
-
     Preference mTwitter;
-
     Preference mThread;
 
     /** Called when the activity is first created. */
@@ -99,17 +83,12 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
         mSignal = prefs.findPreference(PREF_SIGNAL);
 
         boolean checked = (Settings.System
-                .getInt(getContentResolver(), "tweaks_crt_off", 0) == 1) ? true : false;
+                .getInt(getContentResolver(), "tweaks_crt_off", 1) == 1) ? true : false;
         mAnimateScreenOff = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_OFF);
-
-        if (check) {
-            this.finish();
-        }
-
         mAnimateScreenOff.setChecked(checked);
 
         checked = (Settings.System
-                .getInt(getContentResolver(), "tweaks_crt_on", 0) == 1) ? true : false;
+                .getInt(getContentResolver(), "tweaks_crt_on", 1) == 1) ? true : false;
         mAnimateScreenOn = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_ON);
         mAnimateScreenOn.setChecked(checked);
 

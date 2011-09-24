@@ -9,33 +9,33 @@
 		android:entries="@array/pref_lockscreen_style_entries"
 		android:entryValues="@array/pref_lockscreen_style_values" />
 
-	<CheckBoxPreference
-		android:title="Show Honeycomb clock font"
-		android:key="pref_clock" />
+	<!-- <CheckBoxPreference -->
+	<!-- android:title="Show Honeycomb clock font" -->
+	<!-- android:key="pref_clock" /> -->
 
-	<PreferenceCategory
-		android:title="Custom Application Launchers"
-		android:enabled="false">
+	<!-- <PreferenceCategory -->
+	<!-- android:title="Custom Application Launchers" -->
+	<!-- android:enabled="false"> -->
 
-		<Preference
-			android:key="pref_quadrant_1"
-			android:title="Quadrant 1 Activity"
-			android:summary="" />
-		<Preference
-			android:key="pref_quadrant_2"
-			android:title="Quadrant 2 Activity"
-			android:summary="" />
-		<Preference
-			android:key="pref_quadrant_3"
-			android:title="Quadrant 3 Activity"
-			android:summary="" />
-		<Preference
-			android:key="pref_quadrant_4"
-			android:title="Quadrant 4 Activity"
-			android:summary="" />
+	<!-- <Preference -->
+	<!-- android:key="pref_quadrant_1" -->
+	<!-- android:title="Quadrant 1 Activity" -->
+	<!-- android:summary="" /> -->
+	<!-- <Preference -->
+	<!-- android:key="pref_quadrant_2" -->
+	<!-- android:title="Quadrant 2 Activity" -->
+	<!-- android:summary="" /> -->
+	<!-- <Preference -->
+	<!-- android:key="pref_quadrant_3" -->
+	<!-- android:title="Quadrant 3 Activity" -->
+	<!-- android:summary="" /> -->
+	<!-- <Preference -->
+	<!-- android:key="pref_quadrant_4" -->
+	<!-- android:title="Quadrant 4 Activity" -->
+	<!-- android:summary="" /> -->
 
 
-	</PreferenceCategory>
+	<!-- </PreferenceCategory> -->
 
 
 </PreferenceScreen>

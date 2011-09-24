@@ -1,5 +1,5 @@
 
-package com.roman.tweaks.activities;
+package com.roman.tweaks.utils;
 
 import com.roman.tweaks.ShellInterface;
 
