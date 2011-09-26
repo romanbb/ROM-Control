@@ -13,7 +13,6 @@ import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.util.Log;
 
 public class BatteryActivity extends PreferenceActivity implements OnPreferenceChangeListener {
     Context context;

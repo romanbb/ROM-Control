@@ -12,6 +12,7 @@
 	<string-array name="pref_lockscreen_style_entries">
 		<item>HTC Sense</item>
 		<item>Android</item>
+		<item>Honeycomb</item>
 	</string-array>
 
 	<string-array
@@ -19,6 +20,7 @@
 		translatable="false">
 		<item>0</item>
 		<item>1</item>
+		<item>2</item>
 	</string-array>
 
 	<string-array name="am_pm_values">

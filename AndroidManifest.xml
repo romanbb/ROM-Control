@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest
 	xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.roman.tweaks" android:versionCode="16">
+	package="com.roman.tweaks" android:versionCode="18">
 	<uses-feature android:name="android.hardware.camera"></uses-feature>
 	<uses-permission android:name="android.permission.WRITE_SETTINGS"></uses-permission>
 	<uses-permission android:name="android.permission.SET_TIME_ZONE"></uses-permission>
@@ -18,13 +18,14 @@
 	<application
 		android:icon="@drawable/icon"
 		android:label="@string/app_name">
+
 		<activity
 			android:label="@string/app_name"
-			android:name=".Main"
-			android:launchMode="singleTask">
+			android:name=".Main">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
+
 		</activity>
 
 		<receiver android:name=".Receiver">
@@ -38,7 +39,7 @@
 			android:label="Tweaks - Lockscreen Settings"
 			android:name=".activities.LockscreensActivity">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
 
@@ -46,7 +47,7 @@
 			android:label="Tweaks - Quick Settings"
 			android:name=".activities.QuickSettingsActivity">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
 
@@ -54,7 +55,7 @@
 			android:label="Tweaks - Clock Options"
 			android:name=".activities.ClockActivity">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
 
@@ -62,7 +63,7 @@
 			android:label="Tweaks - Battery Options"
 			android:name=".activities.BatteryActivity">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
 
@@ -70,7 +71,7 @@
 			android:label="Tweaks - Signal Options"
 			android:name=".activities.SignalsActivity">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
 
@@ -78,7 +79,7 @@
 			android:label="Tweaks - Sense Options"
 			android:name=".activities.SenseActivity">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"></action>
+				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>
 		</activity>
 

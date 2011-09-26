@@ -1,14 +1,13 @@
 package com.roman.tweaks.activities;
 
 import com.roman.tweaks.R;
-import com.roman.tweaks.R.xml;
 
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.Preference;
-import android.preference.PreferenceActivity;
 import android.preference.Preference.OnPreferenceClickListener;
+import android.preference.PreferenceActivity;
 
 public class AboutActivity extends PreferenceActivity {
 

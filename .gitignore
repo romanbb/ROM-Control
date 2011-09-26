@@ -1,9 +1,0 @@
-*.class
-bin/*
-gen/*
-proguard.cfg
-default.properties
-.settings/*
-.project
-.classpath
-.gitignore

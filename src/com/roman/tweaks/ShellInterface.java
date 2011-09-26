@@ -9,6 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import android.util.Log;
+import com.roman.tweaks.R;
 
 /**
  * Interface to the Superuser shell on Android devices with some helper
