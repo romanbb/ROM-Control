@@ -6,8 +6,9 @@
 		android:title="Statusbar Tweaks"
 		android:key="statusbar_cat">
 
-		<!-- <Preference android:title="Lockscreen settings" android:key="lockscreen_settings" android:enabled="false"> 
-			<intent android:action="android.intent.action.MAIN" android:targetPackage="com.roman.tweaks" android:targetClass="com.roman.tweaks.activities.LockscreenActivity" 
+		<!-- <Preference android:title="Lockscreen settings" android:key="lockscreen_settings" 
+			android:enabled="false"> <intent android:action="android.intent.action.MAIN" 
+			android:targetPackage="com.roman.tweaks" android:targetClass="com.roman.tweaks.activities.LockscreenActivity" 
 			/> </Preference> -->
 
 
@@ -19,10 +20,11 @@
 				android:targetPackage="com.roman.tweaks"
 				android:targetClass="com.roman.tweaks.activities.QuickSettingsActivity" />
 		</Preference>
-		
+
 		<Preference
 			android:title="Lockscreen Settings"
-			android:key="lockscreen_settings">
+			android:key="lockscreen_settings"
+			android:enabled="false">
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
@@ -83,7 +85,8 @@
 			android:key="pref_overscroll_effect"
 			android:title="Overscroll Settings"
 			android:entries="@array/pref_overscroll_effect_entries"
-			android:entryValues="@array/pref_overscroll_effect_values" />
+			android:entryValues="@array/pref_overscroll_effect_values"
+			android:enabled="false" />
 
 
 
