@@ -26,12 +26,11 @@ import android.widget.Toast;
 public class Main extends PreferenceActivity implements
 		OnPreferenceChangeListener {
 	String pref;
-
 	Context context;
-
 	Dialog d;
-
 	AlertDialog.Builder builder;
+
+	public static final String TAG = "Roman";
 
 	public static final int SELECT_ACTIVITY = 2;
 
@@ -81,12 +80,14 @@ public class Main extends PreferenceActivity implements
 
 		boolean checked = (Settings.System.getInt(getContentResolver(),
 				"tweaks_crt_off", 1) == 1) ? true : false;
+		Log.e(TAG, "Inintial CRT_OFF == " + checked);
 		mAnimateScreenOff = (CheckBoxPreference) prefs
 				.findPreference(PREF_SCREEN_OFF);
 		mAnimateScreenOff.setChecked(checked);
 
 		checked = (Settings.System.getInt(getContentResolver(),
 				"tweaks_crt_on", 1) == 1) ? true : false;
+		Log.e(TAG, "Inintial CRT_ON == " + checked);
 		mAnimateScreenOn = (CheckBoxPreference) prefs
 				.findPreference(PREF_SCREEN_ON);
 		mAnimateScreenOn.setChecked(checked);
@@ -201,12 +202,20 @@ public class Main extends PreferenceActivity implements
 
 			Settings.System.putInt(getContentResolver(), "tweaks_crt_off",
 					checked ? 1 : 0);
+			Log.e(TAG,
+					"CRT off set to : "
+							+ (Settings.System.getInt(getContentResolver(),
+									"tweaks_crt_off", 0) == 1 ? "on" : "off"));
 			return true;
 		} else if (preference == mAnimateScreenOn) {
 			boolean checked = ((CheckBoxPreference) preference).isChecked();
 
 			Settings.System.putInt(getContentResolver(), "tweaks_crt_on",
 					checked ? 1 : 0);
+			Log.e(TAG,
+					"CRT on set to : "
+							+ (Settings.System.getInt(getContentResolver(),
+									"tweaks_crt_on", 0) == 1 ? "on" : "off"));
 			return true;
 		} else if (preference == mTwitter) {
 
