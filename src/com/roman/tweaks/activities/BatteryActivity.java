@@ -18,37 +18,24 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
     Context context;
 
     private static final String PREF_BATTERY_TEXT_STYLE = "battery_text_style_pref";
-
     private static final String PREF_SHOW_BATTERY_ICON = "show_battery_icon";
-
     private static final String PREF_COLOR_AUTOMATICALLY = "battery_automatically_color_pref";
-
     private static final String PREF_COLOR_STATIC = "battery_color_pref";
-
     private static final String PREF_COLOR_CHARGING = "battery_color_auto_charging";
-
     private static final String PREF_COLOR_REGULAR = "battery_color_auto_regular";
-
     private static final String PREF_COLOR_MEDIUM = "battery_color_auto_medium";
-
     private static final String PREF_COLOR_LOW = "battery_color_auto_low";
-
     private static final String CONST_BATTERY_TEXT = "tweaks_battery_text_style";
+    private static final String PREF_MIUI = "miui_battery";
 
     ListPreference mBatteryTextStyle;
-
     CheckBoxPreference mShowBatteryIcon;
-
     CheckBoxPreference mColorAutomatically;
-
+    CheckBoxPreference mMiuiBattery;
     Preference mColorStatic;
-
     Preference mColorCharging;
-
     Preference mColorRegular;
-
     Preference mColorMedium;
-
     Preference mColorLow;
 
     private static String sCurrentPrefColorFlag;
@@ -68,6 +55,7 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
         mColorRegular = prefs.findPreference(PREF_COLOR_REGULAR);
         mColorMedium = prefs.findPreference(PREF_COLOR_MEDIUM);
         mColorLow = prefs.findPreference(PREF_COLOR_LOW);
+        mMiuiBattery = (CheckBoxPreference) prefs.findPreference(PREF_MIUI);
 
         int batteryStyleIndex = Settings.System.getInt(getContentResolver(),
                 CONST_BATTERY_TEXT, 1);
@@ -77,6 +65,11 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
         mShowBatteryIcon.setChecked(Settings.System.getInt(getContentResolver(),
                 "tweaks_show_battery", 1) == 1);
+
+        mMiuiBattery.setChecked(Settings.System.getInt(getContentResolver(),
+                "tweaks_miui_battery", 0) == 1);
+
+        prefs.removePreference(mMiuiBattery);
 
         refreshOptions();
     }
@@ -155,6 +148,14 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
             return true;
 
+        } else if (preference == mMiuiBattery) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+            int value = (checked ? 1 : 0);
+
+            Settings.System.putInt(getContentResolver(), "tweaks_miui_battery", value);
+
+            return true;
+
         }
 
         return false;
@@ -162,11 +163,9 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
     ColorPickerDialog.OnColorChangedListener mColorChangeListener = new ColorPickerDialog.OnColorChangedListener() {
 
-
         public void colorUpdate(int color) {
             Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag, color);
         }
-
 
         public void colorChanged(int color) {
             Settings.System.putInt(getContentResolver(), sCurrentPrefColorFlag, color);

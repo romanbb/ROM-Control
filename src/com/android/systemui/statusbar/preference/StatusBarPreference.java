@@ -54,4 +54,9 @@ public class StatusBarPreference {
         // TODO Auto-generated method stub
 
     }
+
+    public void setService(StatusBarService service) {
+        // TODO Auto-generated method stub
+        
+    }
 }

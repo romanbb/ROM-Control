@@ -8,6 +8,9 @@
 		android:key="battery_text_style_pref"
 		android:entryValues="@array/battery_text_display_values"
 		android:entries="@array/battery_text_display_entries" />
+	<CheckBoxPreference
+		android:title="Show MIUI battery bar"
+		android:key="miui_battery" />
 
 	<PreferenceCategory android:title="Color Settings">
 
