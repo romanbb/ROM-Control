@@ -87,8 +87,7 @@
 			android:key="pref_overscroll_effect"
 			android:title="Overscroll Settings"
 			android:entries="@array/pref_overscroll_effect_entries"
-			android:entryValues="@array/pref_overscroll_effect_values"
-			android:enabled="false" />
+			android:entryValues="@array/pref_overscroll_effect_values" />
 
 
 

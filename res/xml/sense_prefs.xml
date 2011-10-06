@@ -7,26 +7,22 @@
 
 		<CheckBoxPreference
 			android:key="use_custom_rosie_activity"
-			android:title="Enable custom personalize button"
-			android:enabled="false" />
+			android:title="Enable custom personalize button" />
 
 		<Preference
 			android:key="pref_rosie_activity"
 			android:title="Custom Personalize button"
-			android:dependency="use_custom_rosie_activity"
-			android:enabled="false" />
+			android:dependency="use_custom_rosie_activity" />
 
 
 		<CheckBoxPreference
 			android:key="enable_unlock_animation"
-			android:title="Enable unlock animation"
-			android:enabled="false" />
+			android:title="Enable unlock animation" />
 
 		<CheckBoxPreference
 			android:key="app_drawer_app_columns"
 			android:title="5 column app drawer"
-			android:summary="Requires a reboot of the system or Rosie"
-			android:enabled="false" />
+			android:summary="Requires a reboot of the system or Rosie" />
 
 		<CheckBoxPreference
 			android:key="paginated_apps"
