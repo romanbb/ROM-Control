@@ -88,16 +88,23 @@
 		<item>Auto rotation</item>
 		<item>Wi-Fi</item>
 		<item>Bluetooth</item>
-		<item>Mobile Network</item>
+		<item>Mobile network</item>
+		<item>--not used--</item>
 		<item>Brightness</item>
-		<item>Wi-Fi HotSpot</item>
 		<item>All settings</item>
 		<item>GPS</item>
-		<item>Ringer volume</item>
-		<item>Task Manager</item>
+		<item>--not used--</item>
+		<item>Task manager</item>
 		<item>Media volume</item>
-		<item>Vibration</item>
+		<item>--not used--</item>
+		<item>Airplane mode</item>
+		<item>Power efficiency</item>
+		<item>Auto sync</item>
+		<item>--not used--</item>
+		<item>Ringer volume</item>
 		<item>Torch</item>
+		<item>Vibration mode</item>
+		<item>Silent mode</item>
 	</string-array>
 
 </resources>

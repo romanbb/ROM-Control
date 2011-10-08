@@ -77,7 +77,7 @@
 
 		<activity
 			android:label="Tweaks - Sense Options"
-			android:name=".activities.SenseActivity">
+			android:name=".activities.Sense">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN" />
 			</intent-filter>

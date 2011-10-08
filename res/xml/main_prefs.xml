@@ -64,7 +64,7 @@
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.SenseActivity" />
+				android:targetClass="com.roman.tweaks.activities.Sense" />
 		</Preference>
 
 	</PreferenceCategory>

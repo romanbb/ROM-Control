@@ -26,21 +26,21 @@ public class QuickSettings extends LinearLayout {
     int[] ids;
 
     private static final int ROTATION = 0;
-
     private static final int WIFI = 1;
     private static final int BT = 2;
     private static final int MOBILE_NETWORK = 3;
+    // private static final int SOMETHING = 4;
     private static final int BRIGHTNESS = 5;
-    private static final int HOTSPOT = 5;
     private static final int SETTINGS = 6;
     private static final int GPS = 7;
-    // private static final int WIMAX = 8;
+    private static final int HOTSPOT = 8;
     private static final int TASK_MANAGER = 9;
     private static final int VOLUME_MEDIA = 10;
     private static final int CARRIER_APP = 11;
     private static final int AIRPLANE_MODE = 12;
     private static final int POWER_EFFICIENCY = 13;
     private static final int AUTO_SYNC = 14;
+    // private static final int SOMETHING = 15;
     private static final int VOLUME_RINGER = 16;
     private static final int TORCH = 17;
     private static final int VIBRATION_MODE = 18;
