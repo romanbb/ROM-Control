@@ -23,8 +23,7 @@
 
 		<Preference
 			android:title="Lockscreen Settings"
-			android:key="lockscreen_settings"
-			android:enabled="false">
+			android:key="lockscreen_settings">
 			<intent
 				android:action="android.intent.action.MAIN"
 				android:targetPackage="com.roman.tweaks"

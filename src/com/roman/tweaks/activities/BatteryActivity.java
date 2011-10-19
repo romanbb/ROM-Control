@@ -69,8 +69,6 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
         mMiuiBattery.setChecked(Settings.System.getInt(getContentResolver(),
                 "tweaks_miui_battery", 0) == 1);
 
-        prefs.removePreference(mMiuiBattery);
-
         refreshOptions();
     }
 

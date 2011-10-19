@@ -7,11 +7,12 @@
 		android:key="pref_lockscreen_style"
 		android:title="Choose lockscreen style"
 		android:entries="@array/pref_lockscreen_style_entries"
-		android:entryValues="@array/pref_lockscreen_style_values" />
+		android:entryValues="@array/pref_lockscreen_style_values"
+		android:enabled="false" />
 
-	<!-- <CheckBoxPreference -->
-	<!-- android:title="Show Honeycomb clock font" -->
-	<!-- android:key="pref_clock" /> -->
+	<CheckBoxPreference
+		android:title="Volume keys wake screen"
+		android:key="volume_wake" />
 
 	<!-- <PreferenceCategory -->
 	<!-- android:title="Custom Application Launchers" -->

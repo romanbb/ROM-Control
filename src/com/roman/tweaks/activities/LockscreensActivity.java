@@ -24,9 +24,10 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
     private static final String LOCKSCREEN_QUADRANT_3_PREF = "pref_quadrant_3";
     private static final String LOCKSCREEN_QUADRANT_4_PREF = "pref_quadrant_4";
     private static final String LOCKSCREEN_CLOCK_PREF = "pref_clock";
+    private static final String PREF_WAKE = "volume_wake";
 
     private ListPreference mLockscreenStylePref;
-    private CheckBoxPreference mShowHoneyClock;
+    private CheckBoxPreference mVolumeWake;
     private Preference mHoneyQuadrant1Pref;
     private Preference mHoneyQuadrant2Pref;
     private Preference mHoneyQuadrant3Pref;
@@ -46,18 +47,26 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
         mLockscreenStylePref = (ListPreference) prefSet.findPreference(LOCKSCREEN_STYLE_PREF);
         int lockScreenStyle = Settings.System.getInt(getContentResolver(),
                 "tweaks_lockscreen_style", 0);
-        Log.e("ROMAN", "style: " + lockScreenStyle);
         // mLockscreenStylePref.setValueIndex(lockScreenStyle);
         mLockscreenStylePref.setOnPreferenceChangeListener(this);
 
-//        mHoneyQuadrant1Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_1_PREF);
-//        mHoneyQuadrant2Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_2_PREF);
-//        mHoneyQuadrant3Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_3_PREF);
-//        mHoneyQuadrant4Pref = prefSet.findPreference(LOCKSCREEN_QUADRANT_4_PREF);
-//
-//        mShowHoneyClock = (CheckBoxPreference) prefSet.findPreference(LOCKSCREEN_CLOCK_PREF);
+        // mHoneyQuadrant1Pref =
+        // prefSet.findPreference(LOCKSCREEN_QUADRANT_1_PREF);
+        // mHoneyQuadrant2Pref =
+        // prefSet.findPreference(LOCKSCREEN_QUADRANT_2_PREF);
+        // mHoneyQuadrant3Pref =
+        // prefSet.findPreference(LOCKSCREEN_QUADRANT_3_PREF);
+        // mHoneyQuadrant4Pref =
+        // prefSet.findPreference(LOCKSCREEN_QUADRANT_4_PREF);
+        //
+        // mShowHoneyClock = (CheckBoxPreference)
+        // prefSet.findPreference(LOCKSCREEN_CLOCK_PREF);
 
         mPicker = new ShortcutPickHelper(this, this);
+
+        mVolumeWake = (CheckBoxPreference) prefSet.findPreference(PREF_WAKE);
+        mVolumeWake.setChecked(Settings.System.getInt(getContentResolver(),
+                "tweaks_lockscreen_style", 1) == 1);
 
     }
 
@@ -86,12 +95,12 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
             mCurrentCustomActivityString = "tweaks_lockscreen_hc_activity_4";
             mPicker.pickShortcut();
             return true;
-        } else if (preference == mShowHoneyClock) {
+        } else if (preference == mVolumeWake) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
             int value = (checked ? 1 : 0);
 
             Settings.System.putInt(getContentResolver(),
-                    "tweaks_lockscreen_hc_clock_enabled", value);
+                    "tweaks_use_volume", value);
             return true;
         }
 

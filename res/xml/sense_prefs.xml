@@ -29,8 +29,11 @@
 		<CheckBoxPreference
 			android:key="paginated_apps"
 			android:title="Paginated app drawer"
-			android:summary="Use pages when scrolling?"
-			android:enabled="false" />
+			android:summary="Use pages when scrolling?" />
+
+		<CheckBoxPreference
+			android:key="transparent_apps"
+			android:title="Transparent app drawer" />
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -52,12 +55,15 @@
 		<CheckBoxPreference
 			android:key="enable_screenshots"
 			android:title="Enable sceenshot function"
-			android:summary="With Power + Home"
-			android:enabled="false" />
+			android:summary="With Power + Home" />
 
 		<CheckBoxPreference
 			android:key="super_quick_settings"
 			android:title="Quick-quick settings"
 			android:summary="Automatically show quick settings when there are no notifications to clear." />
+
+		<CheckBoxPreference
+			android:key="screen_on_mms"
+			android:title="Screen on SMS" />
 	</PreferenceCategory>
 </PreferenceScreen>

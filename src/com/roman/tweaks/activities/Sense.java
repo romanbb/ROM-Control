@@ -35,6 +35,8 @@ public class Sense extends PreferenceActivity {
     private static final String PREF_SUPER_QUICK_SETTINGS = "super_quick_settings";
     private static final String PREF_USE_PAGINATED_APPS = "paginated_apps";
     private static final String PREF_KILL_ROSIE = "kill_rosie";
+    private static final String PREF_SCREEN_ON_MMS = "screen_on_mms";
+    private static final String PREF_TRANSPARENT_APPS = "transparent_apps";
 
     CheckBoxPreference mShowRecentApps;
     CheckBoxPreference mEnableScreenshots;
@@ -44,6 +46,8 @@ public class Sense extends PreferenceActivity {
     Preference mRosieActivity;
     CheckBoxPreference mUseRosieCustomActivity;
     CheckBoxPreference mUsePaginatedAppDrawer;
+    CheckBoxPreference mScreenOnSms;
+    CheckBoxPreference mUseTransparentApps;
     Preference mKillRosie;
 
     @Override
@@ -67,6 +71,8 @@ public class Sense extends PreferenceActivity {
         mEnableFiveColumns = (CheckBoxPreference) prefs.findPreference(PREF_NUM_COLUMNS_APP_DRAWER);
         mEnableQuickQuickSettings = (CheckBoxPreference) prefs.findPreference(PREF_SUPER_QUICK_SETTINGS);
         mUsePaginatedAppDrawer = (CheckBoxPreference) prefs.findPreference(PREF_USE_PAGINATED_APPS);
+        mScreenOnSms = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_ON_MMS);
+        mUseTransparentApps = (CheckBoxPreference) prefs.findPreference(PREF_TRANSPARENT_APPS);
 
         String activityName = Settings.System.getString(getContentResolver(), "tweaks_rosie_activity_name");
         mRosieActivity.setSummary(activityName == null ? "Browser" : activityName);
@@ -95,6 +101,14 @@ public class Sense extends PreferenceActivity {
         /* page drawer */
         checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_use_pages", 1) == 1);
         mUsePaginatedAppDrawer.setChecked(checked);
+
+        /* sms screen on */
+        checked = (Settings.System.getInt(getContentResolver(), "tweaks_sms_screen_on", 0) == 1);
+        mScreenOnSms.setChecked(checked);
+
+        /* transparent app drawer */
+        checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_transparent", 0) == 1);
+        mUseTransparentApps.setChecked(checked);
 
         /* check rosie */
         if (!new File("/system/app/Rosie.apk").exists()) {
@@ -133,7 +147,7 @@ public class Sense extends PreferenceActivity {
 
             Settings.System.putInt(getContentResolver(),
                     "tweaks_rosie_remap_personalize", checked ? 1 : 0);
-            if(!checked)
+            if (!checked)
                 Settings.System.putString(getContentResolver(),
                         "tweaks_rosie_activity_name", "Personalize");
             return true;
@@ -178,6 +192,19 @@ public class Sense extends PreferenceActivity {
             if (ShellInterface.isSuAvailable())
                 ShellInterface.runCommand("pkill -TERM -f com.htc.launcher");
 
+            return true;
+        } else if (preference == mUseTransparentApps) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+            Settings.System.putInt(getContentResolver(),
+                    "tweaks_rosie_transparent", checked ? 1 : 0);
+            return true;
+
+        } else if (preference == mScreenOnSms) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+            Settings.System.putInt(getContentResolver(),
+                    "tweaks_sms_screen_on", checked ? 1 : 0);
             return true;
         }
 
