@@ -8,7 +8,7 @@ import com.android.systemui.statusbar.StatusBarStyleable;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
-import android.net1.ConnectivityManager;
+import android.net.ConnectivityManager;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;

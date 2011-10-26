@@ -1,4 +1,4 @@
-package android.net1;
+package android.net;
 
 public class ConnectivityManager {
 
@@ -8,6 +8,11 @@ public class ConnectivityManager {
     }
 
     public boolean isTetheringSupported() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean getDataEnabled() {
         // TODO Auto-generated method stub
         return false;
     }
