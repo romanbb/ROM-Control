@@ -1,9 +1,6 @@
 
 package com.roman.tweaks.activities;
 
-import com.roman.tweaks.R;
-import com.roman.tweaks.utils.ShortcutPickHelper;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.preference.CheckBoxPreference;
@@ -14,6 +11,9 @@ import android.preference.PreferenceActivity;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
+
+import com.roman.tweaks.R;
+import com.roman.tweaks.utils.ShortcutPickHelper;
 
 public class LockscreensActivity extends PreferenceActivity implements OnPreferenceChangeListener,
         ShortcutPickHelper.OnPickListener {
@@ -67,6 +67,8 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
         mVolumeWake = (CheckBoxPreference) prefSet.findPreference(PREF_WAKE);
         mVolumeWake.setChecked(Settings.System.getInt(getContentResolver(),
                 "tweaks_lockscreen_style", 1) == 1);
+
+        prefSet.removePreference(mVolumeWake);
 
     }
 

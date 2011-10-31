@@ -19,6 +19,7 @@ import android.preference.ListPreference;
 import android.preference.Preference;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceGroup;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
 import android.util.Log;
@@ -57,19 +58,14 @@ public class Main extends PreferenceActivity implements
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        addPreferencesFromResource(R.xml.main_prefs);
         context = this.getApplicationContext();
-
-        Log.e(Main.class.toString(), "HI!");
-
-        if (isKanged("Bulletproof")) {
+        if (isKanged("Juggernaut")) {
             addPreferencesFromResource(R.xml.kanged);
             mTwitter = findPreference(TWITTER_PREF);
             mThread = findPreference(THREAD_PREF);
 
         }
-
-        addPreferencesFromResource(R.xml.main_prefs);
-
         PreferenceScreen prefs = getPreferenceScreen();
 
         d = new Dialog(this);
@@ -79,75 +75,32 @@ public class Main extends PreferenceActivity implements
         mBattery = prefs.findPreference(PREF_BATTERY);
         mSignal = prefs.findPreference(PREF_SIGNAL);
 
-        boolean checked = (Settings.System.getInt(getContentResolver(),
-                "tweaks_crt_off", 1) == 1) ? true : false;
-        Log.e(TAG, "Inintial CRT_OFF == " + checked);
-        mAnimateScreenOff = (CheckBoxPreference) prefs
-                .findPreference(PREF_SCREEN_OFF);
+        boolean checked = (Settings.System.getInt(getContentResolver(), "tweaks_crt_off", 1) == 1) ? true : false;
+        // Log.e(TAG, "Inintial CRT_OFF == " + checked);
+        mAnimateScreenOff = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_OFF);
         mAnimateScreenOff.setChecked(checked);
 
-        checked = (Settings.System.getInt(getContentResolver(),
-                "tweaks_crt_on", 1) == 1) ? true : false;
-        Log.e(TAG, "Inintial CRT_ON == " + checked);
-        mAnimateScreenOn = (CheckBoxPreference) prefs
-                .findPreference(PREF_SCREEN_ON);
+        checked = (Settings.System.getInt(getContentResolver(), "tweaks_crt_on", 1) == 1) ? true : false;
+        // Log.e(TAG, "Inintial CRT_ON == " + checked);
+        mAnimateScreenOn = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_ON);
         mAnimateScreenOn.setChecked(checked);
 
-        mOverscrollPref = (ListPreference) prefs
-                .findPreference(OVERSCROLL_PREF);
-        int overscrollEffect = Settings.System.getInt(getContentResolver(),
-                "overscroll_effect", 1);
+        mOverscrollPref = (ListPreference) prefs.findPreference(OVERSCROLL_PREF);
+        int overscrollEffect = Settings.System.getInt(getContentResolver(), "overscroll_effect", 1);
         mOverscrollPref.setValue(String.valueOf(overscrollEffect));
         mOverscrollPref.setOnPreferenceChangeListener(this);
 
-    }
+        ((PreferenceGroup) findPreference("other_cat")).removePreference(mOverscrollPref);
+        ((PreferenceGroup) findPreference("other_cat")).removePreference(mAnimateScreenOn);
+        ((PreferenceGroup) findPreference("statusbar_cat")).removePreference(findPreference("quick_settings"));
 
-    // flags for setPowerState
-    private static final int SCREEN_ON_BIT = 0x00000001;
-    private static final int SCREEN_BRIGHT_BIT = 0x00000002;
-    private static final int BUTTON_BRIGHT_BIT = 0x00000004;
-    private static final int KEYBOARD_BRIGHT_BIT = 0x00000008;
-    private static final int BATTERY_LOW_BIT = 0x00000010;
-    private int mButtonBrightnessOverride = 0;
-    private int mButtonTimeoutSetting = 0;
-    private int mLightSensorButtonBrightness = 0;
-    private boolean mUseSoftwareAutoBrightness = false;
-
-    private int applyButtonState(int state) {
-        int brightness = -1;
-
-        // 1
-        if ((state & BATTERY_LOW_BIT) != 0) {
-            // do not override brightness if the battery is low
-            return state;
-        }
-
-        // 2
-        if (mButtonBrightnessOverride >= 0) {
-            brightness = mButtonBrightnessOverride;
-        } else if (mLightSensorButtonBrightness >= 0 && mButtonTimeoutSetting == -2) {
-            // 3
-            brightness = mLightSensorButtonBrightness;
-        }else if (mButtonTimeoutSetting != -3 && mButtonTimeoutSetting == -1) {
-            brightness = 0xFF;
-        } else if(mButtonTimeoutSetting == 0) {
-            brightness = 0;            
-        }
-
-        if (brightness > 0) {
-            return state | BUTTON_BRIGHT_BIT;
-        } else if (brightness == 0) {
-            return state & ~BUTTON_BRIGHT_BIT;
-        } else {
-            return state;
-        }
     }
 
     public boolean isKanged(String lol) {
         String modversion = "";
 
         StringBuilder sup = new StringBuilder();
-        sup.append("B");
+        sup.append("J");
 
         Process ifc = null;
         try {
@@ -155,20 +108,20 @@ public class Main extends PreferenceActivity implements
             ifc = Runtime.getRuntime().exec("getprop ro.modversion");
             BufferedReader bis = new BufferedReader(new InputStreamReader(
                     ifc.getInputStream()));
-            sup.append("l");
+            sup.append("g");
 
             modversion = bis.readLine();
             // Log.d("Tweaks", "Modversion: " + modversion);
         } catch (java.io.IOException e) {
             return true;
         } finally {
-            sup.append("l");
+            sup.append("g");
         }
         ifc.destroy();
 
         sup.append("e");
 
-        if (modversion.contains(lol) && modversion.contains("Bulletproof")
+        if (modversion.contains(lol) && modversion.contains("Juggernaut")
                 && modversion.contains(sup)) {
             return false;
         }

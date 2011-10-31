@@ -7,4 +7,9 @@ public class SystemProperties {
         return null;
     }
 
+    public static boolean getBoolean(String string, boolean b) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
 }

@@ -57,15 +57,6 @@
 				android:targetClass="com.roman.tweaks.activities.SignalsActivity" />
 		</Preference>
 
-		<Preference
-			android:title="Sense options"
-			android:key="sense_options_pref">
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.Sense" />
-		</Preference>
-
 	</PreferenceCategory>
 
 	<PreferenceCategory
@@ -74,13 +65,11 @@
 
 		<CheckBoxPreference
 			android:key="pref_animate_off"
-			android:title="Animate screen off"
-			android:enabled="false" />
+			android:title="Animate screen off" />
 
 		<CheckBoxPreference
 			android:key="pref_animate_on"
-			android:title="Animate screen on"
-			android:enabled="false" />
+			android:title="Animate screen on" />
 
 		<ListPreference
 			android:key="pref_overscroll_effect"

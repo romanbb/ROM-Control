@@ -61,26 +61,31 @@ public class GlobalActions implements OnClickListener, OnDismissListener {
     private static boolean mIsWaitingForEcmExit = false;
 
     // ids
-    public static int SILENT_ENABLED_ICON = 0x1080031;
-    public static int SILENT_DISABLED_ICON = 0x1080032;
-    public static int SILENT_MESSAGE = 0x1040153;
-    public static int SILENT_ENABLED_STATUS = 0x1040154;
-    public static int SILENT_DISABLED_STATUS = 0x1040155;
+    public static final int SILENT_ENABLED_ICON = 0x1080031;
+    public static final int SILENT_DISABLED_ICON = 0x1080032;
+    public static final int SILENT_MESSAGE = 0x1040153;
+    public static final int SILENT_ENABLED_STATUS = 0x1040154;
+    public static final int SILENT_DISABLED_STATUS = 0x1040155;
 
-    public static int AIRPLANE_ENABLED_ICON = 0x10801bc;
-    public static int AIRPLANE_DISABLED_ICON = 0x10801bd;
-    public static int AIRPLANE_MESSAGE = 0x1040156;
-    public static int AIRPLANE_ENABLED_STATUS = 0x1040157;
-    public static int AIRPLANE_DISABLED_STATUS = 0x1040158;
+    public static final int AIRPLANE_ENABLED_ICON = 0x10801bc;
+    public static final int AIRPLANE_DISABLED_ICON = 0x10801bd;
+    public static final int AIRPLANE_MESSAGE = 0x1040156;
+    public static final int AIRPLANE_ENABLED_STATUS = 0x1040157;
+    public static final int AIRPLANE_DISABLED_STATUS = 0x1040158;
 
     public static final int R_LAYOUT_GLOBAL_ACTIONS_ITEM = 0x1090029;
     public static final int R_ID_STATUS = 0x10201b2;
 
     public static final int R_DRAWABLE_IC_LOCK_POWER_OFF = 0x1080030;
     public static final int R_STRING_GLOBAL_ACTION_POWER_OFF = 0x1040152;
+    
+    public static final int REBOOT_IMAGE = 0x1080455;
+    public static final int REBOOT_STRING = 0x1040358;
+    
+    public static final int SCREENSHOT_ICON = 0x1080456;
+    public static final int SCREENSHOT_STRING = 0x1040527;
 
     public static final int R_BOOL_CONFIG_SLOW_BLUR = 0x10d0001;
-
     public static final int R_STRING_GLOBAL_ACTIONS = 0x1040150;
 
     public static final int R_DRAWABLE_IC_LOCK_SILENT_MODE_VIBRATE = 0x10801c0;
@@ -179,8 +184,8 @@ public class GlobalActions implements OnClickListener, OnDismissListener {
         };
 
         SinglePressAction rebootOptions = new SinglePressAction(
-                R_DRAWABLE_IC_LOCK_POWER_OFF,
-                R_STRING_GLOBAL_ACTION_POWER_OFF) {
+                REBOOT_IMAGE,
+                REBOOT_STRING) {
 
             CharSequence rebootOpts[][] = {
                     {
@@ -194,7 +199,7 @@ public class GlobalActions implements OnClickListener, OnDismissListener {
             String rebootChoice = "";
 
             public boolean showDuringKeyguard() {
-                return false;
+                return true;
             }
 
             public boolean showBeforeProvisioning() {
@@ -254,6 +259,22 @@ public class GlobalActions implements OnClickListener, OnDismissListener {
                 mSilentModeToggle,
                 // next: airplane mode
                 mAirplaneModeOn,
+                //screenshot
+                new SinglePressAction(SCREENSHOT_ICON, SCREENSHOT_STRING) {
+                    public void onPress() {
+                        Intent intent = new Intent("android.intent.action.SCREENSHOT");
+                        mContext.sendBroadcast(intent);
+                    }
+
+                    public boolean showDuringKeyguard() {
+                        return true;
+                    }
+
+                    public boolean showBeforeProvisioning() {
+                        return true;
+                    }
+                },
+                //reboot opts
                 rebootOptions,
                 // last: power off
                 new SinglePressAction(

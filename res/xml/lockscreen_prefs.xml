@@ -7,8 +7,7 @@
 		android:key="pref_lockscreen_style"
 		android:title="Choose lockscreen style"
 		android:entries="@array/pref_lockscreen_style_entries"
-		android:entryValues="@array/pref_lockscreen_style_values"
-		android:enabled="false" />
+		android:entryValues="@array/pref_lockscreen_style_values" />
 
 	<CheckBoxPreference
 		android:title="Volume keys wake screen"
