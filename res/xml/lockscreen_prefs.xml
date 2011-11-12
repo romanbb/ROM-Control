@@ -9,9 +9,12 @@
 		android:entries="@array/pref_lockscreen_style_entries"
 		android:entryValues="@array/pref_lockscreen_style_values" />
 
-	<CheckBoxPreference
-		android:title="Volume keys wake screen"
-		android:key="volume_wake" />
+	<ListPreference
+		android:title="Volume key screen wake"
+		android:key="volume_wake"
+		android:entries="@array/pref_screenwake_entries"
+		android:entryValues="@array/pref_screenwake_values" 
+		android:dialogTitle="Which keys wake the screen?" />
 
 	<!-- <PreferenceCategory -->
 	<!-- android:title="Custom Application Launchers" -->

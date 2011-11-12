@@ -69,7 +69,7 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
         mShowSignalBars.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_icon_enabled", 1) == 1));
         mSignalAutoColor.setChecked((Settings.System.getInt(getContentResolver(),
-                "tweaks_signal_text_autocolor_enabled", 0) == 1));
+                "tweaks_signal_text_autocolor_enabled", 1) == 1));
         mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_show_4g_icon", 0) == 1));
         mShow2GIcon.setChecked((Settings.System.getInt(getContentResolver(),
@@ -79,6 +79,9 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
         mSignalTextStyle.setValueIndex(Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_text_style", 0));
 
+        
+        prefs.removePreference(mShow4GIcon);
+        prefs.removePreference(mShow2GIcon);
         refreshOptions();
     }
 

@@ -12,15 +12,12 @@
 	<string-array name="pref_lockscreen_style_entries">
 		<item>TouchWiz 3</item>
 		<item>Android</item>
-		<item>Rotary</item>
 	</string-array>
 
-	<string-array
-		name="pref_lockscreen_style_values"
+	<string-array name="pref_lockscreen_style_values"
 		translatable="false">
 		<item>0</item>
 		<item>1</item>
-		<item>2</item>
 	</string-array>
 
 	<string-array name="am_pm_values">
@@ -37,13 +34,13 @@
 	<string-array name="clock_values">
 		<item>0</item>
 		<item>1</item>
-        <!-- <item>2</item> -->
+		<!-- <item>2</item> -->
 
 	</string-array>
 	<string-array name="clock_entries">
 		<item>Hide clock</item>
 		<item>Show clock</item>
-<!-- 		<item>Center clock</item> -->
+		<!-- <item>Center clock</item> -->
 	</string-array>
 
 	<string-array name="battery_text_display_entries">
@@ -76,8 +73,7 @@
 		<item>Bounce and Glow</item>
 		<item>Bounce</item>
 	</string-array>
-	<string-array
-		name="pref_overscroll_effect_values"
+	<string-array name="pref_overscroll_effect_values"
 		translatable="false">
 		<item>0</item>
 		<item>1</item>
@@ -106,6 +102,19 @@
 		<item>Torch</item>
 		<item>Vibration mode</item>
 		<item>Silent mode</item>
+	</string-array>
+
+	<string-array name="pref_screenwake_entries">
+		<item>Power key only</item>
+		<item>Vol +/- and power</item>
+		<item>Vol - and power</item>
+		<item>Vol + and power</item>
+	</string-array>
+	<string-array name="pref_screenwake_values" translatable="false">
+		<item>0</item>
+		<item>1</item>
+		<item>25</item>
+		<item>24</item>
 	</string-array>
 
 </resources>
