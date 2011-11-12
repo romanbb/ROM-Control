@@ -86,8 +86,8 @@ public class CheckVersionListener implements OnPreferenceClickListener {
 
                 Intent launch = new Intent(mContext, Main.class);
                 launch.setAction(Main.BROADCAST_DL_FLASH);
-                launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                Log.e(TAG, "Sending broadcast");
+                launch.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
                 mContext.startActivity(launch);
                 return true;
             } else {
