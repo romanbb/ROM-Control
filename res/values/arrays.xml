@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-	<string-array name="read_ahead_entries">
+	<string-array
+		name="read_ahead_entries">
 		<item>128</item>
 		<item>256</item>
 		<item>512</item>
@@ -9,71 +10,98 @@
 		<item>4096</item>
 	</string-array>
 
-	<string-array name="pref_lockscreen_style_entries">
-		<item>TouchWiz 3</item>
+	<string-array
+		name="pref_lockscreen_style_entries">
+		<item>Samsung</item>
 		<item>Android</item>
+		<item>Rotary</item>
 	</string-array>
 
-	<string-array name="pref_lockscreen_style_values"
+	<string-array
+		name="pref_lockscreen_style_values"
 		translatable="false">
-		<item>0</item>
-		<item>1</item>
-	</string-array>
-
-	<string-array name="am_pm_values">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
 	</string-array>
-	<string-array name="am_pm_entries">
+
+	<string-array
+		name="am_pm_values">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
+	<string-array
+		name="am_pm_entries">
 		<item>Show AM/PM</item>
 		<item>Small AM/PM</item>
 		<item>Hide AM/PM</item>
 	</string-array>
 
-	<string-array name="clock_values">
+	<string-array
+		name="clock_values">
 		<item>0</item>
 		<item>1</item>
 		<!-- <item>2</item> -->
 
 	</string-array>
-	<string-array name="clock_entries">
+	<string-array
+		name="clock_entries">
 		<item>Hide clock</item>
 		<item>Show clock</item>
 		<!-- <item>Center clock</item> -->
 	</string-array>
 
-	<string-array name="battery_text_display_entries">
+	<string-array
+		name="battery_text_display_entries">
 		<item>Regular %</item>
 		<item>Small %</item>
 		<item>No %</item>
 		<item>Hide Text</item>
 	</string-array>
-	<string-array name="battery_text_display_values">
+	<string-array
+		name="battery_text_display_values">
 		<item>1</item>
 		<item>3</item>
 		<item>4</item>
 		<item>2</item>
 	</string-array>
-	<string-array name="signal_text_display_entries">
+	<string-array
+		name="signal_text_display_entries">
 		<item>Show</item>
 		<item>Small w/dBm</item>
 		<item>Hide</item>
 	</string-array>
-	<string-array name="signal_text_display_values">
+	<string-array
+		name="signal_text_display_values">
 		<item>1</item>
 		<item>2</item>
 		<item>0</item>
 	</string-array>
 
+	<string-array
+		name="icon_display_entries">
+		<item>4G</item>
+		<item>H</item>
+		<item>3G</item>
+	</string-array>
+	<string-array
+		name="icon_display_values"
+		translatable="false">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+	</string-array>
 
-	<string-array name="pref_overscroll_effect_entries">
+	<string-array
+		name="pref_overscroll_effect_entries">
 		<item>None</item>
 		<item>Edge Glow</item>
 		<item>Bounce and Glow</item>
 		<item>Bounce</item>
 	</string-array>
-	<string-array name="pref_overscroll_effect_values"
+	<string-array
+		name="pref_overscroll_effect_values"
 		translatable="false">
 		<item>0</item>
 		<item>1</item>
@@ -81,7 +109,8 @@
 		<item>3</item>
 	</string-array>
 
-	<string-array name="quick_settings_entries">
+	<string-array
+		name="quick_settings_entries">
 		<item>Auto rotation</item>
 		<item>Wi-Fi</item>
 		<item>Bluetooth</item>
@@ -104,13 +133,16 @@
 		<item>Silent mode</item>
 	</string-array>
 
-	<string-array name="pref_screenwake_entries">
+	<string-array
+		name="pref_screenwake_entries">
 		<item>Power key only</item>
 		<item>Vol +/- and power</item>
 		<item>Vol - and power</item>
 		<item>Vol + and power</item>
 	</string-array>
-	<string-array name="pref_screenwake_values" translatable="false">
+	<string-array
+		name="pref_screenwake_values"
+		translatable="false">
 		<item>0</item>
 		<item>1</item>
 		<item>25</item>

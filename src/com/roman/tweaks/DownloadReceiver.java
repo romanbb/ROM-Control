@@ -12,6 +12,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Environment;
 import android.preference.PreferenceManager;
 import android.util.Log;
@@ -26,27 +27,62 @@ public class DownloadReceiver extends BroadcastReceiver {
 
     public void onReceive(final Context context, Intent intent) {
         Log.e(TAG, "Receiver");
+        final DownloadManager dm = (DownloadManager) context
+                .getSystemService(Context.DOWNLOAD_SERVICE);
+
+        long download_id = -1;
+
+        if (intent.hasExtra(DownloadManager.EXTRA_DOWNLOAD_ID))
+            download_id = intent.getExtras().getLong(DownloadManager.EXTRA_DOWNLOAD_ID);
+
+        long rom_id = PreferenceManager.getDefaultSharedPreferences(context).getLong(
+                "PREF_DOWNLOAD_ID", 0);
+        long tweaks_id = PreferenceManager.getDefaultSharedPreferences(context).getLong(
+                "tweaks_id", 0);
+
+        boolean rom_dl = rom_id == download_id;
+        boolean tweaks_dl = tweaks_id == download_id;
+
+        
+
         if (intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
             Log.e(TAG, "Reciving " + DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 
-            File externalStorageDir = Environment
-                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-
-            final String md5_expected = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString("file_md5", "");
-            final String fileName = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getString("file_name", "");
-
-            File f = new File(externalStorageDir.getAbsolutePath() + "/" + fileName);
-            
-            if(!f.exists()) {
-                Log.e(TAG, "DL Receiver file doesn't exist!, no notification");
-                return; 
+            if (!(rom_dl || tweaks_dl)) {
+                Log.e(TAG, "dl id mismatch");
+                Log.e(TAG, "rom id: " + rom_id + " | tweaks id: " + tweaks_id);
+                Log.e(TAG, download_id + "");
+                return;
             }
             
-            if(!md5_expected.equals(Main.md5(f))) {
+            File externalStorageDir = Environment
+                    .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+            String md5_expected = null;
+            String fileName = null;
+
+            if (rom_dl) {
+                md5_expected = PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        "file_md5", "");
+                fileName = PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        "file_name", "");
+            } else if (tweaks_dl) {
+                md5_expected = PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        "tweaks_md5", "");
+                fileName = PreferenceManager.getDefaultSharedPreferences(context).getString(
+                        "tweaks_filename", "");
+            }
+
+            File f = new File(externalStorageDir.getAbsolutePath() + "/" + fileName);
+
+            if (!f.exists()) {
+                Log.e(TAG, "DL Receiver file doesn't exist!, no notification");
+                return;
+            }
+
+            if (!md5_expected.equals(Main.md5(f))) {
                 Log.e(TAG, "DL Receiver md5 mismatch, no notification");
-                Log.e(TAG, "so we're deleting the file and the result is: " + f.delete());
+                // Log.e(TAG, "so we're deleting the file and the result is: " +
+                // f.delete());
                 return;
             }
 
@@ -55,20 +91,39 @@ public class DownloadReceiver extends BroadcastReceiver {
             NotificationManager mNotificationManager = (NotificationManager) context
                     .getSystemService(ns);
 
-            int icon = R.drawable.ic_settings_icon_juggernaut; // icon from
-                                                               // resources
-            CharSequence tickerText = "Juggernaut ROM download completed"; // ticker-text
+            CharSequence tickerText = null;
+            CharSequence contentTitle = null;
+            CharSequence contentText = null;
+            int icon = 0;
+            Intent intentToPlace = null;
             long when = System.currentTimeMillis();
-            CharSequence contentTitle = "Juggernaut ROM Update";
-            CharSequence contentText = "Tap when you're ready to update!";
-            
-            Log.e(TAG, "DL Successfull");
-            Intent successIntent = new Intent(context, Main.class);
-            successIntent.setAction(Main.BROADCAST_DL_FLASH);
-            successIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_SINGLE_TOP
-                    | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
 
-            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, successIntent, 0);
+            if (rom_dl) {
+                icon = R.drawable.ic_settings_icon_juggernaut;
+                tickerText = "Juggernaut ROM download completed"; // ticker-text
+                contentTitle = "Juggernaut ROM Update";
+                contentText = "Tap when you're ready to update!";
+
+                intentToPlace = new Intent(context, Main.class);
+                intentToPlace.setAction(Main.BROADCAST_DL_FLASH);
+                intentToPlace.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK
+                        | Intent.FLAG_ACTIVITY_SINGLE_TOP
+                        | Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+            } else if (tweaks_dl) {
+                icon = R.drawable.ic_rom_control_update;
+                tickerText = "ROM Control update ready to install."; // ticker-text
+                contentTitle = "ROM Control Update";
+                contentText = "Tap when you're ready to update!";
+
+                intentToPlace = new Intent(Intent.ACTION_VIEW);
+                intentToPlace.setDataAndType(Uri.fromFile(f),
+                        "application/vnd.android.package-archive");
+                intentToPlace.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intentToPlace);
+                return;
+            }
+
+            PendingIntent contentIntent = PendingIntent.getActivity(context, 0, intentToPlace, 0);
 
             // the next two lines initialize the Notification, using
             // the configurations above
@@ -80,11 +135,16 @@ public class DownloadReceiver extends BroadcastReceiver {
         } else if (intent.getAction().equals(DownloadManager.ACTION_NOTIFICATION_CLICKED)) {
             Log.e(TAG, "Reciving " + DownloadManager.ACTION_NOTIFICATION_CLICKED);
 
-            final DownloadManager dm = (DownloadManager) context
-                    .getSystemService(Context.DOWNLOAD_SERVICE);
+            Log.e(TAG, "click dl id: " + download_id);
+            Log.e(TAG, "rom dl id: " + rom_id);
+            Log.e(TAG, "tweaks dl: " + tweaks_id);
+            if (tweaks_dl)
+                return;
+            
+            if(download_id == 0)
+                download_id = rom_id;
+
             DownloadManager.Query query = new DownloadManager.Query();
-            final long download_id = PreferenceManager.getDefaultSharedPreferences(context)
-                    .getLong(strPref_Download_ID, 0);
             query.setFilterById(download_id);
             Cursor cursor = dm.query(query);
 

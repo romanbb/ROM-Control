@@ -68,6 +68,9 @@ public class BatteryActivity extends PreferenceActivity implements OnPreferenceC
 
         mMiuiBattery.setChecked(Settings.System.getInt(getContentResolver(),
                 "tweaks_miui_battery", 0) == 1);
+        
+        mColorAutomatically.setChecked(Settings.System.getInt(getContentResolver(),
+                "tweaks_batt_color_auto_enabled", 1) == 1);
 
         refreshOptions();
     }

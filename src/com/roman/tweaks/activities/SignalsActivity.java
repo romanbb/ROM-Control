@@ -27,8 +27,8 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
     private static final String PREF_SIGNAL_COLOR_STATIC = "signal_color_static";
     private static final String PREF_AUTO_COLOR = "signal_automatically_color_pref";
     private static final String PREF_SIGNAL_TEXT_STYLE = "signal_text_style_pref";
-    private static final String PREF_TOGGLE_4G_ICON = "show_4g_icon";
-    private static final String PREF_TOGGLE_2G_ICON = "show_2g_icon";
+    private static final String PREF_4G_ICON = "4g_icon";
+    private static final String PREF_3G_ICON = "3g_icon";
     private static final String PREF_SHOW_SIGNAL_BARS = "show_signal_bars";
 
     //
@@ -39,8 +39,8 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
     Preference mSignalColor4;
     Preference mSignalColorStatic;
     CheckBoxPreference mSignalAutoColor;
-    CheckBoxPreference mShow4GIcon;
-    CheckBoxPreference mShow2GIcon;
+    ListPreference m4GIcon;
+    ListPreference m3GIcon;
     CheckBoxPreference mShowSignalBars;
     ListPreference mSignalTextStyle;
 
@@ -58,31 +58,27 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
         mSignalColor3 = prefs.findPreference(PREF_SIGNAL_COLOR_3);
         mSignalColor4 = prefs.findPreference(PREF_SIGNAL_COLOR_4);
         mSignalColorStatic = prefs.findPreference(PREF_SIGNAL_COLOR_STATIC);
-        mShow4GIcon = (CheckBoxPreference) prefs.findPreference(PREF_TOGGLE_4G_ICON);
-        mShow2GIcon = (CheckBoxPreference) prefs.findPreference(PREF_TOGGLE_2G_ICON);
+        m4GIcon = (ListPreference) prefs.findPreference(PREF_4G_ICON);
+        m3GIcon = (ListPreference) prefs.findPreference(PREF_3G_ICON);
         mShowSignalBars = (CheckBoxPreference) prefs.findPreference(PREF_SHOW_SIGNAL_BARS);
 
-        
-        
-        
         // check enabled settings
         mShowSignalBars.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_icon_enabled", 1) == 1));
         mSignalAutoColor.setChecked((Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_text_autocolor_enabled", 1) == 1));
-        mShow4GIcon.setChecked((Settings.System.getInt(getContentResolver(),
-                "tweaks_show_4g_icon", 0) == 1));
-        mShow2GIcon.setChecked((Settings.System.getInt(getContentResolver(),
-                "tweaks_show_2g_icon", 0) == 1));
 
+        m4GIcon.setValueIndex(Settings.System.getInt(getContentResolver(), "4G_ICON_MODE", 0));
+        m4GIcon.setOnPreferenceChangeListener(this);
+        m3GIcon.setValueIndex(Settings.System.getInt(getContentResolver(), "3G_ICON_MODE", 0));
+        m3GIcon.setOnPreferenceChangeListener(this);
         mSignalTextStyle.setOnPreferenceChangeListener(this);
         mSignalTextStyle.setValueIndex(Settings.System.getInt(getContentResolver(),
                 "tweaks_signal_text_style", 0));
-
-        
-        prefs.removePreference(mShow4GIcon);
-        prefs.removePreference(mShow2GIcon);
         refreshOptions();
+        
+        prefs.removePreference(m4GIcon);
+        prefs.removePreference(m3GIcon);
     }
 
     public void onResume(Bundle ofLove) {
@@ -137,29 +133,15 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
 
         } else if (preference == mSignalAutoColor) {
             boolean enable = mSignalAutoColor.isChecked();
-            Settings.System.putInt(getContentResolver(),
-                    "tweaks_signal_text_autocolor_enabled", (enable ? 1 : 0));
+            Settings.System.putInt(getContentResolver(), "tweaks_signal_text_autocolor_enabled",
+                    (enable ? 1 : 0));
             refreshOptions();
-            return true;
-
-        } else if (preference == mShow4GIcon) {
-            boolean enable = mShow4GIcon.isChecked();
-            Settings.System.putInt(getContentResolver(),
-                    "tweaks_show_4g_icon", (enable ? 1 : 0));
-            return true;
-
-        } else if (preference == mShow2GIcon) {
-            boolean enable = ((CheckBoxPreference) preference).isChecked();
-
-            Log.e("Roman", "2G toggle");
-            Settings.System.putInt(getContentResolver(),
-                    "tweaks_show_2g_icon", (enable ? 1 : 0));
             return true;
 
         } else if (preference == mShowSignalBars) {
             boolean enable = mShowSignalBars.isChecked();
-            Settings.System.putInt(getContentResolver(),
-                    "tweaks_signal_icon_enabled", (enable ? 1 : 0));
+            Settings.System.putInt(getContentResolver(), "tweaks_signal_icon_enabled", (enable ? 1
+                    : 0));
 
             return true;
 
@@ -175,8 +157,19 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
             preference = (ListPreference) preference;
 
             int val = Integer.valueOf((String) newValue);
-            Settings.System.putInt(getContentResolver(), "tweaks_signal_text_style",
-                    val);
+            Settings.System.putInt(getContentResolver(), "tweaks_signal_text_style", val);
+            return true;
+        } else if (preference == m4GIcon) {
+            preference = (ListPreference) preference;
+
+            int val = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getContentResolver(), "4G_ICON_MODE", val);
+            return true;
+        } else if (preference == m3GIcon) {
+            preference = (ListPreference) preference;
+
+            int val = Integer.valueOf((String) newValue);
+            Settings.System.putInt(getContentResolver(), "3G_ICON_MODE", val);
             return true;
         }
 

@@ -4,12 +4,12 @@
 	xmlns:android="http://schemas.android.com/apk/res/android">
 
 	<PreferenceCategory
-		android:title="ROM Control"
+		android:title="ROM Information"
 		android:key="rom_control">
 
 		<Preference
-			android:key="rom_version"
-			android:title="ROM Version" />
+			android:title="ROM Version"
+			android:key="rom_version" />
 
 	</PreferenceCategory>
 

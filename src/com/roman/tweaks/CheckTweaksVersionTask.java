@@ -3,6 +3,7 @@ package com.roman.tweaks;
 
 import java.io.BufferedInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -11,23 +12,16 @@ import java.net.URLConnection;
 import java.util.Scanner;
 
 import android.content.Context;
-import android.graphics.Color;
+import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
+import android.net.Uri;
 import android.os.AsyncTask;
-import android.preference.Preference;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
+import android.os.Environment;
+import android.preference.PreferenceManager;
 
-public class CheckVersionTask extends AsyncTask<Void, Boolean, Void> {
-
-    String modVer = "";
-
-    Preference pref;
-
-    Spannable summary = null;
-
-    String sSummary;
+public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
 
     String md5;
 
@@ -35,28 +29,34 @@ public class CheckVersionTask extends AsyncTask<Void, Boolean, Void> {
 
     Context mContext;
 
-    public CheckVersionTask(Context c, String mod, Preference p) {
+    public CheckTweaksVersionTask(Context c) {
         mContext = c;
-        modVer = mod;
-        pref = p;
     }
 
     public void onProgressUpdate(Boolean... p) {
-        if (summary == null)
-            pref.setSummary(sSummary);
-        else
-            pref.setSummary(summary);
-
-        pref.setEnabled(true);
+        Intent i = new Intent();
+        i.setAction(Main.BROADCAST_HIDE_TWEAKS);
+        i.putExtra("show", p[0]);
+        mContext.sendBroadcast(i);
     }
 
     @Override
     protected Void doInBackground(Void... params) {
+
+        PackageManager pm = mContext.getPackageManager();
+        PackageInfo pi = null;
+        try {
+            pi = pm.getPackageInfo("com.roman.tweaks", 0);
+        } catch (NameNotFoundException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+        int localVersion = pi.versionCode;
         String downloaded = null;
         try {
             downloaded = downloadTextFromUrl(new URL(
-                    //"http://www.goo-inside.me/roms/edt/hercules/juggernaut_version_info"));
-                    "http://www.rbirg.com/juggernaut_version_info"));
+            // "http://www.goo-inside.me/roms/edt/hercules/juggernaut_version_info"));
+                    "http://www.rbirg.com/juggernaut_tweaks_version_info"));
             // Log.e(TAG, downloaded);
 
         } catch (MalformedURLException e) {
@@ -68,14 +68,11 @@ public class CheckVersionTask extends AsyncTask<Void, Boolean, Void> {
         }
 
         if (downloaded == null) {
-            sSummary = "Couldn't check for updates. Tap to recheck";
             publishProgress(false);
         } else {
-            Log.e("TASK", downloaded);
             Scanner info = new Scanner(downloaded);
 
             if (!info.hasNext()) {
-                sSummary = "Couldn't check for updates. Tap to recheck.";
                 publishProgress(false);
                 return null;
             }
@@ -85,22 +82,22 @@ public class CheckVersionTask extends AsyncTask<Void, Boolean, Void> {
             md5 = info.next();
 
             // check if its an update
-            if (Double.parseDouble(modVer) < Double.parseDouble(webversion)) {
-                pref.setOnPreferenceClickListener(new CheckVersionListener(mContext, url, md5));
+            if (localVersion < Integer.parseInt(webversion)) {
 
-                String text = modVer + " | " + "New version available! Tap to update.";
-
-                summary = new SpannableString(text);
-                summary.setSpan(new ForegroundColorSpan(Color.RED), text.indexOf("|") + 1,
-                        summary.length(), 0);
+                PreferenceManager.getDefaultSharedPreferences(mContext).edit()
+                        .putString("tweaks_url", url).putString("tweaks_md5", md5)
+                        .putString("tweaks_filename", Uri.parse(url).getLastPathSegment()).apply();
 
                 publishProgress(true);
             } else {
-                String text = modVer + " | " + "You have the newest version. You're awesome.";
+                File externalStorageDir = Environment
+                        .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
+                File f = new File(externalStorageDir.getAbsolutePath() + "/" + Uri.parse(url).getLastPathSegment());
 
-                summary = new SpannableString(text);
-                summary.setSpan(new ForegroundColorSpan(Color.GREEN), text.indexOf("|") + 1,
-                        summary.length(), 0);
+                if(f.exists())
+                    f.delete();
+                
+                publishProgress(false);
             }
         }
         return null;
