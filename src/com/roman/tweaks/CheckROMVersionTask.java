@@ -24,7 +24,7 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
     String modVer = "";
 
     Context mContext;
-    
+
     static String TAG = "CHeckROMVersion";
 
     public CheckROMVersionTask(Context c, String mod) {
@@ -45,7 +45,8 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
         try {
             downloaded = downloadTextFromUrl(new URL(
             // "http://www.goo-inside.me/roms/edt/hercules/juggernaut_version_info"));
-                    "http://www.rbirg.com/juggernaut_version_info"));
+//                    "http://www.rbirg.com/juggernaut_version_info"));
+             "http://www.rbirg.com/juggernaut_version_info_test"));
             // Log.e(TAG, downloaded);
 
         } catch (MalformedURLException e) {
@@ -71,7 +72,7 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
 
             String webversion = info.next();
             String url = info.next();
-            String md5 = info.next();
+            String md5 = info.next().trim().toLowerCase();
 
             // check if its an update
             if (Double.parseDouble(modVer) < Double.parseDouble(webversion)) {
@@ -85,6 +86,9 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
                         + Uri.parse(url).getLastPathSegment());
 
                 if (f.exists() && !md5.equals(Main.md5(f))) {
+                    Log.e(TAG, "deleting " + f.getAbsolutePath()
+                            + " because it exists and doesn't match md5");
+
                     f.delete();
                 }
 

@@ -35,7 +35,7 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
     ListPreference mAmPmStyle;
     ListPreference mClockStyle;
-    CheckBoxPreference mHideAlarm;
+    CheckBoxPreference mShowAlarm;
     Preference mColorPref;
 
     /** Called when the activity is first created. */
@@ -48,7 +48,7 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
         mClockStyle = (ListPreference) prefs.findPreference(PREF_CLOCK_STYLE);
         mAmPmStyle = (ListPreference) prefs.findPreference(PREF_CLOCK_DISPLAY_STYLE);
-        mHideAlarm = (CheckBoxPreference) prefs.findPreference(RPEF_HIDE_ALARM);
+        mShowAlarm = (CheckBoxPreference) prefs.findPreference(RPEF_HIDE_ALARM);
         mColorPref = prefs.findPreference(PREF_CLOCK_COLOR);
 
         int styleValue = Settings.System.getInt(getContentResolver(),
@@ -63,7 +63,7 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
 
         int alarm = Settings.System.getInt(getContentResolver(),
                 "tweaks_show_alarm_icon", 1);
-        mHideAlarm.setChecked(alarm == 0);
+        mShowAlarm.setChecked(alarm == 1);
 
     }
 
@@ -74,11 +74,11 @@ public class ClockActivity extends PreferenceActivity implements OnPreferenceCha
                             "tweaks_clock_color", Color.WHITE));
             cp.show();
             return true;
-        } else if (preference == mHideAlarm) {
+        } else if (preference == mShowAlarm) {
             boolean checked = ((CheckBoxPreference) preference).isChecked();
 
             Settings.System.putInt(getContentResolver(), "tweaks_show_alarm_icon",
-                    checked ? 0 : 1);
+                    checked ? 1 : 0);
 
             return true;
         }

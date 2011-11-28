@@ -13,8 +13,14 @@
 		android:title="Volume key screen wake"
 		android:key="volume_wake"
 		android:entries="@array/pref_screenwake_entries"
-		android:entryValues="@array/pref_screenwake_values" 
+		android:entryValues="@array/pref_screenwake_values"
 		android:dialogTitle="Which keys wake the screen?" />
+
+	<ListPreference
+		android:title="SGS Music Widget Location"
+		android:key="sgs_music_loc"
+		android:entries="@array/sgs_widget_location_entries"
+		android:entryValues="@array/sgs_widget_location_values" />
 
 	<!-- <PreferenceCategory -->
 	<!-- android:title="Custom Application Launchers" -->

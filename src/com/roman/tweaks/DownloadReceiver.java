@@ -43,8 +43,6 @@ public class DownloadReceiver extends BroadcastReceiver {
         boolean rom_dl = rom_id == download_id;
         boolean tweaks_dl = tweaks_id == download_id;
 
-        
-
         if (intent.getAction().equals(DownloadManager.ACTION_DOWNLOAD_COMPLETE)) {
             Log.e(TAG, "Reciving " + DownloadManager.ACTION_DOWNLOAD_COMPLETE);
 
@@ -54,7 +52,7 @@ public class DownloadReceiver extends BroadcastReceiver {
                 Log.e(TAG, download_id + "");
                 return;
             }
-            
+
             File externalStorageDir = Environment
                     .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
             String md5_expected = null;
@@ -79,8 +77,10 @@ public class DownloadReceiver extends BroadcastReceiver {
                 return;
             }
 
-            if (!md5_expected.equals(Main.md5(f))) {
+            String md5 = Main.md5(f);
+            if (!md5_expected.equals(md5)) {
                 Log.e(TAG, "DL Receiver md5 mismatch, no notification");
+                Log.e(TAG, "Expected MD5: " + md5_expected + ", actual md5: " + md5);
                 // Log.e(TAG, "so we're deleting the file and the result is: " +
                 // f.delete());
                 return;
@@ -140,8 +140,8 @@ public class DownloadReceiver extends BroadcastReceiver {
             Log.e(TAG, "tweaks dl: " + tweaks_id);
             if (tweaks_dl)
                 return;
-            
-            if(download_id == 0)
+
+            if (download_id == 0 || download_id == -1)
                 download_id = rom_id;
 
             DownloadManager.Query query = new DownloadManager.Query();

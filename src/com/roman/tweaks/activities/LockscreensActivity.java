@@ -8,12 +8,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.preference.ListPreference;
 import android.preference.Preference;
-import android.preference.PreferenceManager;
 import android.preference.Preference.OnPreferenceChangeListener;
 import android.preference.PreferenceActivity;
+import android.preference.PreferenceManager;
 import android.preference.PreferenceScreen;
 import android.provider.Settings;
-import android.util.Log;
 
 import com.roman.tweaks.R;
 import com.roman.tweaks.utils.ShortcutPickHelper;
@@ -28,9 +27,11 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
     private static final String LOCKSCREEN_QUADRANT_4_PREF = "pref_quadrant_4";
     private static final String LOCKSCREEN_CLOCK_PREF = "pref_clock";
     private static final String PREF_WAKE = "volume_wake";
+    private static final String PREF_SGS2_MUSIC_LOC = "sgs_music_loc";
 
     private ListPreference mLockscreenStylePref;
     private ListPreference mVolumeWake;
+    private ListPreference mSgs2MusicLoc;
     private Preference mHoneyQuadrant1Pref;
     private Preference mHoneyQuadrant2Pref;
     private Preference mHoneyQuadrant3Pref;
@@ -71,6 +72,13 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
         mVolumeWake.setValue(Settings.System.getInt(getContentResolver(), "tweaks_use_volume", 0)
                 + "");
         mVolumeWake.setOnPreferenceChangeListener(this);
+
+        mSgs2MusicLoc = (ListPreference) prefSet.findPreference(PREF_SGS2_MUSIC_LOC);
+        mSgs2MusicLoc.setOnPreferenceChangeListener(this);
+        mSgs2MusicLoc.setValue(Settings.System.getInt(getContentResolver(),
+                "lockscreen_sgsmusic_controls", 1) + "");
+        
+       prefSet.removePreference(mSgs2MusicLoc);
 
     }
 
@@ -167,6 +175,19 @@ public class LockscreensActivity extends PreferenceActivity implements OnPrefere
             }
 
             Settings.System.putInt(getContentResolver(), "tweaks_use_volume", newVal);
+            return true;
+        } else if (preference == mSgs2MusicLoc) {
+            CharSequence[] entries = ((ListPreference) preference).getEntryValues();
+
+            int newVal = 0;
+            for (int i = 0; i < entries.length; i++) {
+                if (entries[i].equals((String) newValue)) {
+                    newVal = Integer.parseInt(entries[i] + "");
+                    break;
+                }
+            }
+
+            Settings.System.putInt(getContentResolver(), "lockscreen_sgsmusic_controls", newVal);
             return true;
         }
 

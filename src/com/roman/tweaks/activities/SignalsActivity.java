@@ -77,8 +77,8 @@ public class SignalsActivity extends PreferenceActivity implements OnPreferenceC
                 "tweaks_signal_text_style", 0));
         refreshOptions();
         
-        prefs.removePreference(m4GIcon);
-        prefs.removePreference(m3GIcon);
+//        prefs.removePreference(m4GIcon);
+//        prefs.removePreference(m3GIcon);
     }
 
     public void onResume(Bundle ofLove) {

@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu
-	xmlns:android="http://schemas.android.com/apk/res/android">
-	<item
-		android:titleCondensed="Check for updates"
-		android:title="Check for updates"
-		android:id="@+id/check_updates"></item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/check_updates"
+        android:title="Check for updates"
+        android:titleCondensed="Check for updates"></item>
+
 </menu>

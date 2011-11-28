@@ -4,6 +4,7 @@ package com.roman.tweaks;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +27,9 @@ import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.ServiceConnection;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.graphics.Color;
 import android.net.Uri;
@@ -167,10 +170,17 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
          * temporary, remove at a later release to disable lockscreens and shit
          * for now
          */
-        boolean disabled_before = PreferenceManager.getDefaultSharedPreferences(this).contains("JUGGERNAUT_26_LOCKSCREEN_DISABLE");
-        
-        boolean disable_lockscreens = PreferenceManager.getDefaultSharedPreferences(this).getBoolean("JUGGERNAUT_26_LOCKSCREEN_DISABLE", true);
-        
+        boolean disabled_before = PreferenceManager.getDefaultSharedPreferences(this).contains(
+                "JUGGERNAUT_26_LOCKSCREEN_DISABLE");
+        boolean disable_lockscreens = PreferenceManager.getDefaultSharedPreferences(this)
+                .getBoolean("JUGGERNAUT_26_LOCKSCREEN_DISABLE", true);
+
+        if (getVersion() > 31) {
+            disable_lockscreens = false;
+            PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
+                    .putBoolean("JUGGERNAUT_26_LOCKSCREEN_DISABLE", false).apply();
+        }
+
         if (!disabled_before && disable_lockscreens) {
             Settings.System.putInt(getContentResolver(), "tweaks_lockscreen_style", 0);
             PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).edit()
@@ -188,6 +198,18 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
                     }).create().show();
 
         }
+    }
+
+    private int getVersion() {
+        int version = -1;
+        try {
+            PackageInfo pInfo = getPackageManager().getPackageInfo(getPackageName(),
+                    PackageManager.GET_META_DATA);
+            version = pInfo.versionCode;
+        } catch (NameNotFoundException e1) {
+            Log.e(this.getClass().getSimpleName(), "Name not found", e1);
+        }
+        return version;
     }
 
     protected void onNewIntent(Intent intent) {
@@ -423,33 +445,40 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
         alert.show();
     }
 
-    public static String md5(File f) {
-        MessageDigest digest;
-        InputStream is = null;
+    public static String md5(File filename) {
+        InputStream in;
         try {
-            digest = MessageDigest.getInstance("MD5");
-            is = new FileInputStream(f);
+            in = new FileInputStream(filename);
 
-            byte[] buffer = new byte[8192];
-            int read = 0;
+            MessageDigest md = MessageDigest.getInstance("MD5");
 
-            while ((read = is.read(buffer)) > 0) {
-                digest.update(buffer, 0, read);
+            byte[] buf = new byte[8192];
+            int len;
+            while ((len = in.read(buf)) != -1) {
+                md.update(buf, 0, len);
             }
-            byte[] md5sum = digest.digest();
-            BigInteger bigInt = new BigInteger(1, md5sum);
-            String output = bigInt.toString(16);
-            is.close();
-            return output;
-        } catch (IOException e) {
-            throw new RuntimeException("Unable to process file for MD5", e);
-        } catch (NoSuchAlgorithmException e1) {
+            in.close();
+
+            byte[] bytes = md.digest();
+
+            StringBuilder sb = new StringBuilder(2 * bytes.length);
+            for (byte b : bytes) {
+                sb.append("0123456789ABCDEF".charAt((b & 0xF0) >> 4));
+                sb.append("0123456789ABCDEF".charAt((b & 0x0F)));
+            }
+            String hex = sb.toString();
+            return hex.toLowerCase();
+        } catch (FileNotFoundException e) {
             // TODO Auto-generated catch block
-            e1.printStackTrace();
+            e.printStackTrace();
+        } catch (NoSuchAlgorithmException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
         }
-
-        return null;
-
+        return "";
     }
 
     private OnPreferenceClickListener updateROMListener = new OnPreferenceClickListener() {
@@ -471,7 +500,7 @@ public class Main extends PreferenceActivity implements OnPreferenceChangeListen
                 if (attempts++ < 3) {
                     handler.postDelayed(flashTask, (attempts + 1) * 500);
                     mROMVersion
-                            .setSummary("Couldn't connect to ROM Manager. Retrying. Please don't exit the window!");
+                            .setSummary("Couldn't connect to ROM Manager. Retrying. Please don't exit the window! If you don't have ROM Manager you can't update through ROM Control!");
                 }
                 return;
 
