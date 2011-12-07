@@ -37,6 +37,8 @@ public class Sense extends PreferenceActivity {
     private static final String PREF_KILL_ROSIE = "kill_rosie";
     private static final String PREF_SCREEN_ON_MMS = "screen_on_mms";
     private static final String PREF_TRANSPARENT_APPS = "transparent_apps";
+    private static final String PREF_SUPER_SMOOTH = "super_smooth";
+    private static final String PREF_ULTRA_SMOOTH = "ultra_smooth";
 
     CheckBoxPreference mShowRecentApps;
     CheckBoxPreference mEnableScreenshots;
@@ -49,6 +51,9 @@ public class Sense extends PreferenceActivity {
     CheckBoxPreference mScreenOnSms;
     CheckBoxPreference mUseTransparentApps;
     Preference mKillRosie;
+
+    CheckBoxPreference mSuperSmoothEnabled;
+    CheckBoxPreference mUltraSmoothEnabled;
 
     @Override
     protected void onCreate(Bundle ofLove) {
@@ -69,29 +74,37 @@ public class Sense extends PreferenceActivity {
         mEnableScreenshots = (CheckBoxPreference) prefs.findPreference(PREF_ENABLE_SCREENSHOTS);
         mEnableUnlockAnimation = (CheckBoxPreference) prefs.findPreference(PREF_ENABLE_UNLOCK_ANIM);
         mEnableFiveColumns = (CheckBoxPreference) prefs.findPreference(PREF_NUM_COLUMNS_APP_DRAWER);
-        mEnableQuickQuickSettings = (CheckBoxPreference) prefs.findPreference(PREF_SUPER_QUICK_SETTINGS);
+        mEnableQuickQuickSettings = (CheckBoxPreference) prefs
+                .findPreference(PREF_SUPER_QUICK_SETTINGS);
         mUsePaginatedAppDrawer = (CheckBoxPreference) prefs.findPreference(PREF_USE_PAGINATED_APPS);
         mScreenOnSms = (CheckBoxPreference) prefs.findPreference(PREF_SCREEN_ON_MMS);
         mUseTransparentApps = (CheckBoxPreference) prefs.findPreference(PREF_TRANSPARENT_APPS);
 
-        String activityName = Settings.System.getString(getContentResolver(), "tweaks_rosie_activity_name");
+        String activityName = Settings.System.getString(getContentResolver(),
+                "tweaks_rosie_activity_name");
         mRosieActivity.setSummary(activityName == null ? "Browser" : activityName);
 
-        boolean checked = (Settings.System.getInt(getContentResolver(), "tweaks_show_recent_apps", 0) == 1) ? true : false;
+        boolean checked = (Settings.System.getInt(getContentResolver(), "tweaks_show_recent_apps",
+                0) == 1) ? true : false;
         mShowRecentApps.setChecked(checked);
 
-        checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_remap_personalize", 1) == 1) ? true : false;
+        checked = (Settings.System
+                .getInt(getContentResolver(), "tweaks_rosie_remap_personalize", 1) == 1) ? true
+                : false;
         mUseRosieCustomActivity.setChecked(checked);
 
-        checked = (Settings.System.getInt(getContentResolver(), "tweaks_enable_screenshot", 1) == 1) ? true : false;
+        checked = (Settings.System.getInt(getContentResolver(), "tweaks_enable_screenshot", 1) == 1) ? true
+                : false;
         mEnableScreenshots.setChecked(checked);
 
         /* unlock animation */
-        checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_skip_unlock_animation", 0) == 0);
+        checked = (Settings.System.getInt(getContentResolver(),
+                "tweaks_rosie_skip_unlock_animation", 0) == 0);
         mEnableUnlockAnimation.setChecked(checked);
 
         /* columns */
-        checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_app_drawer_columns", 4) == 5);
+        checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_app_drawer_columns",
+                4) == 5);
         mEnableFiveColumns.setChecked(checked);
 
         /* quick quick settings */
@@ -109,6 +122,16 @@ public class Sense extends PreferenceActivity {
         /* transparent app drawer */
         checked = (Settings.System.getInt(getContentResolver(), "tweaks_rosie_transparent", 0) == 1);
         mUseTransparentApps.setChecked(checked);
+
+        /* super smooth */
+        mSuperSmoothEnabled = (CheckBoxPreference) findPreference(PREF_SUPER_SMOOTH);
+        mSuperSmoothEnabled.setChecked(Settings.System.getInt(getContentResolver(),
+                "tweaks_rosie_super_smooth", 0) == 1);
+
+        /* ultra smooth */
+        mUltraSmoothEnabled = (CheckBoxPreference) findPreference(PREF_ULTRA_SMOOTH);
+        mUltraSmoothEnabled.setChecked(Settings.System.getInt(getContentResolver(),
+                "tweaks_rosie_ultra_smooth", 0) == 1);
 
         /* check rosie */
         if (!new File("/system/app/Rosie.apk").exists()) {
@@ -205,6 +228,32 @@ public class Sense extends PreferenceActivity {
 
             Settings.System.putInt(getContentResolver(),
                     "tweaks_sms_screen_on", checked ? 1 : 0);
+            return true;
+        } else if (preference == mSuperSmoothEnabled) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+            Settings.System.putInt(getContentResolver(),
+                    "tweaks_rosie_super_smooth", checked ? 1 : 0);
+            
+            if(!checked) {
+                
+                
+                Settings.System.putInt(getContentResolver(),
+                        "tweaks_rosie_ultra_smooth", 0);
+                mUltraSmoothEnabled.setChecked(false);
+            }
+            return true;
+        } else if (preference == mUltraSmoothEnabled) {
+            boolean checked = ((CheckBoxPreference) preference).isChecked();
+
+            Settings.System.putInt(getContentResolver(),
+                    "tweaks_rosie_ultra_smooth", checked ? 1 : 0);
+            
+            if(checked) {
+                Settings.System.putInt(getContentResolver(),
+                        "tweaks_rosie_super_smooth", 1);
+                mSuperSmoothEnabled.setChecked(true);
+            }
             return true;
         }
 

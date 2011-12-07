@@ -1,69 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	android:key="sense_pref_root">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="sense_pref_root" >
 
-	<PreferenceCategory
-		android:title="Sense Launcher Tweaks"
-		android:key="sense_tweaks_id">
+    <PreferenceCategory
+        android:key="sense_tweaks_id"
+        android:title="Sense Launcher Tweaks" >
 
-		<CheckBoxPreference
-			android:key="use_custom_rosie_activity"
-			android:title="Enable custom personalize button" />
+        <CheckBoxPreference
+            android:key="use_custom_rosie_activity"
+            android:title="Enable custom personalize button" />
 
-		<Preference
-			android:key="pref_rosie_activity"
-			android:title="Custom Personalize button"
-			android:dependency="use_custom_rosie_activity" />
+        <Preference
+            android:dependency="use_custom_rosie_activity"
+            android:key="pref_rosie_activity"
+            android:title="Custom Personalize button" />
 
+        <CheckBoxPreference
+            android:key="enable_unlock_animation"
+            android:title="Enable unlock animation" />
 
-		<CheckBoxPreference
-			android:key="enable_unlock_animation"
-			android:title="Enable unlock animation" />
+        <CheckBoxPreference
+            android:key="app_drawer_app_columns"
+            android:summary="Requires a reboot of the system or Rosie"
+            android:title="5 column app drawer" />
 
-		<CheckBoxPreference
-			android:key="app_drawer_app_columns"
-			android:title="5 column app drawer"
-			android:summary="Requires a reboot of the system or Rosie" />
+        <CheckBoxPreference
+            android:key="paginated_apps"
+            android:summary="Use pages when scrolling?"
+            android:title="Paginated app drawer" />
 
-		<CheckBoxPreference
-			android:key="paginated_apps"
-			android:title="Paginated app drawer"
-			android:summary="Use pages when scrolling?" />
+        <CheckBoxPreference
+            android:key="transparent_apps"
+            android:title="Transparent app drawer" />
 
-		<CheckBoxPreference
-			android:key="transparent_apps"
-			android:title="Transparent app drawer" />
-	</PreferenceCategory>
+        <CheckBoxPreference
+            android:key="transparent_apps"
+            android:title="Transparent app drawer" />
 
-	<PreferenceCategory
-		android:title="Restart Rosie"
-		android:key="sense_restart_rosie_cat">
+        <CheckBoxPreference
+            android:key="super_smooth"
+            android:summary="This will keep the 3D widgets in the initial screen you begin scrolling from and freeze/flattens all other pages until you stop scrolling"
+            android:title="Super Smooth Rosie" />
 
-		<Preference
-			android:key="kill_rosie"
-			android:title="Kill Rosie!"
-			android:summary="Use this whenever changing any Sense Launcher tweaks" />
-	</PreferenceCategory>
+        <CheckBoxPreference
+            android:key="ultra_smooth"
+            android:summary="This mod goes even further by completely disabling 3D layered widgets by flattening and freezing all homescreens during scroll"
+            android:title="Ultra Smooth Rosie" />
+    </PreferenceCategory>
 
-	<PreferenceCategory android:title="Other Interface Tweaks">
-		<CheckBoxPreference
-			android:key="show_recent_apps"
-			android:title="Show recent apps"
-			android:summary="In the dropdown. Will need a reboot after disabling." />
+    <PreferenceCategory
+        android:key="sense_restart_rosie_cat"
+        android:title="Restart Rosie" >
 
-		<CheckBoxPreference
-			android:key="enable_screenshots"
-			android:title="Enable sceenshot function"
-			android:summary="With Power + Home" />
+        <Preference
+            android:key="kill_rosie"
+            android:summary="Use this whenever changing any Sense Launcher tweaks"
+            android:title="Kill Rosie!" />
+    </PreferenceCategory>
 
-		<CheckBoxPreference
-			android:key="super_quick_settings"
-			android:title="Quick-quick settings"
-			android:summary="Automatically show quick settings when there are no notifications to clear." />
+    <PreferenceCategory android:title="Other Interface Tweaks" >
 
-		<CheckBoxPreference
-			android:key="screen_on_mms"
-			android:title="Screen on SMS" />
-	</PreferenceCategory>
+        <CheckBoxPreference
+            android:key="show_recent_apps"
+            android:summary="In the dropdown. Will need a reboot after disabling."
+            android:title="Show recent apps" />
+
+        <CheckBoxPreference
+            android:key="enable_screenshots"
+            android:summary="With Power + Home"
+            android:title="Enable sceenshot function" />
+
+        <CheckBoxPreference
+            android:key="super_quick_settings"
+            android:summary="Automatically show quick settings when there are no notifications to clear."
+            android:title="Quick-quick settings" />
+
+        <CheckBoxPreference
+            android:key="screen_on_mms"
+            android:title="Screen on SMS" />
+    </PreferenceCategory>
+
 </PreferenceScreen>
