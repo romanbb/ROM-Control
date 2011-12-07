@@ -50,15 +50,19 @@ public class TweaksUpdateListener implements OnPreferenceClickListener {
         String url = preferenceManager.getString("tweaks_url", null);
         String fileName = preferenceManager.getString("tweaks_filename", null);
 
+        if (!new File(externalStorageDir.getAbsolutePath()).exists()) {
+            new File(externalStorageDir.getAbsolutePath()).mkdir();
+        }
+
         File f = new File(externalStorageDir.getAbsolutePath() + "/" + fileName);
 
         // Log.e(TAG, "file name: " + f.getAbsolutePath());
 
         if (f.exists()) {
-            Log.e(TAG, "Checking MD5");
+            Log.i(TAG, "Checking MD5");
 
             if (Main.md5(f).equals(md5)) {
-                Log.e(TAG, "MD5 matches");
+                Log.i(TAG, "MD5 matches");
 
                 Intent installIntent = new Intent();
                 installIntent.setAction(Intent.ACTION_VIEW);
@@ -84,7 +88,7 @@ public class TweaksUpdateListener implements OnPreferenceClickListener {
     }
 
     public void enqueue(String url, String fileName) {
-        Log.e(TAG, "enqueueing download");
+        Log.i(TAG, "enqueueing download");
 
         Uri down = Uri.parse(url);
         DownloadManager.Request req = new DownloadManager.Request(down);

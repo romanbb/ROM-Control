@@ -1,9 +1,6 @@
 
 package com.android.internal.policy.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-
 import android.R;
 import android.app.AlertDialog;
 import android.app.StatusBarManager;
@@ -33,6 +30,9 @@ import android.widget.TextView;
 
 import com.android.internal.app.ShutdownThread;
 import com.google.android.collect.Lists;
+
+import java.io.IOException;
+import java.util.ArrayList;
 
 public class GlobalActions implements OnClickListener, OnDismissListener {
 

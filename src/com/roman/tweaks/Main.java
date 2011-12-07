@@ -1,18 +1,6 @@
 
 package com.roman.tweaks;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.math.BigInteger;
-import java.net.URISyntaxException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -60,6 +48,17 @@ import android.widget.Toast;
 import com.koushikdutta.rommanager.api.IROMManagerAPIService;
 import com.roman.tweaks.listeners.ROMUpdateClickListener;
 import com.roman.tweaks.listeners.TweaksUpdateListener;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.URISyntaxException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 
 public class Main extends PreferenceActivity implements OnPreferenceChangeListener {
 

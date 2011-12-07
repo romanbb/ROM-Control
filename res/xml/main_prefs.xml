@@ -1,88 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<PreferenceScreen
-	android:key="pref_root"
-	xmlns:android="http://schemas.android.com/apk/res/android">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="pref_root" >
 
-	<PreferenceCategory
-		android:title="ROM Information"
-		android:key="rom_control">
+    <PreferenceCategory
+        android:key="rom_control"
+        android:title="ROM Information" >
 
-		<Preference
-			android:title="ROM Version"
-			android:key="rom_version" />
+        <Preference
+            android:key="rom_version"
+            android:title="ROM Version" />
 
-	</PreferenceCategory>
+        <com.roman.tweaks.AdPreference android:layout="@layout/ad_preference" />
+    </PreferenceCategory>
 
-	<PreferenceCategory
-		android:title="Statusbar Tweaks"
-		android:key="statusbar_cat">
+    <PreferenceCategory
+        android:key="statusbar_cat"
+        android:title="Statusbar Tweaks" >
 
-		<Preference
-			android:title="Quick settings... settings"
-			android:key="quick_settings">
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.QuickSettingsActivity" />
-		</Preference>
+        <Preference
+            android:key="quick_settings"
+            android:title="Quick settings... settings" >
 
-		<Preference
-			android:title="Lockscreen Settings"
-			android:key="lockscreen_settings">
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.LockscreensActivity"></intent>
-		</Preference>
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.roman.tweaks.activities.QuickSettingsActivity"
+                android:targetPackage="com.roman.tweaks" />
+        </Preference>
 
-		<Preference
-			android:title="Clock options"
-			android:key="clock_options_pref">
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.ClockActivity" />
-		</Preference>
+        <Preference
+            android:key="lockscreen_settings"
+            android:title="Lockscreen Settings" >
 
-		<Preference
-			android:title="Battery options"
-			android:key="battery_options_pref">
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.BatteryActivity" />
-		</Preference>
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.roman.tweaks.activities.LockscreensActivity"
+                android:targetPackage="com.roman.tweaks" >
+            </intent>
+        </Preference>
 
-		<Preference
-			android:title="Signal options"
-			android:key="signal_options_pref">
-			<intent
-				android:action="android.intent.action.MAIN"
-				android:targetPackage="com.roman.tweaks"
-				android:targetClass="com.roman.tweaks.activities.SignalsActivity" />
-		</Preference>
+        <Preference
+            android:key="clock_options_pref"
+            android:title="Clock options" >
 
-	</PreferenceCategory>
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.roman.tweaks.activities.ClockActivity"
+                android:targetPackage="com.roman.tweaks" />
+        </Preference>
 
-	<PreferenceCategory
-		android:title="Other"
-		android:key="other_cat">
+        <Preference
+            android:key="battery_options_pref"
+            android:title="Battery options" >
 
-		<CheckBoxPreference
-			android:key="pref_animate_off"
-			android:title="Animate screen off" />
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.roman.tweaks.activities.BatteryActivity"
+                android:targetPackage="com.roman.tweaks" />
+        </Preference>
 
-		<CheckBoxPreference
-			android:key="pref_animate_on"
-			android:title="Animate screen on" />
+        <Preference
+            android:key="sustemui"
+            android:title="Statusbar Options" >
 
-		<ListPreference
-			android:key="pref_overscroll_effect"
-			android:title="Overscroll Settings"
-			android:entries="@array/pref_overscroll_effect_entries"
-			android:entryValues="@array/pref_overscroll_effect_values" />
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.roman.tweaks.activities.PullDownActivity"
+                android:targetPackage="com.roman.tweaks" />
+        </Preference>
 
+        <Preference
+            android:key="signal_options_pref"
+            android:title="Signal options" >
 
+            <intent
+                android:action="android.intent.action.MAIN"
+                android:targetClass="com.roman.tweaks.activities.SignalsActivity"
+                android:targetPackage="com.roman.tweaks" />
+        </Preference>
+    </PreferenceCategory>
 
-	</PreferenceCategory>
+    <PreferenceCategory
+        android:key="other_cat"
+        android:title="Other" >
+
+        <CheckBoxPreference
+            android:key="pref_animate_off"
+            android:title="Animate screen off" />
+
+        <CheckBoxPreference
+            android:key="pref_animate_on"
+            android:title="Animate screen on" />
+
+        <ListPreference
+            android:entries="@array/pref_overscroll_effect_entries"
+            android:entryValues="@array/pref_overscroll_effect_values"
+            android:key="pref_overscroll_effect"
+            android:title="Overscroll Settings" />
+    </PreferenceCategory>
+
 </PreferenceScreen>

@@ -47,15 +47,19 @@ public class ROMUpdateClickListener implements OnPreferenceClickListener {
         String url = preferenceManager.getString("file_url", null);
         String fileName = preferenceManager.getString("file_name", null);
 
+        if (!new File(externalStorageDir.getAbsolutePath()).exists()) {
+            new File(externalStorageDir.getAbsolutePath()).mkdir();
+        }
+
         File f = new File(externalStorageDir.getAbsolutePath() + "/" + fileName);
 
-        Log.e(TAG, "file name: " + f.getAbsolutePath());
+        Log.i(TAG, "file name: " + f.getAbsolutePath());
 
         if (f.exists()) {
-            Log.e(TAG, "Checking MD5");
+            Log.i(TAG, "Checking MD5");
 
             if (Main.md5(f).equals(md5)) {
-                Log.e(TAG, "MD5 matches");
+                Log.i(TAG, "MD5 matches");
 
                 Intent launch = new Intent(mContext, Main.class);
                 launch.setAction(Main.BROADCAST_DL_FLASH);
@@ -64,7 +68,7 @@ public class ROMUpdateClickListener implements OnPreferenceClickListener {
                 mContext.startActivity(launch);
                 return true;
             } else {
-                Log.e(TAG, "MD5 mismatch");
+                Log.i(TAG, "MD5 mismatch");
                 f.delete();
                 // if (f.delete()) {
                 enqueue(url, fileName);
@@ -80,11 +84,11 @@ public class ROMUpdateClickListener implements OnPreferenceClickListener {
     }
 
     public void enqueue(String url, String fileName) {
-        Log.e(TAG, "enqueueing download: " + url);
+        Log.i(TAG, "enqueueing download: " + url);
 
         Uri down = Uri.parse(url);
         DownloadManager.Request req = new DownloadManager.Request(down);
-         req.setTitle(fileName);
+        req.setTitle(fileName);
         // req.setDescription("Juggernaut ROM Update");
         req.setShowRunningNotification(true);
         req.setVisibleInDownloadsUi(true);

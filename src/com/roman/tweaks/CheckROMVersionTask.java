@@ -25,7 +25,7 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
 
     Context mContext;
 
-    static String TAG = "CHeckROMVersion";
+    static String TAG = "CheckROMVersion";
 
     public CheckROMVersionTask(Context c, String mod) {
         mContext = c;
@@ -45,8 +45,8 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
         try {
             downloaded = downloadTextFromUrl(new URL(
             // "http://www.goo-inside.me/roms/edt/hercules/juggernaut_version_info"));
-//                    "http://www.rbirg.com/juggernaut_version_info"));
-             "http://www.rbirg.com/juggernaut_version_info_test"));
+                    "http://www.rbirg.com/juggernaut_version_info"));
+            // "http://www.rbirg.com/juggernaut_version_info_test"));
             // Log.e(TAG, downloaded);
 
         } catch (MalformedURLException e) {
@@ -61,7 +61,7 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
 
             publishProgress(false);
         } else {
-            Log.e("ROM TASK", downloaded);
+            Log.i(TAG, downloaded);
             Scanner info = new Scanner(downloaded);
 
             if (!info.hasNext()) {
@@ -76,6 +76,8 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
 
             // check if its an update
             if (Double.parseDouble(modVer) < Double.parseDouble(webversion)) {
+                // Log.i(TAG, "Local version: " + modVer + ", webversion: " +
+                // webversion);
                 PreferenceManager.getDefaultSharedPreferences(mContext).edit()
                         .putString("file_url", url).putString("file_md5", md5)
                         .putString("file_name", Uri.parse(url).getLastPathSegment()).apply();
@@ -86,7 +88,7 @@ public class CheckROMVersionTask extends AsyncTask<Void, Boolean, Void> {
                         + Uri.parse(url).getLastPathSegment());
 
                 if (f.exists() && !md5.equals(Main.md5(f))) {
-                    Log.e(TAG, "deleting " + f.getAbsolutePath()
+                    Log.w(TAG, "deleting " + f.getAbsolutePath()
                             + " because it exists and doesn't match md5");
 
                     f.delete();

@@ -1,16 +1,6 @@
 
 package com.roman.tweaks;
 
-import java.io.BufferedInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.util.Scanner;
-
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -20,8 +10,21 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.util.Log;
+
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.Scanner;
 
 public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
+
+    private static final String TAG = "CheckTweaksVersion";
 
     String md5;
 
@@ -55,7 +58,7 @@ public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
         String downloaded = null;
         try {
             downloaded = downloadTextFromUrl(new URL(
-            // "http://www.goo-inside.me/roms/edt/hercules/juggernaut_version_info"));
+                    // "http://www.goo-inside.me/roms/edt/hercules/juggernaut_version_info"));
                     "http://www.rbirg.com/juggernaut_tweaks_version_info"));
             // Log.e(TAG, downloaded);
 
@@ -70,6 +73,7 @@ public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
         if (downloaded == null) {
             publishProgress(false);
         } else {
+            Log.i(TAG, downloaded);
             Scanner info = new Scanner(downloaded);
 
             if (!info.hasNext()) {
@@ -92,11 +96,12 @@ public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
             } else {
                 File externalStorageDir = Environment
                         .getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-                File f = new File(externalStorageDir.getAbsolutePath() + "/" + Uri.parse(url).getLastPathSegment());
+                File f = new File(externalStorageDir.getAbsolutePath() + "/"
+                        + Uri.parse(url).getLastPathSegment());
 
-                if(f.exists())
+                if (f.exists())
                     f.delete();
-                
+
                 publishProgress(false);
             }
         }
@@ -105,11 +110,11 @@ public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
 
     private String downloadTextFromUrl(URL url) throws IOException {
 
-        // URL url = new URL(fileURL); // you can write here any link
-        URLConnection ucon = url.openConnection();
-        InputStream is = ucon.getInputStream();
+        Log.d(TAG, "downloading from: " + url.toString());
+        HttpURLConnection ucon = (HttpURLConnection) url.openConnection();
+        ucon.setUseCaches(false);
 
-        BufferedInputStream bis = new BufferedInputStream(is);
+        BufferedInputStream bis = new BufferedInputStream(ucon.getInputStream());
         ByteArrayOutputStream b = new ByteArrayOutputStream();
 
         while (true) {
@@ -121,9 +126,9 @@ public class CheckTweaksVersionTask extends AsyncTask<Void, Boolean, Void> {
         }
 
         bis.close();
-        is.close();
         b.close();
 
+        ucon.disconnect();
         return b.toString();
 
         // Log.d("Download", "downloaded file name:" + filePath);
